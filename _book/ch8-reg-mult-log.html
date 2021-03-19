@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>8 Regressão Múltipla e Logística | Livro de Probabilidade e Estatística EAD - UFRGS</title>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7.4/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4.9002/tabs.js"></script><script src="libs/bs3compat-0.2.4.9002/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script><script>
+    $(document).ready(function() {
+      $plots = $('img.plot');
+      $chunks = $('pre').has('code');
+      $chunks = $chunks.filter(function(idx) {
+        return $(this).children('code').outerHeight(false) > parseInt($(this).css('line-height'));
+      });
+
+      $chunks.each(function () {
+        if($(this).hasClass('r')) {
+          $(this).append("<div class=\"showopt\"><button type=\"button\" class=\"btn btn-outline-primary\">Mostrar código</button></div><br style=\"line-height:22px;\"/>");
+        } else {
+          $(this).append("<div class=\"showopt\">Show Output</div><br style=\"line-height:22px;\"/>");
+        }
+      });
+
+      $plots.each(function () {
+        $(this).wrap('<pre class=\"plot\"></pre>');
+        $(this).parent('pre.plot').prepend("<div class=\"showopt\">Show Plot</div><br style=\"line-height:22px;\"/>");
+      });
+
+      // hide all chunks when document is loaded
+      $chunks.children('code').toggle();
+      $('pre.plot').children('img').toggle();
+      // function to toggle the visibility
+      $('.showopt').click(function() {
+        var label = $(this).html();
+        if (label.indexOf("Mostrar") >= 0) {
+          $(this).html(label.replace("Mostrar", "Esconder"));
+        } else {
+          $(this).html(label.replace("Esconder", "Mostrar"));
+        }
+        $(this).siblings('code, img').slideToggle('fast', 'swing');
+      });
+    });
+    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Pular para o conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Livro de Probabilidade e Estatística EAD - UFRGS</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar índice</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Search">
+</form>
+      
+      <!--Adicionando bota de retorno a pagina index do livro-->
+      
+      <a href="/livro/index.html"><i class="fas fa-arrow-alt-circle-left"></i> Voltar para o site</a>
+
+      <nav aria-label="indice"><h2>Índice</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Prefácio</a></li>
+<li><a class="" href="ch1-intro.html"><span class="header-section-number">1</span> Introdução aos Bancos de Dados</a></li>
+<li><a class="" href="ch2-prob.html"><span class="header-section-number">2</span> Probabilidade (tópico especial)</a></li>
+<li><a class="" href="ch3-distribuicoes.html"><span class="header-section-number">3</span> Distribuições de Variáveis Aleatórias</a></li>
+<li><a class="" href="ch4-fund-inf.html"><span class="header-section-number">4</span> Fundamentos para Inferência</a></li>
+<li><a class="" href="ch5-inf-num.html"><span class="header-section-number">5</span> Inferência para dados numéricos</a></li>
+<li><a class="" href="ch6-inf-cat.html"><span class="header-section-number">6</span> Inferência para dados categóricos</a></li>
+<li><a class="" href="ch7-reg-simples.html"><span class="header-section-number">7</span> Introdução à Regressão Linear</a></li>
+<li><a class="active" href="ch8-reg-mult-log.html"><span class="header-section-number">8</span> Regressão Múltipla e Logística</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/Probabilidade-e-Estatistica-EAD/livro">Ver código do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="ch8-reg-mult-log" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Regressão Múltipla e Logística<a class="anchor" aria-label="anchor" href="#ch8-reg-mult-log"><i class="fas fa-link"></i></a>
+</h1>
+<p>Os princípios da regressão linear simples estabelecem a base para métodos de regressão mais sofisticados usados em uma ampla gama de configurações desafiadoras. Neste capítulo, nós exploramos a <strong>regressão múltipla</strong>, que introduz a possibilidade de mais de um preditor; e a <strong>regressão logística</strong>, uma técnica para prever resultados categóricos com duas categorias possíveis.</p>
+<div id="introductionToMultipleRegression" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Introdução à regressão múltipla<a class="anchor" aria-label="anchor" href="#introductionToMultipleRegression"><i class="fas fa-link"></i></a>
+</h2>
+<p>A regressão múltipla estende a regressão simples de duas variáveis para o caso que ainda tem uma resposta, mas muitos preditores (denotado <span class="math inline">\(X_1, X_2, X_3, \dots\)</span>). O método é motivado por cenários em que muitas variáveis podem ser conectadas simultaneamente a uma saída.</p>
+<p>Vamos considerar leilões Ebay de um videogame chamado <strong>Mario Kart</strong> para o Nintendo Wii. A variável de interesse resultante é o preço total de um leilão, que é o lance mais alto, mais o custo de envio. Vamos tentar determinar como o preço total é relacionado a cada característica em um leilão e simultaneamente controlar outras variáveis. Por exemplo, todas as outras características mantidas constantes são leilões mais longos associados a preços mais altos ou mais baixos? E, em média, quanto mais os compradores tendem a pagar por rodas adicionais do Wii (volantes de plástico que prendem ao controle do Wii) em leilões? A regressão múltipla nos ajudará a responder essas e outras perguntas.</p>
+<p>O conjunto de dados inclui resultados de 141 leilões<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Diez DM, Barr CD, Cetinkaya-Rundel M. 2015.: OpenIntro data sets and supplement functions: github.com/OpenIntroOrg/openintro-r-package&lt;/p&gt;"><sup>277</sup></a>. Quatro observações deste conjunto de dados são mostradas na Tabela <a href="ch8-reg-mult-log.html#tab:marioKartDataMatrix">8.1</a> e descrições para cada variável são mostradas na Tabela <a href="ch8-reg-mult-log.html#tab:marioKartVariables">8.2</a>. Observe que as variáveis <code>condição</code> e <code>foto stock</code> são variáveis indicadoras. Por exemplo, as variáveis <strong>cond_nova</strong> assume o valor 1 se o jogo em leilão for novo e 0 se for usado. A utilização de variáveis indicadoras no lugar de nomes de categorias permite que essas variáveis sejam usadas diretamente na regressão. A regressão múltipla também permite variáveis categóricas com muitos níveis, embora não tenhamos essas variáveis nessa análise, e salvamos esses detalhes para um segundo ou terceiro curso.</p>
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"marioKart"</span><span class="op">)</span>
+
+<span class="va">temp</span> <span class="op">&lt;-</span> <span class="va">marioKart</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'totalPr'</span>, <span class="st">'cond'</span>, <span class="st">'stockPhoto'</span>, <span class="st">'duration'</span>, <span class="st">'wheels'</span><span class="op">)</span><span class="op">]</span>
+
+<span class="va">temp</span><span class="op">$</span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">temp</span><span class="op">$</span><span class="va">cond</span> <span class="op">==</span> <span class="st">'used'</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="va">temp</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">temp</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">==</span> <span class="st">'yes'</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'preço'</span>, <span class="st">'condição'</span>, <span class="st">'foto'</span>, <span class="st">'duração'</span>, <span class="st">'rodas'</span><span class="op">)</span>
+
+
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">4</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">'Quatro observações do conjunto de dados Mario Kart'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:marioKartDataMatrix">Tabela 8.1: </span>Quatro observações do conjunto de dados Mario Kart</caption>
+<thead><tr class="header">
+<th align="right">preço</th>
+<th align="right">condição</th>
+<th align="right">foto</th>
+<th align="right">duração</th>
+<th align="right">rodas</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">51.55</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">37.04</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">45.50</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">44.00</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">descs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'preço do leilão final mais custo de transporte, em dólares americanos'</span>,
+           <span class="st">'a variável categória, que é 1 quando o jogo é novo e 0 se usado'</span>,
+           <span class="st">'a variável categórica, que é 1 se a foto principal do leilão era uma foto do estoque e 0 se fosse única para aquele leilão'</span>,
+           <span class="st">'duração do leilão em dias, valores entre 1 a 10'</span>, 
+           <span class="st">'o número de rodas de Wii incluídas na seção (uma roda de wii é um acessório em formato de roda para auxiliar ao jogar Mario Kart Wii'</span><span class="op">)</span>
+
+<span class="va">table2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>, <span class="va">descs</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">table2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Variável'</span>, <span class="st">'Descrição'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table2</span>, align <span class="op">=</span> <span class="st">'r'</span>, 
+             caption <span class="op">=</span> <span class="st">'Variáveis e suas descrições para o conjunto de dados Mario Kart'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:marioKartVariables">Tabela 8.2: </span>Variáveis e suas descrições para o conjunto de dados Mario Kart</caption>
+<colgroup>
+<col width="6%">
+<col width="93%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Variável</th>
+<th align="right">Descrição</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">preço</td>
+<td align="right">preço do leilão final mais custo de transporte, em dólares americanos</td>
+</tr>
+<tr class="even">
+<td align="right">condição</td>
+<td align="right">a variável categória, que é 1 quando o jogo é novo e 0 se usado</td>
+</tr>
+<tr class="odd">
+<td align="right">foto</td>
+<td align="right">a variável categórica, que é 1 se a foto principal do leilão era uma foto do estoque e 0 se fosse única para aquele leilão</td>
+</tr>
+<tr class="even">
+<td align="right">duração</td>
+<td align="right">duração do leilão em dias, valores entre 1 a 10</td>
+</tr>
+<tr class="odd">
+<td align="right">rodas</td>
+<td align="right">o número de rodas de Wii incluídas na seção (uma roda de wii é um acessório em formato de roda para auxiliar ao jogar Mario Kart Wii</td>
+</tr>
+</tbody>
+</table></div>
+<div id="twoSingleVariableModelsForMarioKartData" class="section level3" number="8.1.1">
+<h3>
+<span class="header-section-number">8.1.1</span> Um modelo de variável única para os dados do Mario Kart<a class="anchor" aria-label="anchor" href="#twoSingleVariableModelsForMarioKartData"><i class="fas fa-link"></i></a>
+</h3>
+<p>Vamos ajustar um modelo de regressão linear com a condição do jogo como um preditor do preço do leilão. O modelo pode ser escrito como</p>
+<p><span class="math display">\[\begin{align*}
+\widehat{preço} &amp;= 42.87 + 10.90\times cond\_\hspace{0.3mm}nova
+\end{align*}\]</span></p>
+<p>Os resultados deste modelo são mostrados na Tabela <a href="ch8-reg-mult-log.html#tab:singleVarModelsForPriceUsingCond">8.3</a> e um gráfico de dispersão por preço <em>versus</em> condição de jogo é mostrado na Figura <a href="ch8-reg-mult-log.html#fig:marioKartSingle">8.1</a>.</p>
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">marioKart</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="va">marioKart</span><span class="op">[</span><span class="va">marioKart</span><span class="op">$</span><span class="va">totalPr</span> <span class="op">&lt;</span> <span class="fl">100</span>,<span class="op">]</span>
+<span class="va">d</span><span class="op">$</span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">cond</span> <span class="op">==</span> <span class="st">'used'</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">totalPr</span> <span class="op">~</span> <span class="va">cond</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
+
+<span class="va">table3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">table3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Estimativa'</span>, <span class="st">'Erro Padrão'</span>, <span class="st">'Valor t'</span>, <span class="st">'Pr(&gt;|t|)'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'(Intercepto)'</span>, <span class="st">'Condição'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table3</span>, digits <span class="op">=</span> <span class="fl">3</span>, align <span class="op">=</span> <span class="st">'c'</span>, 
+             caption <span class="op">=</span> <span class="st">'Resumo de um modelo linear para prever o preço do leilão com base na condição do jogo.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:singleVarModelsForPriceUsingCond">Tabela 8.3: </span>Resumo de um modelo linear para prever o preço do leilão com base na condição do jogo.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="center">Estimativa</th>
+<th align="center">Erro Padrão</th>
+<th align="center">Valor t</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercepto)</td>
+<td align="center">42.871</td>
+<td align="center">0.814</td>
+<td align="center">52.668</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Condição</td>
+<td align="center">10.900</td>
+<td align="center">1.258</td>
+<td align="center">8.662</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">marioKart</span><span class="op">)</span>
+<span class="va">mk</span>      <span class="op">&lt;-</span> <span class="va">marioKart</span><span class="op">[</span><span class="va">marioKart</span><span class="op">$</span><span class="va">totalPr</span> <span class="op">&lt;</span> <span class="fl">100</span>, <span class="op">]</span>
+<span class="va">mk</span><span class="op">$</span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/relevel.html">relevel</a></span><span class="op">(</span><span class="va">mk</span><span class="op">$</span><span class="va">cond</span>, <span class="st">"used"</span><span class="op">)</span>
+<span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">mk</span><span class="op">$</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"new"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mk</span><span class="op">$</span><span class="va">totalPr</span> <span class="op">~</span> <span class="va">cond</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">cond</span><span class="op">)</span>, <span class="va">mk</span><span class="op">$</span><span class="va">totalPr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">'Preço Total'</span>, x <span class="op">=</span> <span class="st">'Condição'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="va">g</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, intercept <span class="op">=</span> <span class="va">g</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:marioKartSingle"></span>
+<img src="_main_files/figure-html/marioKartSingle-1.png" alt="Gráfico de dispersão do preço total do leilão contra a condição do jogo. A linha dos mínimos quadrados também é mostrada." width="672"><p class="caption">
+Figura 8.1: Gráfico de dispersão do preço total do leilão contra a condição do jogo. A linha dos mínimos quadrados também é mostrada.
+</p>
+</div>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-286" class="exercise"><strong>Prática Orientada 8.1  </strong></span>
+Examine a Figura <a href="ch8-reg-mult-log.html#fig:marioKartSingle">8.1</a>. O modelo linear parece razoável?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Sim. A variabilidade constante, os resíduos quase normais e a linearidade parecem razoáveis.&lt;/p&gt;"><sup>278</sup></a>
+</div>
+<hr>
+<div class="example">
+<span id="exm:unnamed-chunk-287" class="example"><strong>Exemplo 8.1  </strong></span>Interprete o coeficiente para a condição do jogo no modelo. Este coeficiente é significativamente diferente de 0?
+</div>
+<p>Note que <code>condição</code> é uma variável categórica de dois níveis que recebe o valor 1 quando o jogo é novo e o valor 0 quando o jogo é usado. Então, 10.90 significa que o modelo prevê um extra de $10. 90 para aqueles jogos que são novos versus aqueles que são usados. Examinando a saída de regressão na Tabela <a href="ch8-reg-mult-log.html#tab:singleVarModelsForPriceUsingCond">8.3</a>, podemos ver que o p-valor para <code>condição</code> é muito próximo de zero, indicando que há fortes evidências de que o coeficiente é diferente de zero ao usar esse modelo simples de uma variável.</p>
+</div>
+<div id="includingAndAssessingManyVariablesInAModel" class="section level3" number="8.1.2">
+<h3>
+<span class="header-section-number">8.1.2</span> Incluindo e avaliando muitas variáveis em um modelo<a class="anchor" aria-label="anchor" href="#includingAndAssessingManyVariablesInAModel"><i class="fas fa-link"></i></a>
+</h3>
+<p>Às vezes, há estruturas subjacentes ou relacionamentos entre variáveis preditoras. Por exemplo, os novos jogos vendidos no Ebay tendem a vir com mais rodas do Wii, o que pode ter levado a preços mais altos para esses leilões. Gostaríamos de encaixar um modelo que inclua todas as variáveis potencialmente importantes simultaneamente. Isso nos ajudaria a avaliar a relação entre uma variável preditora e o resultado enquanto controlamos a influência potencial de outras variáveis. Essa é a estratégia usada na <strong>regressão múltipla</strong>. Embora permaneçamos cautelosos em fazer quaisquer interpretações causais usando a regressão múltipla, tais modelos são um primeiro passo comum no fornecimento de evidências de uma conexão causal.</p>
+<p>Queremos construir um modelo que responda não apenas à condição do jogo, mas simultaneamente responde por três outras variáveis: <code>foto_stock</code>, <code>duração</code>, e <code>rodas</code>.</p>
+<p><span class="math display" id="eq:eqForMultipleRegrOfTotalPrForAllPredictors">\[\begin{align}
+\widehat{preço}
+    &amp;= \beta_0 + \beta_1\times cond\_nova +
+        \beta_2\times foto\_stock \notag \\
+    &amp;\qquad\  + \beta_3 \times  duração +
+        \beta_4 \times  rodas \notag \\
+\hat{y}
+    &amp;= \beta_0 + \beta_1 x_1 + \beta_2 x_2 +
+        \beta_3 x_3 + \beta_4 x_4
+\tag{8.1}
+\end{align}\]</span></p>
+<p>Nesta equação, <span class="math inline">\(Y\)</span> representa o preço total, <span class="math inline">\(X_1\)</span> indica se o jogo é novo, <span class="math inline">\(X_2\)</span> indica se uma foto foi usada, <span class="math inline">\(X_3\)</span> é a duração do leilão e <span class="math inline">\(X_4\)</span> é o número de rodas de Wii incluídas no jogo. Assim como no caso do preditor único, um modelo de regressão múltipla pode estar faltando componentes importantes ou pode não representar precisamente a relação entre o resultado e as variáveis explicativas disponíveis. Enquanto nenhum modelo é perfeito, nós desejamos explorar a possibilidade de que este possa encaixar os dados razoavelmente bem.</p>
+<p>Nós estimamos os parâmetros <span class="math inline">\(\beta_0, \beta_1,\dots, \beta_4\)</span> da mesma forma que fizemos no caso de um único preditor. Nós selecionamos <span class="math inline">\(b_0, b_1, \dots, b_4\)</span> que minimizam a soma dos resíduos quadrados:</p>
+<p><span class="math display" id="eq:sumOfSqResInMultRegr">\[\begin{align}
+SSE = e_1^2 + e_2^2 + \dots + e_{141}^2
+      = \sum_{i=1}^{141} e_i^2
+      = \sum_{i=1}^{141} \left(y_i - \hat{y}_i\right)^2
+\tag{8.2}
+\end{align}\]</span></p>
+<p>Aqui há 141 resíduos, um para cada observação. Normalmente usamos um computador para minimizar a soma na Equação <a href="ch8-reg-mult-log.html#eq:sumOfSqResInMultRegr">(8.2)</a> e calcular estimativas pontuais, como mostrado na saída da amostra na Tabela <a href="ch8-reg-mult-log.html#tab:outputForMultipleRegrOutputForAllPredictors">8.4</a>. Usando essa saída, identificamos as estimativas pontuais <span class="math inline">\(b_i\)</span> de cada <span class="math inline">\(\beta_i\)</span>, assim como fizemos no caso de um preditor.</p>
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">==</span> <span class="st">'yes'</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">totalPr</span> <span class="op">~</span> <span class="va">cond</span> <span class="op">+</span> <span class="va">stockPhoto</span> <span class="op">+</span> <span class="va">duration</span> <span class="op">+</span> <span class="va">wheels</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
+
+<span class="va">table4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">table4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Estimativa'</span>, <span class="st">'Erro Padrão'</span>, <span class="st">'Valor t'</span>, <span class="st">'Pr(&gt;|t|)'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'(Intercepto)'</span>, <span class="st">'Condição'</span>, <span class="st">'Foto'</span>, <span class="st">'Duração'</span>, <span class="st">'Rodas'</span><span class="op">)</span>
+
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table4</span>, align <span class="op">=</span> <span class="st">'c'</span>, digits <span class="op">=</span> <span class="fl">4</span>, caption <span class="op">=</span> <span class="st">'Saída para o modelo de regressão onde preço é o resultado e condição, foto, duração e rodas são os preditores.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:outputForMultipleRegrOutputForAllPredictors">Tabela 8.4: </span>Saída para o modelo de regressão onde preço é o resultado e condição, foto, duração e rodas são os preditores.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="center">Estimativa</th>
+<th align="center">Erro Padrão</th>
+<th align="center">Valor t</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercepto)</td>
+<td align="center">36.2110</td>
+<td align="center">1.5140</td>
+<td align="center">23.9173</td>
+<td align="center">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">Condição</td>
+<td align="center">5.1306</td>
+<td align="center">1.0511</td>
+<td align="center">4.8810</td>
+<td align="center">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">Foto</td>
+<td align="center">1.0803</td>
+<td align="center">1.0568</td>
+<td align="center">1.0222</td>
+<td align="center">0.3085</td>
+</tr>
+<tr class="even">
+<td align="left">Duração</td>
+<td align="center">-0.0268</td>
+<td align="center">0.1904</td>
+<td align="center">-0.1408</td>
+<td align="center">0.8882</td>
+</tr>
+<tr class="odd">
+<td align="left">Rodas</td>
+<td align="center">7.2852</td>
+<td align="center">0.5547</td>
+<td align="center">13.1337</td>
+<td align="center">0.0000</td>
+</tr>
+</tbody>
+</table></div>
+<div class="alert alert-info">
+<p><strong>Modelo de Regressão Múltipla</strong>: Um modelo de regressão múltipla é um modelo linear com muitos preditores. Em geral, escrevemos o modelo como</p>
+<p><span class="math display">\[\begin{align*}
+\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k %+ \epsilon
+\end{align*}\]</span></p>
+<p>quando há <span class="math inline">\(k\)</span> preditores. Costumamos estimar os parâmetros <span class="math inline">\(\beta_i\)</span> usando um computador.</p>
+</div>
+<hr>
+<div class="exercise">
+<span id="exr:eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients" class="exercise"><strong>Prática Orientada 8.2  </strong></span>Escreva o modelo na Equação <a href="ch8-reg-mult-log.html#eq:eqForMultipleRegrOfTotalPrForAllPredictors">(8.1)</a> usando as estimativas pontuais da Tabela <a href="ch8-reg-mult-log.html#tab:outputForMultipleRegrOutputForAllPredictors">8.4</a>. Quantos preditores existem neste modelo?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(\hat{y} = 36,21 + 5,13x_1 + 1,08x_2 – 0,03x_3 + 7,29x_4\)&lt;/span&gt;, e existem &lt;span class="math inline"&gt;\(k=4\)&lt;/span&gt; variáveis preditoras.&lt;/p&gt;'><sup>279</sup></a>
+</div>
+<hr>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-288" class="exercise"><strong>Prática Orientada 8.3  </strong></span>O que <span class="math inline">\(\beta_4\)</span>, o coeficiente da variável <span class="math inline">\(x_4\)</span> (rodas Wii), representa? Qual é a estimativa pontual de <span class="math inline">\(\beta_4\)</span>?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;É a diferença média no preço do leilão para cada roda Wii incluída ao manter as outras variáveis constantes. A estimativa pontual é &lt;span class="math inline"&gt;\(b_4 = 7.29\)&lt;/span&gt;.&lt;/p&gt;'><sup>280</sup></a>
+</div>
+<hr>
+<hr>
+<div class="exercise">
+<span id="exr:computeMultipleRegressionResidualForMarioKart" class="exercise"><strong>Prática Orientada 8.4  </strong></span>Calcule o resíduo da primeira observação na Tabela <a href="ch8-reg-mult-log.html#tab:marioKartDataMatrix">8.1</a> usando a equação identificada na Prática Orientada <a href="ch8-reg-mult-log.html#exr:eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients">8.2</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(e_i = y_i - \hat{y_i} = 51,55 – 49,62 = 1,93\)&lt;/span&gt;, onde 49,62 foi calculado utilizando os valores das variáveis da observação e a equação identificada na Prática Orientada &lt;a href="ch8-reg-mult-log.html#exr:eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients"&gt;8.2&lt;/a&gt;.&lt;/p&gt;'><sup>281</sup></a>
+</div>
+<hr>
+<div class="example">
+<span id="exm:colinearityOfCondNewAndStockPhoto" class="example"><strong>Exemplo 8.2  </strong></span>Estimamos um coeficiente para <code>condição</code> na Seção <a href="ch8-reg-mult-log.html#twoSingleVariableModelsForMarioKartData">8.1.1</a> de <span class="math inline">\(b_1 = 10,90\)</span> com um erro padrão <span class="math inline">\(EP_{b_1} = 1,26\)</span> ao usar regressão linear simples. Por que pode haver uma diferença entre essa estimativa e aquela na configuração de regressão múltipla?
+</div>
+<p>Se examinássemos os dados cuidadosamente, veríamos que alguns preditores estão correlacionados. Por exemplo, quando estimamos a conexão do resultado <code>preço</code> e o preditor <code>condição</code> usando a regressão linear simples, não conseguimos controlar outras variáveis, como o número de rodas Wii incluídas no leilão. Esse modelo foi influenciado pela variável de confusão <code>rodas</code>. Quando usamos as duas variáveis, esse viés subjacente e não intencional específico é reduzido ou eliminado (embora viés de outras variáveis confusas ainda possa permanecer).</p>
+<p>Exemplo <a href="ch8-reg-mult-log.html#exm:colinearityOfCondNewAndStockPhoto">8.2</a> descreve um problema comum em regressão múltipla: correlação entre variáveis preditoras. Dizemos que as duas variáveis preditoras são <strong>colineares</strong> (pronunciado como co-lineares) quando eles são correlacionados e essa colinearidade complica a estimação do modelo. Embora seja impossível evitar que a colinearidade surja em dados observacionais, os experimentos geralmente são projetados para impedir que os preditores sejam colineares.</p>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-289" class="exercise"><strong>Prática Orientada 8.5  </strong></span>O valor estimado do intercepto é 36,21, e pode-se ficar tentado a fazer alguma interpretação desse coeficiente, tal como, é o preço previsto do modelo quando cada uma das variáveis toma o valor zero: o jogo é usado, a imagem primária não é uma foto de estoque, a duração do leilão é de zero dias, e não há rodas incluídas. Existe algum ganho ao fazer essa interpretação?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Três das variáveis (condição, foto, e rodas) assumem o valor 0, mas a duração do leilão é sempre um ou mais dias. Se o leilão não estiver em dia, ninguém poderá fazer lances! Isso significa que o preço total do leilão seria sempre zero para tal leilão; a interpretação do intercepto nesse cenário não é perspicaz.&lt;/p&gt;"><sup>282</sup></a>
+</div>
+<hr>
+</div>
+<div id="R2adj" class="section level3" number="8.1.3">
+<h3>
+<span class="header-section-number">8.1.3</span> <span class="math inline">\(R^2\)</span> ajustado como melhor estimativa da variância explicada<a class="anchor" aria-label="anchor" href="#R2adj"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nós usamos pela primeira vez <span class="math inline">\(R^2\)</span> para determinar a quantidade de variabilidade na resposta que foi explicada pelo modelo:</p>
+<p><span class="math display">\[\begin{align*}
+R^2 = 1 - \frac{\text{variabilidade nos resíduos}}{\text{variabilidade no resultado}}
+    = 1 - \frac{Var(e_i)}{Var(y_i)}
+\end{align*}\]</span></p>
+<p>onde <span class="math inline">\(e_i\)</span> representa os resíduos do modelo e <span class="math inline">\(y_i\)</span> os resultados. Esta equação permanece válida na estrutura de regressão múltipla, mas um pequeno aprimoramento pode ser ainda mais informativo.</p>
+<hr>
+<div class="exercise">
+<span id="exr:computeUnadjustedR2ForAllPredictorsInMarioKart" class="exercise"><strong>Prática Orientada 8.6  </strong></span>A variância dos resíduos para o modelo dado na Prática Orientada <a href="ch8-reg-mult-log.html#exr:computeMultipleRegressionResidualForMarioKart">8.4</a> é 23,34 e a variação do preço total em todos os leilões é de 83,06. Calcule <span class="math inline">\(R^2\)</span> para este modelo.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(R^2 = 1 - \frac{23,34}{83,06} = 0,719\)&lt;/span&gt;.&lt;/p&gt;'><sup>283</sup></a>
+</div>
+<hr>
+<p>Essa estratégia para estimar <span class="math inline">\(R^2\)</span> é aceitável quando há apenas uma única variável. No entanto, torna-se menos útil quando existem muitas variáveis. O <span class="math inline">\(R^2\)</span> regular é uma estimativa menor da quantidade de variabilidade explicada pelo modelo. Para obter uma estimativa melhor, usamos o valor ajustado de <span class="math inline">\(R^2\)</span>.</p>
+<div class="alert alert-info">
+<p><strong><span class="math inline">\(\mathbf{R^2}\)</span> ajustado como uma ferramenta para avaliação de modelo</strong>: O <span class="math inline">\(\mathbf{R^2}\)</span> ajustado é calculado como</p>
+<p><span class="math display">\[\begin{align*}
+R_{aj}^{2} = 1-\frac{Var(e_i) / (n-k-1)}{Var(y_i) / (n-1)}
+    = 1-\frac{Var(e_i)}{Var(y_i)} \times \frac{n-1}{n-k-1}
+\end{align*}\]</span></p>
+<p>onde <span class="math inline">\(n\)</span> é o número de casos usados para ajustar o modelo e <span class="math inline">\(k\)</span> é o número de variáveis preditoras no modelo.</p>
+</div>
+<p>Como <span class="math inline">\(k\)</span> nunca é negativo, o <span class="math inline">\(R^2\)</span> ajustado será menor – muitas vezes um pouco menor – do que o <span class="math inline">\(R^2\)</span> não ajustado. O raciocínio por trás do <span class="math inline">\(R^2\)</span> ajustado está nos <strong>graus de liberdade</strong> associados a cada variação.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Na regressão múltipla, os graus de liberdade associados à variância da estimativa dos resíduos são &lt;span class="math inline"&gt;\(n-k-1\)&lt;/span&gt;, não &lt;span class="math inline"&gt;\(n-1\)&lt;/span&gt;. Por exemplo, se fôssemos fazer previsões para novos dados usando nosso modelo atual, descobriríamos que o &lt;span class="math inline"&gt;\(R^2\)&lt;/span&gt; não ajustado é uma estimativa excessivamente otimista da redução na variação na resposta, e usando os graus de liberdade na fórmula do &lt;span class="math inline"&gt;\(R^2\)&lt;/span&gt; ajustado ajuda a corrigir este viés.&lt;/p&gt;'><sup>284</sup></a></p>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-290" class="exercise"><strong>Prática Orientada 8.7  </strong></span>Houve <span class="math inline">\(n=141\)</span> leilões no conjunto de dados e <span class="math inline">\(k=4\)</span> variáveis preditoras no modelo. Use <span class="math inline">\(n\)</span>, <span class="math inline">\(k\)</span> e as variações da Prática Orientada <a href="ch8-reg-mult-log.html#exr:computeUnadjustedR2ForAllPredictorsInMarioKart">8.6</a> para calcular o <span class="math inline">\(R_{aj}^2\)</span> para o modelo Mario Kart.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(R_{aj}^2 = 1 - \frac{23.34}{83.06}\times \frac{141-1}{141-4-1} = 0.711\)&lt;/span&gt;.&lt;/p&gt;'><sup>285</sup></a>
+</div>
+<hr>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-291" class="exercise"><strong>Prática Orientada 8.8  </strong></span>Suponha que você tenha adicionado outro preditor ao modelo, mas a variância dos erros <span class="math inline">\(Var(e_i)\)</span> não caiu. O que aconteceria com o <span class="math inline">\(R^2\)</span>? O que aconteceria com o <span class="math inline">\(R^2\)</span> ajustado?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;O &lt;span class="math inline"&gt;\(R^2\)&lt;/span&gt; não ajustado permaneceria o mesmo e o &lt;span class="math inline"&gt;\(R^2\)&lt;/span&gt; ajustado cairia.&lt;/p&gt;'><sup>286</sup></a>
+</div>
+<hr>
+<p><span class="math inline">\(R^2\)</span> ajustado poderia ter sido usado na regressão linear simples. No entanto, quando há apenas <span class="math inline">\(k=1\)</span> preditores, o ajuste <span class="math inline">\(R^2\)</span> está muito próximo do valor normal de <span class="math inline">\(R^2\)</span>, portanto, essa nuance não é normalmente importante quando se considera apenas um preditor.</p>
+</div>
+</div>
+<div id="modelSelection" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Seleção de modelos<a class="anchor" aria-label="anchor" href="#modelSelection"><i class="fas fa-link"></i></a>
+</h2>
+<p>O melhor modelo nem sempre é o mais complicado. Às vezes, incluir variáveis que não são evidentemente importantes pode reduzir a precisão das previsões. Nesta seção, discutiremos as estratégias de seleção de modelos, que nos ajudarão a eliminar as variáveis do modelo que são consideradas menos importantes.</p>
+<p>Na prática, o modelo que inclui todas as variáveis explicativas disponíveis é geralmente chamado de <strong>modelo completo</strong>. O modelo completo pode não ser o melhor modelo e, se não for, queremos identificar um modelo menor que seja preferível.</p>
+<div id="notUsefulVariables" class="section level3" number="8.2.1">
+<h3>
+<span class="header-section-number">8.2.1</span> Identificando variáveis no modelo que podem não ser úteis<a class="anchor" aria-label="anchor" href="#notUsefulVariables"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <span class="math inline">\(R^2\)</span> ajustado descreve a força de um ajuste de modelo e é uma ferramenta útil para avaliar quais preditores estão adicionando valor ao modelo, em que <em>adicionando valor</em> significa que eles estão (provavelmente) melhorando a precisão na previsão de resultados.</p>
+<p>Vamos considerar dois modelos, que são mostrados nas Tabelas <a href="ch8-reg-mult-log.html#tab:outputForMultipleRegrOutputForAllPredictors2">8.5</a> e <a href="ch8-reg-mult-log.html#tab:marioKartMultipleRegressionModelAllButDuration">8.6</a>. A primeira tabela resume o modelo completo já que inclui todos preditores, enquanto a segunda não inclui a variável <code>duração</code>.</p>
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">table5</span> <span class="op">&lt;-</span> <span class="va">table4</span>
+<span class="va">table5</span><span class="op">[</span><span class="fl">6</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7108</span>, <span class="st">''</span>, <span class="st">''</span>, <span class="st">''</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table5</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table4</span><span class="op">)</span>, <span class="st">'R² adj'</span><span class="op">)</span>)
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table5</span>, digits <span class="op">=</span> <span class="fl">3</span>, 
+             caption <span class="op">=</span> <span class="st">'O ajuste para o modelo de regressão completo, incluindo o valor ajustado de R2'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:outputForMultipleRegrOutputForAllPredictors2">Tabela 8.5: </span>O ajuste para o modelo de regressão completo, incluindo o valor ajustado de R2</caption>
+<colgroup>
+<col width="14%">
+<col width="22%">
+<col width="20%">
+<col width="20%">
+<col width="23%">
+</colgroup>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="left">Estimativa</th>
+<th align="left">Erro Padrão</th>
+<th align="left">Valor t</th>
+<th align="left">Pr(&gt;|t|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercepto)</td>
+<td align="left">36.2109676898294</td>
+<td align="left">1.51400736232875</td>
+<td align="left">23.9172996055528</td>
+<td align="left">1.43474549520979e-50</td>
+</tr>
+<tr class="even">
+<td align="left">Condição</td>
+<td align="left">5.1305641413385</td>
+<td align="left">1.05112377996932</td>
+<td align="left">4.88102756222323</td>
+<td align="left">2.9118528276758e-06</td>
+</tr>
+<tr class="odd">
+<td align="left">Foto</td>
+<td align="left">1.08031083132648</td>
+<td align="left">1.05682382243593</td>
+<td align="left">1.02222414785883</td>
+<td align="left">0.308489715468975</td>
+</tr>
+<tr class="even">
+<td align="left">Duração</td>
+<td align="left">-0.0268075265758599</td>
+<td align="left">0.190412204307907</td>
+<td align="left">-0.14078680866753</td>
+<td align="left">0.888246676521142</td>
+</tr>
+<tr class="odd">
+<td align="left">Rodas</td>
+<td align="left">7.28517787447181</td>
+<td align="left">0.554692763155475</td>
+<td align="left">13.1337171825151</td>
+<td align="left">5.88815545183586e-26</td>
+</tr>
+<tr class="even">
+<td align="left">R² adj</td>
+<td align="left">0.7108</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">totalPr</span> <span class="op">~</span> <span class="va">cond</span> <span class="op">+</span> <span class="va">stockPhoto</span> <span class="op">+</span> <span class="va">wheels</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
+
+<span class="va">table6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table5</span><span class="op">)</span>
+<span class="va">table6</span><span class="op">[</span><span class="fl">5</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7128</span>, <span class="st">''</span>, <span class="st">''</span>, <span class="st">''</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'(Intercepto)'</span>, <span class="st">'Condição'</span>, <span class="st">'Foto'</span>, <span class="st">'Rodas'</span>, <span class="st">'R² adj'</span><span class="op">)</span>)
+
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table6</span>, caption <span class="op">=</span> <span class="st">'O ajuste para o modelo de regressão para preditores condição, foto e rodas.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:marioKartMultipleRegressionModelAllButDuration">Tabela 8.6: </span>O ajuste para o modelo de regressão para preditores condição, foto e rodas.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="left">Estimativa</th>
+<th align="left">Erro Padrão</th>
+<th align="left">Valor t</th>
+<th align="left">Pr(&gt;|t|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercepto)</td>
+<td align="left">36.048</td>
+<td align="left">0.975</td>
+<td align="left">36.99</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">Condição</td>
+<td align="left">5.176</td>
+<td align="left">0.996</td>
+<td align="left">5.196</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Foto</td>
+<td align="left">1.118</td>
+<td align="left">1.019</td>
+<td align="left">1.097</td>
+<td align="left">0.275</td>
+</tr>
+<tr class="even">
+<td align="left">Rodas</td>
+<td align="left">7.298</td>
+<td align="left">0.545</td>
+<td align="left">13.397</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">R² adj</td>
+<td align="left">0.7128</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="example">
+<span id="exm:unnamed-chunk-292" class="example"><strong>Exemplo 8.3  </strong></span>Qual dos dois modelos é melhor?
+</div>
+<p>Nós comparamos o <span class="math inline">\(R^2\)</span> ajustado de cada modelo para determinar qual escolher. O primeiro modelo tem um <span class="math inline">\(R^2_{aj}\)</span> menor que o <span class="math inline">\(R^2_{aj}\)</span> do segundo modelo, então preferimos o segundo modelo ao primeiro.</p>
+<p>Será que o modelo sem <code>duração</code> é melhor do que o modelo com <code>duração</code>? Nós não podemos ter certeza, mas com base no <span class="math inline">\(R^2\)</span> ajustado, esta é a nossa melhor avaliação.</p>
+</div>
+<div id="twoStrategies" class="section level3" number="8.2.2">
+<h3>
+<span class="header-section-number">8.2.2</span> Duas estratégias de seleção de modelo<a class="anchor" aria-label="anchor" href="#twoStrategies"><i class="fas fa-link"></i></a>
+</h3>
+<p>Duas estratégias comuns para adicionar ou remover variáveis em um modelo de regressão múltipla são chamadas de <strong>eliminação regressiva</strong> e <strong>seleção progressiva</strong>. Essas técnicas são frequentemente chamadas de estratégias de seleção de modelos <em>gradual</em>, porque elas adicionam ou excluem uma variável de cada vez, conforme elas “escalam” os preditores candidatos.</p>
+<p><strong>Eliminação regressiva</strong> (backward elimination) começa com o modelo que inclui todas as possíveis variáveis preditoras. As variáveis são eliminadas uma por vez do modelo até que não possamos melhorar o <span class="math inline">\(R^2\)</span> ajustado. A estratégia dentro de cada etapa de eliminação é eliminar a variável que leva à maior melhoria no <span class="math inline">\(R^2\)</span> ajustado.</p>
+
+<div class="example">
+<span id="exm:backwardEliminationExampleWMarioKartData" class="example"><strong>Exemplo 8.4  </strong></span>Resultados correspondentes ao modelo completo para os dados são mostrados na Tabela <a href="ch8-reg-mult-log.html#tab:outputForMultipleRegrOutputForAllPredictors2">8.5</a>. Como devemos proceder com a estratégia de eliminação regressiva?
+</div>
+<p>Nossa linha de base para o <span class="math inline">\(R^2\)</span> ajustado do modelo completo é <span class="math inline">\(R^2_{aj} = 0,7108\)</span>, e precisamos determinar se descartar um preditor melhorará o <span class="math inline">\(R^2\)</span> ajustado. Para verificar, ajustamos quatro modelos, cada um com um preditor diferente, e registramos os <span class="math inline">\(R^2\)</span> ajustados de cada:</p>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.6626</span>, <span class="fl">0.7107</span>, <span class="fl">0.7128</span>, <span class="fl">0.3487</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R² aj'</span><span class="op">)</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'condição'</span>, <span class="st">'foto'</span>, <span class="st">'duração'</span>, <span class="st">'rodas'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">condição</th>
+<th align="right">foto</th>
+<th align="right">duração</th>
+<th align="right">rodas</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">R² aj</td>
+<td align="right">0.6626</td>
+<td align="right">0.7107</td>
+<td align="right">0.7128</td>
+<td align="right">0.3487</td>
+</tr></tbody>
+</table></div>
+<p>O terceiro modelo sem <code>duração</code> tem o maior <span class="math inline">\(R^2\)</span> ajustado de 0.7128, então nós o comparamos com o <span class="math inline">\(R^2\)</span> ajustado para o modelo completo. Porque eliminando <code>duração</code> leva a um modelo com um maior <span class="math inline">\(R^2\)</span> ajustado, nóstiramos <code>duração</code> do modelo.</p>
+<p>Como eliminamos um preditor do modelo na primeira etapa, vemos se devemos eliminar quaisquer preditores adicionais. Nossa linha de base ajustada <span class="math inline">\(R^2\)</span> é agora <span class="math inline">\(R^2_{aj} = 0.7128\)</span>. Agora, encaixamos três novos modelos, que consideram a eliminação de cada um dos três preditores restantes:</p>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">R_v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.6587</span>, <span class="fl">0.7124</span>, <span class="fl">0.3414</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R_v2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R² aj'</span><span class="op">)</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">R_v2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'condição'</span>, <span class="st">'foto'</span>, <span class="st">'rodas'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">R_v2</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">condição</th>
+<th align="right">foto</th>
+<th align="right">rodas</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">R² aj</td>
+<td align="right">0.6587</td>
+<td align="right">0.7124</td>
+<td align="right">0.3414</td>
+</tr></tbody>
+</table></div>
+<p>Nenhum desses modelos leva a uma melhoria do <span class="math inline">\(R^2\)</span> ajustado, portanto, não eliminamos nenhum dos preditores restantes. Ou seja, após a eliminação regressiva, ficamos com o modelo que mantém condição, foto e rodas, que podemos resumir usando os coeficientes da Tabela <a href="ch8-reg-mult-log.html#tab:marioKartMultipleRegressionModelAllButDuration">8.6</a>:</p>
+<p><span class="math display">\[\begin{align*}
+\hat{y} \ &amp;= \ b_0 + b_1x_1 + b_2x_2 + b_4x_4 \\
+\widehat{preço} &amp;= \ 36,05 + 5,18 \times \text{cond\_nova} + 1,12 \times \textfoto\_stock} + 7,30 \times \text{rodas}
+\end{align*}\]</span></p>
+<p>A estratégia de <strong>seleção progressiva</strong> é o reverso da técnica de eliminação regressiva. Em vez de eliminar as variáveis uma por vez, adicionamos as variáveis uma por vez até não encontrarmos nenhuma variável que melhore o modelo (medida pelo <span class="math inline">\(R^2\)</span> ajustado).</p>
+
+<div class="example">
+<span id="exm:forwardEliminationExampleWMarioKartData" class="example"><strong>Exemplo 8.5  </strong></span>Construa um modelo para o conjunto de dadosusando a estratégia de seleção progressiva.
+</div>
+<p>Começamos com o modelo que não inclui variáveis. Em seguida, ajustamos cada um dos modelos possíveis com apenas uma variável. Ou seja, nós ajustamos no modelo incluindo apenas <code>condição</code>, então o modelo incluindo apenas <code>foto</code>, então um modelo com apenas <code>duração</code>, e um modelo com apenas <code>rodas</code>. Cada um dos quatro modelos fornece um valor ajustado de <span class="math inline">\(R^2\)</span>:</p>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">R_v3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.3459</span>, <span class="fl">0.0332</span>, <span class="fl">0.1338</span>, <span class="fl">0.6390</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R_v3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R² aj'</span><span class="op">)</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">R_v3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'condição'</span>, <span class="st">'foto'</span>, <span class="st">'duração'</span>, <span class="st">'rodas'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">R_v3</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">condição</th>
+<th align="right">foto</th>
+<th align="right">duração</th>
+<th align="right">rodas</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">R² aj</td>
+<td align="right">0.3459</td>
+<td align="right">0.0332</td>
+<td align="right">0.1338</td>
+<td align="right">0.639</td>
+</tr></tbody>
+</table></div>
+<p>Nesta primeira etapa, comparamos o <span class="math inline">\(R^2\)</span> ajustado com um modelo de linha de base que não possui preditores. O modelo sem preditores sempre tem <span class="math inline">\(R_{aj}^2 = 0\)</span>. O modelo com um preditor que tem o maior <span class="math inline">\(R^2\)</span> ajustado é o modelo com o preditor <code>rodas</code>, e porque esse <span class="math inline">\(R^2\)</span> ajustado é maior que o <span class="math inline">\(R^2\)</span> ajustado do modelo sem preditores (<span class="math inline">\(R_{aj}^2 = 0\)</span>), vamos adicionar essa variável ao nosso modelo.</p>
+<p>Repetimos o processo novamente, desta vez considerando modelos de 2 preditores onde um dos preditores é <code>rodas</code> e com uma nova linha de base <span class="math inline">\(R^2_{aj} = 0.6390\)</span>:</p>
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">R_v4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7124</span>, <span class="fl">0.6587</span>, <span class="fl">0.6528</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R_v4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R² aj'</span><span class="op">)</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">R_v4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'condição'</span>, <span class="st">'foto'</span>, <span class="st">'duração'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">R_v4</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">condição</th>
+<th align="right">foto</th>
+<th align="right">duração</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">R² aj</td>
+<td align="right">0.7124</td>
+<td align="right">0.6587</td>
+<td align="right">0.6528</td>
+</tr></tbody>
+</table></div>
+<p>O melhor preditor nesta fase, <code>condição</code>, tem um maior <span class="math inline">\(R^2\)</span> ajustado (0.7124) que a linha de base (0.6390), então também o adicionamos no modelo.</p>
+<p>Como adicionamos novamente uma variável ao modelo, continuamos e verificamos se seria vantajoso adicionar uma terceira variável:</p>
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">R_v5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7128</span>, <span class="fl">0.7107</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R_v5</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R² aj'</span><span class="op">)</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">R_v5</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'foto'</span>, <span class="st">'duração'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">R_v5</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">foto</th>
+<th align="right">duração</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">R² aj</td>
+<td align="right">0.7128</td>
+<td align="right">0.7107</td>
+</tr></tbody>
+</table></div>
+<p>O modelo adicionando <code>foto</code> tem maior <span class="math inline">\(R^2\)</span> ajustado (0.7124 para 0.7128), então nós o adicionamos no modelo.</p>
+<p>Porque nós adicionamos novamente um preditor, nós verificamos se adicionando a última variável, <code>duração</code>, irá melhorar o <span class="math inline">\(R^2\)</span> ajustado. Nós comparamos o <span class="math inline">\(R^2\)</span> ajustado do modelo com duração e os outros três preditores (0,7108) para o modelo que considera apenas <code>rodas</code>, <code>condição</code>, e <code>foto</code> (0,7128). Adicionar <code>duração</code> não melhora o <span class="math inline">\(R^2\)</span> ajustado, por isso não o adicionamos ao modelo, e chegamos ao mesmo modelo que identificamos a partir da eliminação regressiva.</p>
+<div class="alert alert-info">
+<p><strong>Estratégias de seleção de modelos</strong>: A eliminação regressiva começa com o maior modelo e elimina as variáveis uma a uma até que estejamos satisfeitos de que todas as variáveis restantes são importantes para o modelo. A seleção progressiva começa sem nenhuma variável incluída no modelo, depois adiciona variáveis de acordo com sua importância até que nenhuma outra variável importante seja encontrada.</p>
+</div>
+<p>Não há garantia de que a eliminação regressiva e a seleção progressiva chegarão ao mesmo modelo final. Se ambas as técnicas são testadas e chegam a modelos diferentes, escolhemos o modelo com o maior <span class="math inline">\(R_{aj}^2\)</span>; Outras opções de escolha existem, mas estão além do escopo deste livro.</p>
+</div>
+<div id="pValueAlternativeToR2adj" class="section level3" number="8.2.3">
+<h3>
+<span class="header-section-number">8.2.3</span> A abordagem do p-valor, uma alternativa para o <span class="math inline">\(R^2\)</span> ajustado<a class="anchor" aria-label="anchor" href="#pValueAlternativeToR2adj"><i class="fas fa-link"></i></a>
+</h3>
+<p>O p-valor pode ser usado como uma alternativa para o ajuste de <span class="math inline">\(R^2\)</span> para a seleção do modelo.</p>
+<p>Na eliminação regressiva, identificaríamos o preditor correspondente ao maior p-valor. Se o p-valor estiver acima do nível de significância, geralmente <span class="math inline">\(\alpha = 0,05\)</span>, então abandonaríamos essa variável, reformaríamos o modelo e repetiríamos o processo. Se o maior p-valor for menor que <span class="math inline">\(\alpha = 0,05\)</span>, então não eliminaríamos nenhum preditor e o modelo atual seria nosso modelo de melhor ajuste.</p>
+<p>Na seleção direta com p-valores, invertemos o processo. Começamos com um modelo que não possui preditores, então ajustamos um modelo para cada possível preditor, identificando o modelo em que o p-valor do preditor correspondente é o menor. Se esse p-valor for menor que <span class="math inline">\(\alpha = 0,05\)</span>, nós o adicionamos ao modelo e repetimos o processo, considerando se devemos adicionar mais variáveis uma por vez. Quando nenhum dos preditores restantes puder ser adicionado ao modelo e tiver um p-valor menor que 0,05, então paramos de adicionar variáveis e o modelo atual seria nosso modelo de melhor ajuste.</p>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-298" class="exercise"><strong>Prática Orientada 8.9  </strong></span>Examine a Tabela <a href="ch8-reg-mult-log.html#tab:marioKartMultipleRegressionModelAllButDuration">8.6</a>, que considera o modelo incluindo os preditores <code>condição</code>, <code>foto</code> e <code>rodas</code>. Se estivéssemos usando a abordagem de p-valor com eliminação regressiva e estivéssemos considerando esse modelo, qual dessas três variáveis estaria pronta para eliminação? Nós abandonaríamos essa variável ou a manteríamos no modelo?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O preditor foto está pronto para eliminação, pois tem o maior p-valor. Além disso, como esse p-valor é maior que 0,05, na verdade o eliminamos do modelo.&lt;/p&gt;"><sup>287</sup></a>
+</div>
+<hr>
+<p>Embora as abordagens do <span class="math inline">\(R^2\)</span> ajustado e do p-valor sejam semelhantes, elas às vezes levam a modelos diferentes, com a abordagem do <span class="math inline">\(R^2\)</span> ajustado tendendo a incluir mais preditores no modelo final. Por exemplo, se tivéssemos usado a abordagem do p-valor com os dados do leilão, não teríamos incluído o preditor <code>foto</code> no modelo final.</p>
+<div class="alert alert-info">
+<p><strong>Quando usar o <span class="math inline">\(R^2\)</span> ajustado e quando usar a abordagem do p-valor</strong>: Quando o único objetivo é melhorar a precisão da previsão, use <span class="math inline">\(R^2\)</span> ajustado. Esse é comumente o caso em aplicativos de aprendizado de máquina.</p>
+<p>Quando nos preocupamos em entender quais variáveis são estatisticamente significantes preditores da resposta, ou se existe interesse em produzir um modelo mais simples ao custo potencial de uma pequena precisão de predição, então a abordagem do p-valor é preferida.</p>
+</div>
+<p>Independentemente de você usar a abordagem do <span class="math inline">\(R^2\)</span> ajustado ou do p-valor, ou se você usar a eliminação regressiva ou seleção progressiva, nosso trabalho não está feito após a seleção de variáveis. Devemos ainda verificar se as condições do modelo são razoáveis.</p>
+</div>
+</div>
+<div id="multipleRegressionModelAssumptions" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> Verificando os pressupostos do modelo usando gráficos<a class="anchor" aria-label="anchor" href="#multipleRegressionModelAssumptions"><i class="fas fa-link"></i></a>
+</h2>
+<p>Métodos de regressão múltipla usando o modelo</p>
+<p><span class="math display">\[\begin{align*}
+\hat{y} &amp;= \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
+\end{align*}\]</span></p>
+<p>geralmente dependem dos seguintes quatro pressupostos:</p>
+<ul>
+<li><p>os resíduos do modelo são quase normais,</p></li>
+<li><p>a variabilidade dos resíduos é quase constante,</p></li>
+<li><p>os resíduos são independentes, e</p></li>
+<li><p>cada variável é linearmente relacionada ao resultado.</p></li>
+</ul>
+<p>Os <strong>Gráficos de diagnóstico</strong> podem ser usados para verificar cada uma dessas suposições. Vamos considerar o modelo dos dados do leilão Mario Kart, e verificar se há alguma preocupação notável:</p>
+<p><span class="math display">\[\begin{align*}
+\widehat{preço} &amp;= \ 36,05 + 5,18 \times \text{cond\_nova} + 1,12 \times \text{foto\_stock} + 7,30 \times \text{rodas}
+\end{align*}\]</span></p>
+<ul>
+<li>
+<strong>Gráfico de probabilidade normal.</strong> Um gráfico de probabilidade normal dos resíduos é mostrado na Figura <a href="ch8-reg-mult-log.html#fig:mkDiagnosticNormalQuantilePlot">8.2</a>. Enquanto o enredo exibe algumas pequenas irregularidades, não há outliers que possam ser motivo de preocupação. Em um gráfico de probabilidade normal para resíduos, tendemos a estar mais preocupados com resíduos que parecem ser outliers, uma vez que indicam caudas longas na distribuição de resíduos.</li>
+</ul>
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">marioKart</span><span class="op">)</span>
+<span class="va">toss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">marioKart</span><span class="op">$</span><span class="va">totalPr</span> <span class="op">&gt;</span> <span class="fl">80</span><span class="op">)</span>
+<span class="va">keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"totalPr"</span>,
+          <span class="st">"cond"</span>,
+          <span class="st">"stockPhoto"</span>,
+          <span class="st">"duration"</span>,
+          <span class="st">"wheels"</span>,
+          <span class="st">"shipSp"</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="va">marioKart</span><span class="op">[</span><span class="op">-</span><span class="va">toss</span>, <span class="va">keep</span><span class="op">]</span>
+<span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">==</span> <span class="st">"yes"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span>
+<span class="va">d</span><span class="op">$</span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"new"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span>
+<span class="va">thisOne</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span> <span class="op">==</span> <span class="st">"cond"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">[</span><span class="va">thisOne</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"condNew"</span>
+<span class="va">d</span><span class="op">$</span><span class="va">shipSp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">)</span>
+<span class="va">these</span> <span class="op">&lt;-</span> <span class="va">d</span><span class="op">$</span><span class="va">shipSp</span> <span class="op">%in%</span>
+         <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"firstClass"</span>, <span class="st">"priority"</span>, <span class="st">"parcel"</span>, <span class="st">"media"</span><span class="op">)</span>
+<span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">[</span><span class="va">these</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"usps"</span>
+<span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"ups"</span>, <span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ups"</span>
+<span class="va">these</span> <span class="op">&lt;-</span> <span class="va">d</span><span class="op">$</span><span class="va">shipSp</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"other"</span>, <span class="st">"standard"</span><span class="op">)</span>
+<span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">[</span><span class="va">these</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"unknown"</span>
+<span class="va">d</span><span class="op">$</span><span class="va">shipSp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">shipSp</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span> <span class="op">==</span> <span class="st">"shipSp"</span><span class="op">)</span><span class="op">]</span>
+
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">totalPr</span> <span class="op">~</span> <span class="va">condNew</span> <span class="op">+</span> <span class="va">stockPhoto</span> <span class="op">+</span> <span class="va">wheels</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
+
+<span class="va">e</span> <span class="op">&lt;-</span> <span class="va">fit</span><span class="op">$</span><span class="va">res</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="va">fit</span><span class="op">$</span><span class="va">fit</span>
+
+<span class="co"># mkDiagnosticNormalQuantilePlot.pdf</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">e</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">stat_qq</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">stat_qq_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'skyblue3'</span>, linetype <span class="op">=</span> <span class="st">'dashed'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Quantis Teóricos"</span>,y <span class="op">=</span> <span class="st">"Resíduos"</span><span class="op">)</span>  <span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:mkDiagnosticNormalQuantilePlot"></span>
+<img src="_main_files/figure-html/mkDiagnosticNormalQuantilePlot-1.png" alt="Um gráfico de probabilidade normal dos resíduos é útil na identificação de observações que podem ser outliers." width="672"><p class="caption">
+Figura 8.2: Um gráfico de probabilidade normal dos resíduos é útil na identificação de observações que podem ser outliers.
+</p>
+</div>
+<ul>
+<li>
+<strong>Valores absolutos dos resíduos em relação aos valores ajustados.</strong> Um gráfico do valor absoluto dos resíduos em relação aos seus valores ajustados correspondentes (<span class="math inline">\(\hat{y}_i\)</span>) é mostrado na Figura <a href="ch8-reg-mult-log.html#fig:mkDiagnosticEvsAbsF">8.3</a>. Este gráfico é útil para verificar a condição de que a variação dos resíduos é aproximadamente constante. Não vemos desvios óbvios da variação constante neste exemplo.</li>
+</ul>
+<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># mkDiagnosticEvsAbsF.pdf</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Valores Ajustados"</span>, y <span class="op">=</span> <span class="st">"Valores Absolutos dos Resíduos"</span><span class="op">)</span>  <span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">f</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:mkDiagnosticEvsAbsF"></span>
+<img src="_main_files/figure-html/mkDiagnosticEvsAbsF-1.png" alt="Comparando o valor absoluto dos resíduos com os valores ajustados é útil na identificação de desvios da suposição de variância constante." width="672"><p class="caption">
+Figura 8.3: Comparando o valor absoluto dos resíduos com os valores ajustados é útil na identificação de desvios da suposição de variância constante.
+</p>
+</div>
+<ul>
+<li>
+<strong>Resíduos em ordem de coleta de dados.</strong> Um gráfico dos resíduos na ordem em que seus leilões correspondentes foram observados é mostrado na Figura <a href="ch8-reg-mult-log.html#fig:mkDiagnosticInOrder">8.4</a>. Tal enredo é útil para identificar qualquer ligação entre casos que estão próximos uns dos outros. Poderíamos procurar preços em queda ao longo do tempo ou se houvesse uma hora do dia em que os leilões tendiam a obter um preço mais alto. Aqui não vemos nenhuma estrutura que indique um problema.~[Uma verificação especialmente rigorosa usaria os métodos de <strong>séries temporais</strong>. Por exemplo, podemos verificar se os resíduos consecutivos estão correlacionados. Fazer isso com esses resíduos não gera correlações estatisticamente significativas.]</li>
+</ul>
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># mkDiagnosticInOrder.pdf</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Ordem de Coleta"</span>, y <span class="op">=</span> <span class="st">"Resíduos"</span><span class="op">)</span>  <span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">e</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:mkDiagnosticInOrder"></span>
+<img src="_main_files/figure-html/mkDiagnosticInOrder-1.png" alt="Plotar os resíduos na ordem em que as observações correspondentes foram coletadas ajuda a identificar as conexões entre as observações sucessivas. Se parece que observações consecutivas tendem a estar próximas umas das outras, isso indica que a suposição de independência das observações falharia." width="672"><p class="caption">
+Figura 8.4: Plotar os resíduos na ordem em que as observações correspondentes foram coletadas ajuda a identificar as conexões entre as observações sucessivas. Se parece que observações consecutivas tendem a estar próximas umas das outras, isso indica que a suposição de independência das observações falharia.
+</p>
+</div>
+<ul>
+<li>
+<strong>Residuos contra cada variável preditora.</strong> Consideramos um gráfico dos resíduos em relação à variável <code>condição</code>, os resíduos contra a variável <code>foto</code>e resíduos contra a variável <code>roda</code>. Estes gráficos são mostradas na Figura <a href="ch8-reg-mult-log.html#fig:mkDiagnosticEvsVariables">8.5</a>. Para a variável de condição de dois níveis, garantimos que não veremos nenhuma tendência restante e, em vez disso, estamos verificando se a variabilidade não flutua entre os grupos, o que não acontece. No entanto, olhando para a variável estoque de fotos, descobrimos que há alguma diferença na variabilidade dos resíduos nos dois grupos. Adicionalmente, quando consideramos os resíduos contra a variável <code>rodas</code>, nós vemos alguma estrutura possível. Parece haver curvatura nos resíduos, indicando que a relação provavelmente não é linear.</li>
+</ul>
+<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># mkDiagnosticEvsVariables.pdf</span>
+<span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">condNew</span><span class="op">)</span>, <span class="va">e</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Condição"</span>, y <span class="op">=</span> <span class="st">"Resíduos"</span><span class="op">)</span>  <span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">e</span><span class="op">[</span><span class="va">d</span><span class="op">$</span><span class="va">condNew</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">e</span><span class="op">[</span><span class="va">d</span><span class="op">$</span><span class="va">condNew</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Usado'</span>, <span class="st">'Novo'</span><span class="op">)</span><span class="op">)</span>  
+
+
+<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span><span class="op">)</span>, <span class="va">e</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Tipo de Foto"</span>, y <span class="op">=</span> <span class="st">"Resíduos"</span><span class="op">)</span>  <span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">e</span><span class="op">[</span><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">e</span><span class="op">[</span><span class="va">d</span><span class="op">$</span><span class="va">stockPhoto</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Única'</span>, <span class="st">'Estoque'</span><span class="op">)</span><span class="op">)</span>  
+
+<span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">wheels</span>, <span class="va">e</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Número de Rodas"</span>, y <span class="op">=</span> <span class="st">"Resíduos"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span>
+
+<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">g1</span>, <span class="va">g2</span>, <span class="va">g3</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:mkDiagnosticEvsVariables"></span>
+<img src="_main_files/figure-html/mkDiagnosticEvsVariables-1.png" alt="Para as variáveis condição e foto, verificamos as diferenças no formato de distribuição ou na variabilidade dos resíduos. No caso da variável foto, vemos um pouco menos de variabilidade no grupo foto única do que no outro grupo. Para preditores numéricos, também verificamos tendências ou outras estruturas. Vemos uma ligeira reverência nos resíduos contra a variável rodas na parte de baixo." width="672" height="100%"><p class="caption">
+Figura 8.5: Para as variáveis condição e foto, verificamos as diferenças no formato de distribuição ou na variabilidade dos resíduos. No caso da variável foto, vemos um pouco menos de variabilidade no grupo foto única do que no outro grupo. Para preditores numéricos, também verificamos tendências ou outras estruturas. Vemos uma ligeira reverência nos resíduos contra a variável rodas na parte de baixo.
+</p>
+</div>
+<p>É necessário resumir os diagnósticos para qualquer ajuste de modelo. Se os diagnósticos suportarem as suposições do modelo, isso melhoraria a credibilidade nos resultados. Se a avaliação diagnóstica mostrar a estrutura subjacente remanescente nos resíduos, devemos tentar ajustar o modelo para considerar essa estrutura. Se não formos capazes de fazê-lo, poderemos ainda relatar o modelo, mas também observar suas deficiências. No caso dos dados do leilão, relatamos que parece haver uma variação não constante na variável <code>fotos</code> e que pode haver uma relação não linear entre o preço total e o número de rodas incluídas em um leilão. Esta informação seria importante para os compradores e vendedores que podem rever a análise, e omitir esta informação pode ser um revés para as pessoas que o modelo pode ajudar.</p>
+<div class="alert alert-info">
+<p><strong>“Todos os modelos estão errados, mas alguns são úteis”" - George E.P. Box</strong>: A verdade é que nenhum modelo é perfeito. No entanto, até modelos imperfeitos podem ser úteis. Relatar um modelo falho pode ser razoável desde que seja claro e relate as deficiências do modelo.</p>
+</div>
+<div class="alert alert-info">
+<p><strong> Não relate os resultados quando as suposições forem totalmente violadas</strong>: Embora haja uma pequena margem de manobra nas suposições do modelo, não vá longe demais. Se as suposições do modelo forem claramente violadas, considere um novo modelo, mesmo que isso signifique aprender mais métodos estatísticos ou contratar alguém que possa ajudar.</p>
+</div>
+<div class="alert alert-info">
+<p><strong>Intervalos de confiança em regressão múltipla</strong>: Intervalos de confiança para coeficientes em regressão múltipla podem ser calculados usando a mesma fórmula como no modelo preditor único:</p>
+<p><span class="math display">\[\begin{align*}
+b_i \ \pm\ t_{df}^{\star}EP_{b_{i}}
+\end{align*}\]</span></p>
+<p>onde <span class="math inline">\(t_{df}^{\star}\)</span> é o valor <span class="math inline">\(t\)</span> apropriado correspondente ao nível de confiança e aos graus de liberdade do modelo, <span class="math inline">\(df=n-k-1\)</span>.</p>
+</div>
+</div>
+<div id="logisticRegression" class="section level2" number="8.4">
+<h2>
+<span class="header-section-number">8.4</span> Introdução à regressão logística<a class="anchor" aria-label="anchor" href="#logisticRegression"><i class="fas fa-link"></i></a>
+</h2>
+<p>Nesta seção, apresentamos a <strong>regressão logística</strong> como uma ferramenta para construir modelos quando existe uma variável de resposta categórica com dois níveis. A regressão logística é um tipo de <strong>modelo linear generalizado</strong> (MLG) para variáveis de resposta onde a regressão múltipla regular não funciona muito bem. Em particular, a variável resposta nessas configurações geralmente assume um formato em que os residuos parecem completamente diferentes da distribuição normal.</p>
+<p>Os MLG podem ser considerados como uma abordagem de modelagem de dois estágios. Primeiro modelamos a variável de resposta usando uma distribuição de probabilidade, como a distribuição binomial ou de Poisson. Segundo, modelamos o parâmetro da distribuição usando uma coleção de preditores e uma forma especial de regressão múltipla.</p>
+<p>Na Seção <a href="ch8-reg-mult-log.html#logisticRegression">8.4</a> vamos revisitar o conjunto de dados <code>email</code>. Esses e-mails foram coletados de uma única conta de e-mail e trabalharemos no desenvolvimento de um filtro de spam básico usando esses dados. A variável resposta, <code>spam</code>, foi codificado para ter valor 0 quando uma mensagem não é spam e 1 quando é spam. Nossa tarefa será criar um modelo apropriado que classifique mensagens como spam ou não spam, usando características de email codificadas como variáveis preditoras. Embora esse modelo não seja o mesmo daqueles usados em filtros de spam de grande escala, ele compartilha muitos dos mesmos recursos.</p>
+<div id="eMailData" class="section level3" number="8.4.1">
+<h3>
+<span class="header-section-number">8.4.1</span> Dados e-mail<a class="anchor" aria-label="anchor" href="#eMailData"><i class="fas fa-link"></i></a>
+</h3>
+<p>O conjunto de dados <code>email</code> foi apresentado pela primeira vez no Capítulo de introdução, com um número relativamente pequeno de variáveis. Na verdade, existem muitas outras variáveis disponíveis que podem ser úteis para classificar o spam. As descrições dessas variáveis são apresentadas na Tabela <a href="ch8-reg-mult-log.html#tab:emailVariables">8.7</a>. A variável <em>spam</em> será o resultado, e as outras 10 variáveis serão os preditores do modelo. Embora tenhamos limitado que os preditores usados nesta seção sejam variáveis categóricas (em que muitos são representados como variáveis indicadoras), preditores numéricos também podem ser usados na regressão logística. Veja a nota de rodapé para uma discussão adicional sobre este tópico.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Lembre-se que se outliers estão presentes em variáveis preditoras, as observações correspondentes podem ser especialmente influentes no modelo resultante. Essa é a motivação para omitir as variáveis numéricas, como o número de caracteres e as quebras de linha nos e-mails, que vimos anteriormente. Estas variáveis exibiram uma inclinação extrema. Poderíamos resolver esse problema transformando essas variáveis (por exemplo, usando uma transformação logarítmica), mas omitiremos essa investigação adicional para fins de brevidade.&lt;/p&gt;"><sup>288</sup></a></p>
+<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"email"</span><span class="op">)</span>
+
+<span class="va">aux</span> <span class="op">&lt;-</span> <span class="va">email</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'spam'</span>, <span class="st">'to_multiple'</span>, <span class="st">'cc'</span>, <span class="st">'attach'</span>, <span class="st">'dollar'</span>, <span class="st">'winner'</span>, 
+                <span class="st">'inherit'</span>, <span class="st">'password'</span>, <span class="st">'format'</span>, <span class="st">'re_subj'</span>, <span class="st">'exclaim_subj'</span><span class="op">)</span><span class="op">]</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">aux</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'spam'</span>, <span class="st">'a_multiplos'</span>, <span class="st">'cc'</span>, <span class="st">'anexo'</span>, <span class="st">'dolar'</span>, <span class="st">'ganhador'</span>,
+                <span class="st">'herdar'</span>, <span class="st">'senha'</span>, <span class="st">'formatacao'</span>, <span class="st">'re_assun'</span>, <span class="st">'exclamacao_assun'</span><span class="op">)</span>
+
+<span class="va">des_email</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Especifica se a mensagem era spam'</span>, 
+               <span class="st">'uma variável indicadora de se mais de uma pessoa estava no campo A do email'</span>, 
+               <span class="st">'um indicador se alguém estava no campo cc do email'</span>, 
+               <span class="st">'um indicador se tinha um anexo, como um documento ou imagem'</span>, 
+               <span class="st">'um indicador se a palavra dólar ou simbolo $ apareceu no email'</span>,
+               <span class="st">'um indicador se a palavra ganhador apareceu no email'</span>, 
+               <span class="st">'um indicador se a palavra herdar (ou uma variação, como heranca), apareceu no email'</span>, 
+               <span class="st">'um indicador se a palavra senha estava presente no email'</span>, 
+               <span class="st">'indica se o email tinha formatação especial, como negritos, tabelas ou links'</span>, 
+               <span class="st">'indica se re: estava incluida no começo do assunto do email'</span>,
+               <span class="st">'indica se tinha algum ponto de exclamação no assunto do email'</span><span class="op">)</span>
+
+<span class="va">table7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">aux</span><span class="op">)</span>, <span class="va">des_email</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table7</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Variável'</span>, <span class="st">'Descrição'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table7</span>, caption <span class="op">=</span> <span class="st">'Descrições de 11 variáveis no conjunto de dados email. Observe que todas as variáveis são variáveis indicadoras, que tomam o valor 1 se a característica especificada estiver presente e 0 caso contrário.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:emailVariables">Tabela 8.7: </span>Descrições de 11 variáveis no conjunto de dados email. Observe que todas as variáveis são variáveis indicadoras, que tomam o valor 1 se a característica especificada estiver presente e 0 caso contrário.</caption>
+<colgroup>
+<col width="16%">
+<col width="83%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Variável</th>
+<th align="left">Descrição</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">spam</td>
+<td align="left">Especifica se a mensagem era spam</td>
+</tr>
+<tr class="even">
+<td align="left">a_multiplos</td>
+<td align="left">uma variável indicadora de se mais de uma pessoa estava no campo A do email</td>
+</tr>
+<tr class="odd">
+<td align="left">cc</td>
+<td align="left">um indicador se alguém estava no campo cc do email</td>
+</tr>
+<tr class="even">
+<td align="left">anexo</td>
+<td align="left">um indicador se tinha um anexo, como um documento ou imagem</td>
+</tr>
+<tr class="odd">
+<td align="left">dolar</td>
+<td align="left">um indicador se a palavra dólar ou simbolo $ apareceu no email</td>
+</tr>
+<tr class="even">
+<td align="left">ganhador</td>
+<td align="left">um indicador se a palavra ganhador apareceu no email</td>
+</tr>
+<tr class="odd">
+<td align="left">herdar</td>
+<td align="left">um indicador se a palavra herdar (ou uma variação, como heranca), apareceu no email</td>
+</tr>
+<tr class="even">
+<td align="left">senha</td>
+<td align="left">um indicador se a palavra senha estava presente no email</td>
+</tr>
+<tr class="odd">
+<td align="left">formatacao</td>
+<td align="left">indica se o email tinha formatação especial, como negritos, tabelas ou links</td>
+</tr>
+<tr class="even">
+<td align="left">re_assun</td>
+<td align="left">indica se re: estava incluida no começo do assunto do email</td>
+</tr>
+<tr class="odd">
+<td align="left">exclamacao_assun</td>
+<td align="left">indica se tinha algum ponto de exclamação no assunto do email</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="modelingTheProbabilityOfAnEvent" class="section level3" number="8.4.2">
+<h3>
+<span class="header-section-number">8.4.2</span> Modelando a probabilidade de um evento<a class="anchor" aria-label="anchor" href="#modelingTheProbabilityOfAnEvent"><i class="fas fa-link"></i></a>
+</h3>
+<div class="alert alert-info">
+<p><strong>Notação para um modelo de regressão logística</strong>: A variável de resultado para um MLG é denotada por <span class="math inline">\(Y_i\)</span>, onde o índice <span class="math inline">\(i\)</span> é usado para representar a observação <span class="math inline">\(i\)</span>. No aplicativo de e-mail, <span class="math inline">\(Y_i\)</span> será usado para representar se o e-mail <span class="math inline">\(i\)</span> é spam (<span class="math inline">\(Y_i=1\)</span>) ou não (<span class="math inline">\(Y_i=0\)</span>).</p>
+<p>As variáveis preditoras são representadas da seguinte forma: <span class="math inline">\(x_{1,i}\)</span> é o valor da variável 1 para observação <span class="math inline">\(i\)</span>, <span class="math inline">\(x_{2,i}\)</span> é o valor da variável 2 para observação <span class="math inline">\(i\)</span> e assim por diante.</p>
+</div>
+<p>A regressão logística é um modelo linear generalizado em que o resultado é uma variável categórica de dois níveis. O resultado, <span class="math inline">\(Y_i\)</span>, recebe o valor 1 (em nosso aplicativo, isso representa uma mensagem de spam) com probabilidade <span class="math inline">\(p_i\)</span> e o valor 0 com probabilidade <span class="math inline">\(1-p_i\)</span>. É a probabilidade <span class="math inline">\(p_i\)</span> que modelamos em relação às variáveis preditoras.</p>
+<p>O modelo de regressão logística relaciona a probabilidade de um e-mail ser spam (<span class="math inline">\(p_i\)</span>) aos preditores <span class="math inline">\(x_{1,i}, x_{2,i}, \dots, x_{k,i}\)</span> através de um quadro muito parecido com o de regressão múltipla:</p>
+<p><span class="math display" id="eq:linkTransformationEquation">\[\begin{align}
+transformação(p_{i}) = \beta_0 + \beta_1x_{1,i} + \beta_2 x_{2,i} + \cdots \beta_k x_{k,i}
+\tag{8.3}
+\end{align}\]</span></p>
+<p>Queremos escolher uma transformação na Equação <a href="ch8-reg-mult-log.html#eq:linkTransformationEquation">(8.3)</a> que faz sentido prático e matemático. Por exemplo, queremos uma transformação que faça o leque de possibilidades do lado esquerdo da Equação @ref9EQ:linkTransformationEquation) igual ao intervalo de possibilidades para o lado direito; se não houvesse transformação para essa equação, o lado esquerdo só poderia ter valores entre 0 e 1, mas o lado direito poderia obter valores fora desse intervalo. Uma transformação comum para <span class="math inline">\(p_i\)</span> é o <strong>transformação logit</strong>, que pode ser escrito como</p>
+<p><span class="math display">\[\begin{align*}
+logit(p_i) = \log_{e}\left( \frac{p_i}{1-p_i} \right)
+\end{align*}\]</span></p>
+<p>A transformação logit é mostrada na Figura <a href="ch8-reg-mult-log.html#fig:logitTransformationFigureHoriz">8.6</a>. Abaixo, nós reescrevemos a Equação <a href="ch8-reg-mult-log.html#eq:linkTransformationEquation">(8.3)</a> usando a transformação logit de <span class="math inline">\(p_i\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+\log_{e}\left( \frac{p_i}{1-p_i} \right)
+    = \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + \cdots + \beta_k x_{k,i}
+\end{align*}\]</span></p>
+<p>No nosso exemplo de spam, existem 10 variáveis preditoras, então <span class="math inline">\(k=10\)</span>. Este modelo não é muito intuitivo, mas ainda tem alguma semelhança com a regressão múltipla, e podemos ajustar este modelo usando <em>software</em>. De fato, uma vez que examinamos os resultados do <em>software</em>, começaremos a sentir que estamos de volta à regressão múltipla, mesmo que a interpretação dos coeficientes seja mais complexa.</p>
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.0001</span>, <span class="fl">0.9999</span>, <span class="fl">0.0002</span><span class="op">)</span>
+<span class="va">lp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">p</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">p</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">pts</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.99</span>, length.out <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>
+<span class="va">R</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>,<span class="fl">6</span><span class="op">)</span>
+<span class="va">adj</span>  <span class="op">&lt;-</span> <span class="fl">0.07</span>
+<span class="va">adj1</span> <span class="op">&lt;-</span> <span class="fl">0.02</span>
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="va">this</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">p</span> <span class="op">-</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">LP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">5</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">LP</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">LP</span><span class="op">)</span><span class="op">)</span>
+<span class="va">POS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="va">xOFF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">Round</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>
+
+<span class="va">t1</span> <span class="op">&lt;-</span> <span class="va">t2</span> <span class="op">&lt;-</span> <span class="va">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">LP</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">t1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">LP</span>, <span class="fl">0.9</span><span class="op">)</span>, <span class="va">Round</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+  <span class="va">t2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">P</span>, <span class="va">Round</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+  
+  <span class="va">labs</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"("</span>, <span class="va">t1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">", "</span>, <span class="va">t2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">")"</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lp</span>, <span class="va">p</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu">logit</span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">p</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, linetype <span class="op">=</span> <span class="st">'dashed'</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">LP</span>, <span class="va">P</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">t2</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">labs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:logitTransformationFigureHoriz"></span>
+<img src="_main_files/figure-html/logitTransformationFigureHoriz-1.png" alt="Valores de pi contra valores de logit(pi)" width="672"><p class="caption">
+Figura 8.6: Valores de pi contra valores de logit(pi)
+</p>
+</div>
+
+<div class="example">
+<span id="exm:logisticExampleWithToMultiple" class="example"><strong>Exemplo 8.6  </strong></span>Aqui criamos um filtro de spam com um único preditor: <code>a_múltiplos</code>. Essa variável indica se mais de um endereço de e-mail foi listado no campo do e-mail. O seguinte modelo de regressão logística foi ajustado usando software estatístico:
+</div>
+<p><span class="math display">\[\begin{align*}
+\log\left( \frac{p_i}{1-p_i} \right) = -2.12 - 1.81\times\text{a\_múltiplos}
+\end{align*}\]</span></p>
+<p>Se um email for selecionado aleatoriamente e tiver apenas um endereço no campo, qual é a probabilidade de ser spam? E se mais de um endereço estiver listado no campo?</p>
+<p>Se houver apenas um e-mail no campo de destinatários, <code>a_multiplicar</code> toma o valor 0 e o lado direito da equação do modelo é igual a -2,12. Resolvendo para <span class="math inline">\(p_i\)</span>: <span class="math inline">\(\frac{e^{-2.12}}{1 + e^{-2.12}} = 0.11\)</span>. Assim como rotulamos um valor ajustado de <span class="math inline">\(y_i\)</span> com um “chapéu” em uma variável simples e em uma regressão múltipla, faremos o mesmo para essa probabilidade: <span class="math inline">\(\hat{p}_i = 0.11\)</span>.</p>
+<p>Se houver mais de um endereço listado no campo de destinatários, o lado direito da equação do modelo será <span class="math inline">\(-2.12 - 1.81\times1 = -3.93\)</span>, que corresponde a uma probabilidade <span class="math inline">\(\hat{p}_i = 0.02\)</span>.</p>
+<p>Observe que podemos examinar -2,12 e -3,93 na Figura <a href="ch8-reg-mult-log.html#fig:logitTransformationFigureHoriz">8.6</a> para estimar a probabilidade antes de calcular formalmente o valor.</p>
+<p>Para converter de valores na escala de regressão (por exemplo, -2,12 e -3,93 no Exemplo <a href="ch8-reg-mult-log.html#exm:logisticExampleWithToMultiple">8.6</a>), use a seguinte fórmula, que é o resultado da resolução de <span class="math inline">\(p_i\)</span> no modelo de regressão:</p>
+<p><span class="math display">\[\begin{align*}
+p_i
+    = \frac{e^{\beta_0 + \beta_1 x_{1,i}+\cdots+\beta_k x_{k,i}}}
+        {\ 1\ \ +\ \ e^{\beta_0 + \beta_1 x_{1,i}+\cdots+\beta_k x_{k,i}}\ }
+\end{align*}\]</span></p>
+<p>Tal como acontece com a maioria dos problemas de dados aplicados, substituímos as estimativas pontuais dos parâmetros (o <span class="math inline">\(\beta_i\)</span>) para que possamos fazer uso desta fórmula. No Exemplo <a href="ch8-reg-mult-log.html#exm:logisticExampleWithToMultiple">8.6</a>, as probabilidades foram calculadas como</p>
+<p><span class="math display">\[\begin{align*}
+&amp;\frac{\ e^{-2.12}\ }{\ 1\ +\ e^{-2.12}\ } = 0.11 &amp;&amp; \frac{\ e^{-2.12 - 1.81}\ }{\ 1\ +\ e^{-2.12 - 1.81}\ } = 0.02
+\end{align*}\]</span></p>
+<p>Embora as informações sobre se o e-mail é endereçado a várias pessoas seja um começo útil na classificação de e-mails como spam ou não, as probabilidades de 11% e 2% não são drasticamente diferentes, e nenhuma delas fornece evidências muito fortes sobre quais mensagens de e-mail específicas são spam. Para obter estimativas mais precisas, precisaremos incluir muito mais variáveis no modelo.</p>
+<p>Usamos software estatístico para ajustar o modelo de regressão logística com todos os dez preditores descritos na Tabela <a href="ch8-reg-mult-log.html#tab:emailVariables">8.7</a>. Como a regressão múltipla, o resultado pode ser apresentado em uma tabela de resumo, que é mostrada na Tabela <a href="ch8-reg-mult-log.html#tab:emailLogisticModelResults">8.8</a>. A estrutura desta tabela é quase idêntica à da regressão múltipla; a única diferença notável é que os p-valores são calculados usando a distribuição normal em vez da distribuição-<span class="math inline">\(t\)</span>.</p>
+<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">aux</span><span class="op">$</span><span class="va">ganhador</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">aux</span><span class="op">$</span><span class="va">ganhador</span> <span class="op">==</span> <span class="st">'yes'</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">.</span> , data <span class="op">=</span> <span class="va">aux</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>
+
+<span class="va">table8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table8</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Estimativa'</span>, <span class="st">'Erro Padrão'</span>, <span class="st">'Valor Z'</span>, <span class="st">'Pr(&gt;|z|)'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table8</span>, digits <span class="op">=</span> <span class="fl">3</span>, caption <span class="op">=</span> <span class="st">'Tabela de resumo para o modelo de regressão logística completa para o exemplo de filtro de spam.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:emailLogisticModelResults">Tabela 8.8: </span>Tabela de resumo para o modelo de regressão logística completa para o exemplo de filtro de spam.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">Estimativa</th>
+<th align="right">Erro Padrão</th>
+<th align="right">Valor Z</th>
+<th align="right">Pr(&gt;|z|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.800</td>
+<td align="right">0.089</td>
+<td align="right">-8.950</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">a_multiplos</td>
+<td align="right">-2.841</td>
+<td align="right">0.312</td>
+<td align="right">-9.118</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">cc</td>
+<td align="right">0.031</td>
+<td align="right">0.019</td>
+<td align="right">1.654</td>
+<td align="right">0.098</td>
+</tr>
+<tr class="even">
+<td align="left">anexo</td>
+<td align="right">0.204</td>
+<td align="right">0.059</td>
+<td align="right">3.478</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">dolar</td>
+<td align="right">-0.073</td>
+<td align="right">0.023</td>
+<td align="right">-3.168</td>
+<td align="right">0.002</td>
+</tr>
+<tr class="even">
+<td align="left">ganhador</td>
+<td align="right">1.831</td>
+<td align="right">0.336</td>
+<td align="right">5.443</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">herdar</td>
+<td align="right">0.330</td>
+<td align="right">0.152</td>
+<td align="right">2.168</td>
+<td align="right">0.030</td>
+</tr>
+<tr class="even">
+<td align="left">senha</td>
+<td align="right">-0.760</td>
+<td align="right">0.296</td>
+<td align="right">-2.566</td>
+<td align="right">0.010</td>
+</tr>
+<tr class="odd">
+<td align="left">formatacao</td>
+<td align="right">-1.523</td>
+<td align="right">0.123</td>
+<td align="right">-12.411</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">re_assun</td>
+<td align="right">-3.119</td>
+<td align="right">0.365</td>
+<td align="right">-8.539</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">exclamacao_assun</td>
+<td align="right">0.244</td>
+<td align="right">0.225</td>
+<td align="right">1.084</td>
+<td align="right">0.278</td>
+</tr>
+</tbody>
+</table></div>
+<p>Assim como a regressão múltipla, poderíamos cortar algumas variáveis do modelo usando o p-valor. Usando a eliminação regressiva com um ponto de corte de p-valor de 0,05 (comece com o modelo completo e apare os preditores com valores de p maiores que 0,05), acabamos por eliminar os preditores <code>exclamação_asun</code>, <code>dólar</code>, <code>herdar</code>, e <code>cc</code>. O restante desta seção contará com este modelo menor, que é resumido na Tabela <a href="ch8-reg-mult-log.html#tab:emailLogisticReducedModel">8.9</a>.</p>
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">md2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">a_multiplos</span> <span class="op">+</span> <span class="va">ganhador</span> <span class="op">+</span> <span class="va">formatacao</span> <span class="op">+</span> <span class="va">re_assun</span> <span class="op">+</span> 
+            <span class="va">anexo</span> <span class="op">+</span> <span class="va">senha</span>, data <span class="op">=</span> <span class="va">aux</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>
+
+<span class="va">table9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">md2</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table9</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Estimativa'</span>, <span class="st">'Erro Padrão'</span>, <span class="st">'Valor Z'</span>, <span class="st">'Pr(&gt;|z|)'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table9</span>, digits <span class="op">=</span> <span class="fl">3</span> , caption <span class="op">=</span> <span class="st">'Tabela de resumo para o modelo de regressão logística para o filtro de spam, onde a seleção de variáveis foi executada.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:emailLogisticReducedModel">Tabela 8.9: </span>Tabela de resumo para o modelo de regressão logística para o filtro de spam, onde a seleção de variáveis foi executada.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">Estimativa</th>
+<th align="right">Erro Padrão</th>
+<th align="right">Valor Z</th>
+<th align="right">Pr(&gt;|z|)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.806</td>
+<td align="right">0.088</td>
+<td align="right">-9.154</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">a_multiplos</td>
+<td align="right">-2.751</td>
+<td align="right">0.307</td>
+<td align="right">-8.949</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">ganhador</td>
+<td align="right">1.725</td>
+<td align="right">0.325</td>
+<td align="right">5.316</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">formatacao</td>
+<td align="right">-1.586</td>
+<td align="right">0.120</td>
+<td align="right">-13.204</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">re_assun</td>
+<td align="right">-3.098</td>
+<td align="right">0.365</td>
+<td align="right">-8.484</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">anexo</td>
+<td align="right">0.213</td>
+<td align="right">0.057</td>
+<td align="right">3.718</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">senha</td>
+<td align="right">-0.748</td>
+<td align="right">0.296</td>
+<td align="right">-2.529</td>
+<td align="right">0.011</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-299" class="exercise"><strong>Prática Orientada 8.10  </strong></span>Examine o resumo do modelo reduzido na Tabela <a href="ch8-reg-mult-log.html#tab:emailLogisticReducedModel">8.9</a>, e, em particular, examine a linha a_múltiplos. A estimativa pontual é a mesma que encontramos antes, -1,81, ou é diferente? Explique por que isso pode acontecer.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;A nova estimativa é diferente: -2,75. Esse novo valor representa o coeficiente estimado quando também estamos contabilizando outras variáveis no modelo de regressão logística.&lt;/p&gt;"><sup>289</sup></a>
+</div>
+<hr>
+<p>As estimativas pontuais geralmente mudam um pouco – e muitas vezes – dependendo de quais outras variáveis estão incluídas no modelo. Isso geralmente é devido à colinearidade nas variáveis preditoras. Anteriormente, vimos isso no exemplo do leilão do Ebay quando comparamos o coeficiente de <code>condição</code> em um modelo de variável única e o coeficiente correspondente no modelo de regressão múltipla que usou três variáveis adicionais.</p>
+
+<div class="example">
+<span id="exm:exampleForSpamAndWinner" class="example"><strong>Exemplo 8.7  </strong></span>Os filtros de spam são criados para serem automatizados, o que significa que uma parte do software é gravada para coletar informações sobre os e-mails à medida que eles chegam e essas informações são colocadas na forma de variáveis. Essas variáveis são então colocadas em um algoritmo que usa um modelo estatístico, como o que ajustamos, para classificar o email. Suponha que escrevamos software para um filtro de spam usando o modelo reduzido mostrado na Tabela <a href="ch8-reg-mult-log.html#tab:emailLogisticReducedModel">8.9</a>. Se um e-mail recebido tiver a palavra “vencedor,” isso aumentará ou diminuirá a probabilidade calculada do modelo de que o e-mail recebido é spam?
+</div>
+<p>O coeficiente estimado de <strong>ganhador</strong> é positivo (1,7250). Um coeficiente estimado positivo na regressão logística, assim como na regressão múltipla, corresponde a uma associação positiva entre o preditor e as variáveis de resposta ao considerar as demais variáveis do modelo. Como a variável de resposta assume valor 1 se um email é spam e 0 caso contrário, o coeficiente positivo indica que a presença de “vencedor”" em um email aumenta a probabilidade de que a mensagem seja spam.</p>
+
+<div class="example">
+<span id="exm:exampleForSpamAndFormat" class="example"><strong>Exemplo 8.8  </strong></span>Suponha que o mesmo email do Exemplo <a href="ch8-reg-mult-log.html#exm:exampleForSpamAndWinner">8.7</a> estava no formato HTML, significando a variável <code>formatação</code> levou valor 1. Esta característica aumenta ou diminui a probabilidade de o email ser spam de acordo com o modelo?
+</div>
+<p>Como HTML corresponde a um valor de 1 na variável <code>formatação</code> e o coeficiente dessa variável é negativo (-1,5569), isso reduziria a estimativa de probabilidade proveniente do modelo.</p>
+</div>
+<div id="practicalDecisionsOnEMailApp" class="section level3" number="8.4.3">
+<h3>
+<span class="header-section-number">8.4.3</span> Decisões práticas no aplicativo de e-mail<a class="anchor" aria-label="anchor" href="#practicalDecisionsOnEMailApp"><i class="fas fa-link"></i></a>
+</h3>
+<p>Examplos <a href="ch8-reg-mult-log.html#exm:exampleForSpamAndWinner">8.7</a> e <a href="ch8-reg-mult-log.html#exm:exampleForSpamAndFormat">8.8</a> destacaram uma característica fundamental da regressão logística e múltipla. No exemplo do filtro de spam, algumas características do e-mail empurram a classificação de um e-mail na direção do spam, enquanto outras características o empurram na direção oposta.</p>
+<p>Se implementássemos um filtro de spam usando o modelo adequado, cada e-mail futuro analisado se encaixaria em uma das três categorias com base nas características do e-mail:</p>
+<ul>
+<li><p>As características do e-mail geralmente indicam que o e-mail não é spam e, portanto, a probabilidade resultante de que o e-mail é spam é bastante baixa, digamos, abaixo de 0,05.</p></li>
+<li><p>As características geralmente indicam que o email é spam e, portanto, a probabilidade resultante de o email ser spam é muito grande, digamos, acima de 0,95.</p></li>
+<li><p>As características se equilibram umas às outras em termos de evidência a favor e contra a mensagem sendo classificada como spam. Sua probabilidade cai no intervalo restante, ou seja, o e-mail não pode ser classificado adequadamente como spam ou não spam.</p></li>
+</ul>
+<p>Se estivéssemos gerenciando um serviço de e-mail, teríamos que pensar sobre o que deveria ser feito em cada uma dessas três instâncias. Em um aplicativo de email, geralmente há apenas duas possibilidades: filtrar o email da caixa de entrada normal e colocá-lo em um “spambox,” ou deixar que o email vá para a caixa de entrada normal.</p>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-300" class="exercise"><strong>Prática Orientada 8.11  </strong></span>O primeiro e o segundo cenários são intuitivos. Se a evidência sugerir fortemente que uma mensagem não é spam, envie-a para a caixa de entrada. Se a evidência sugerir fortemente que a mensagem é spam, envie-a para o spambox. Como devemos lidar com os e-mails na terceira categoria?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Neste aplicativo em particular, devemos enviar mais e-mails para a caixa de entrada, em vez de colocar mensagens boas na spambox. Então, em resumo: os e-mails da primeira e da última categorias vão para a caixa de entrada normal e os do segundo cenário vão para a caixa de spambox.&lt;/p&gt;"><sup>290</sup></a>
+</div>
+<hr>
+<hr>
+<div class="exercise">
+<span id="exr:unnamed-chunk-301" class="exercise"><strong>Prática Orientada 8.12  </strong></span>Suponha que aplicamos o modelo logístico que construímos como filtro de spam e que 100 mensagens são colocadas na spambox ao longo de 3 meses. Se usássemos as diretrizes acima para colocar mensagens na spambox, sobre quantas mensagens legítimas (não spam) você esperaria encontrar entre as 100 mensagens?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Primeiro, note que propusemos um ponto de corte para a probabilidade prevista de 0,95 para spam. Na pior das hipóteses, todas as mensagens na spambox tinham a probabilidade mínima igual a cerca de 0,95. Assim, devemos esperar encontrar cerca de 5 ou menos mensagens legítimas entre as 100 mensagens colocadas no spambox.&lt;/p&gt;"><sup>291</sup></a>
+</div>
+<hr>
+<p>Quase qualquer classificador terá algum erro. Nas diretrizes do filtro de spam acima, decidimos que não há problema em permitir que até 5% das mensagens na caixa de spam sejam mensagens reais. Se quiséssemos dificultar um pouco a classificação de mensagens como spam, poderíamos usar um limite de 0,99. Isso teria dois efeitos. Por elevar o padrão do que pode ser classificado como spam, reduz o número de bons emails classificados como spam. No entanto, ele também não classificará corretamente uma fração aumentada de mensagens spam. Não importa a complexidade e a confiança que possamos ter em nosso modelo, essas considerações práticas são absolutamente cruciais para criar um filtro de spam útil. Sem eles, poderíamos fazer mais mal do que bem usando nosso modelo estatístico.</p>
+</div>
+<div id="diagnosticsForTheEmailSorter" class="section level3" number="8.4.4">
+<h3>
+<span class="header-section-number">8.4.4</span> Diagnóstico para o classificador de e-mail<a class="anchor" aria-label="anchor" href="#diagnosticsForTheEmailSorter"><i class="fas fa-link"></i></a>
+</h3>
+<div class="alert alert-info">
+<p><strong>Condições de regressão logística</strong>: Existem duas condições chave para ajustar um modelo de regressão logística:</p>
+<ul>
+<li><p>Cada preditor <span class="math inline">\(x_i\)</span> está linearmente relacionado a logit<span class="math inline">\((p_i)\)</span> se todos os outros preditores forem mantidos constantes.</p></li>
+<li><p>O modelo que relaciona o parâmetro <span class="math inline">\(p_i\)</span> com os preditores <span class="math inline">\(x_{1,i}, x_{2,i}, \dots, x_{k,i}\)</span> assemelha-se muito à verdadeira relação entre o parâmetro e os preditores.</p></li>
+<li><p>Cada resultado <span class="math inline">\(Y_i\)</span> é independente dos outros resultados.</p></li>
+</ul>
+</div>
+<p>A primeira condição do modelo de regressão logística não é facilmente verificada sem uma quantidade razoavelmente grande de dados. Felizmente, temos 3.921 e-mails em nosso conjunto de dados! Vamos primeiro visualizar esses dados traçando a classificação real dos e-mails em relação às probabilidades ajustadas do modelo, como mostrado na Figura~ <a href="ch8-reg-mult-log.html#fig:logisticModelPredict">8.7</a>. A grande maioria dos emails (spam ou não) ainda tem probabilidades abaixo de 0,5.</p>
+<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">email</span><span class="op">)</span>
+<span class="va">e</span> <span class="op">&lt;-</span> <span class="va">email</span>
+<span class="va">e</span><span class="op">$</span><span class="va">cc</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">cc</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">attach</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">attach</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">dollar</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">dollar</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">inherit</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">inherit</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">password</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">password</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">to_multiple</span> <span class="op">+</span> <span class="va">winner</span> <span class="op">+</span> <span class="va">format</span> <span class="op">+</span> 
+                <span class="va">re_subj</span> <span class="op">+</span> <span class="va">exclaim_subj</span> <span class="op">+</span>
+                <span class="va">attach</span> <span class="op">+</span> <span class="va">dollar</span> <span class="op">+</span>
+                <span class="va">inherit</span> <span class="op">+</span> <span class="va">password</span>, <span class="co"># +</span>
+                <span class="co">#num_char + line_breaks + exclaim_mess,</span>
+                data <span class="op">=</span> <span class="va">e</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>
+<span class="co"># summary(g)</span>
+<span class="va">p</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">g</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span>
+<span class="va">p.</span> <span class="op">&lt;-</span> <span class="va">p</span>
+
+<span class="co"># logisticModelPredict</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">e</span><span class="op">$</span><span class="va">spam</span> <span class="op">+</span> <span class="va">noise</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">'Probabilidade Predita'</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'0 \n(Não é Spam)'</span>, <span class="st">'1 \n(Spam)'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:logisticModelPredict"></span>
+<img src="_main_files/figure-html/logisticModelPredict-1.png" alt="A probabilidade prevista de que cada um dos 3.912 e-mails seja spam é classificada por seu agrupamento, spam ou não. Ruídos (pequenos deslocamentos verticais aleatórios) foram adicionados a cada ponto para que os pontos com valores quase idênticos não sejam representados exatamente um em cima do outro. Isto torna possível ver mais observações." width="672"><p class="caption">
+Figura 8.7: A probabilidade prevista de que cada um dos 3.912 e-mails seja spam é classificada por seu agrupamento, spam ou não. Ruídos (pequenos deslocamentos verticais aleatórios) foram adicionados a cada ponto para que os pontos com valores quase idênticos não sejam representados exatamente um em cima do outro. Isto torna possível ver mais observações.
+</p>
+</div>
+<p>A princípio, isso pode parecer muito desanimador: ajustamos um modelo logístico para criar um filtro de spam, mas nenhum e-mail tem uma probabilidade ajustada de ser spam acima de 0,75. Não se desespere; Vamos discutir maneiras de melhorar o modelo através do uso de melhores variáveis na Seção <a href="ch8-reg-mult-log.html#improvingTheSetOfVariablesForASpamFilter">8.4.5</a>.</p>
+<p>Gostaríamos de avaliar a qualidade do nosso modelo. Por exemplo, podemos perguntar: se olharmos para os e-mails que modelamos como tendo 10% de chance de ser spam, descobrimos que cerca de 10% deles são realmente spam? Para nos ajudar, emprestamos um método estatístico avançado chamado <strong>splines naturais</strong> que estima a probabilidade local sobre a região de 0,00 a 0,75 (a maior probabilidade prevista foi de 0,73, portanto evitamos extrapolar). Tudo o que você precisa saber sobre splines naturais para entender o que estamos fazendo é que eles são usados para encaixar linhas flexíveis em vez de linhas retas.</p>
+<p>O ajuste da curva usando splines naturais é mostrado na Figura <a href="ch8-reg-mult-log.html#fig:logisticModelSpline">8.8</a> como uma linha preta sólida. Se o modelo logístico se ajustar bem, a curva deve seguir de perto a linha tracejada <span class="math inline">\(y=x\)</span>. Adicionamos sombreamento para representar o limite de confiança da linha curva para esclarecer quais flutuações podem ser plausivelmente devido ao acaso. Mesmo com essa confiança, há pontos fracos na suposição do primeiro modelo. A curva sólida e a sua margem de confiança mergulham abaixo da linha tracejada em cerca de 0,1 a 0,3, e depois flutuam acima da linha tracejada em cerca de 0,35 a 0,55. Esses desvios indicam que o modelo que relaciona o parâmetro aos preditores não se parece muito com o relacionamento verdadeiro.</p>
+<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">email</span><span class="op">)</span>
+<span class="va">e</span> <span class="op">&lt;-</span> <span class="va">email</span>
+
+<span class="va">e</span><span class="op">$</span><span class="va">cc</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">cc</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">attach</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">attach</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">dollar</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">dollar</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">inherit</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">inherit</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">e</span><span class="op">$</span><span class="va">password</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">email</span><span class="op">$</span><span class="va">password</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">to_multiple</span> <span class="op">+</span> <span class="va">winner</span> <span class="op">+</span> <span class="va">format</span> <span class="op">+</span> 
+           <span class="va">re_subj</span> <span class="op">+</span> <span class="va">exclaim_subj</span> <span class="op">+</span>
+           <span class="va">attach</span> <span class="op">+</span> <span class="va">dollar</span> <span class="op">+</span>
+           <span class="va">inherit</span> <span class="op">+</span> <span class="va">password</span>, <span class="co"># +</span>
+         <span class="co">#num_char + line_breaks + exclaim_mess,</span>
+         data <span class="op">=</span> <span class="va">e</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>
+<span class="co"># summary(g)</span>
+<span class="va">p</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">g</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span>
+<span class="va">p.</span> <span class="op">&lt;-</span> <span class="va">p</span>
+<span class="va">q</span> <span class="op">&lt;-</span> <span class="va">p</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span>
+
+<span class="co"># parte do poligono </span>
+<span class="va">ns1</span> <span class="op">&lt;-</span> <span class="fl">7</span>
+<span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">spam</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">ns1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">p</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
+<span class="va">Y</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">g1</span>,
+              <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">ns1</span><span class="op">)</span><span class="op">)</span>,
+              se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">yb</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">$</span><span class="va">fit</span> <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">Y</span><span class="op">$</span><span class="va">se.fit</span>
+<span class="va">yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">Y</span><span class="op">$</span><span class="va">fit</span> <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">Y</span><span class="op">$</span><span class="va">se.fit</span><span class="op">)</span>
+
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">q</span>, <span class="va">e</span><span class="op">$</span><span class="va">spam</span><span class="op">+</span><span class="va">noise</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'skyblue3'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">'dashed'</span><span class="op">)</span> <span class="op">+</span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">yb</span>, <span class="va">yt</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">'gold2'</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">Y</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
+        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.83</span>, y <span class="op">=</span> <span class="fl">0.57</span>, xend <span class="op">=</span> <span class="fl">0.8</span>, yend <span class="op">=</span> <span class="fl">0.785</span><span class="op">)</span>, 
+               arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.36</span>, y <span class="op">=</span> <span class="fl">0.54</span>, xend <span class="op">=</span> <span class="fl">0.45</span>, yend <span class="op">=</span> <span class="fl">0.52</span><span class="op">)</span>, 
+               arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.6</span>, y <span class="op">=</span> <span class="fl">0.36</span>, xend <span class="op">=</span> <span class="fl">0.7</span>, yend <span class="op">=</span> <span class="fl">0.61</span><span class="op">)</span>, 
+               arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.88</span>, y <span class="op">=</span> <span class="fl">0.48</span>, size <span class="op">=</span> <span class="fl">3</span>, 
+           label <span class="op">=</span> <span class="st">"O que esperamos \nse o modelo logístico \né razoável"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.6</span>, size <span class="op">=</span> <span class="fl">3</span>, 
+           label <span class="op">=</span> <span class="st">"Probabilidades localmente \nestimadas com \nlimites de confiança"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0.6</span>, y <span class="op">=</span> <span class="fl">0.27</span>, size <span class="op">=</span> <span class="fl">3</span>, 
+           label <span class="op">=</span> <span class="st">"Os limites se tornam \namplos porque não \nsão encontrados muitos \ndados até o momento"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">'Probabilidade Predita'</span>, y <span class="op">=</span> <span class="st">'Spam'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'0 \n(Não é Spam)'</span>, <span class="st">'0.2'</span>, <span class="st">'0.4'</span>, <span class="st">'0.6'</span>, <span class="st">'0.8'</span>, <span class="st">'1 \n(Spam)'</span><span class="op">)</span><span class="op">)</span>  </code></pre></div>
+<div class="figure">
+<span id="fig:logisticModelSpline"></span>
+<img src="_main_files/figure-html/logisticModelSpline-1.png" alt="A linha preta sólida fornece a estimativa empírica da probabilidade de observações com base em suas probabilidades previstas (limites de confiança também são mostrados para essa linha), que é ajustada usando splines naturais. Uma pequena quantidade de ruído foi adicionada às observações na parcela para permitir que mais observações fossem vistas." width="672" height="100%"><p class="caption">
+Figura 8.8: A linha preta sólida fornece a estimativa empírica da probabilidade de observações com base em suas probabilidades previstas (limites de confiança também são mostrados para essa linha), que é ajustada usando splines naturais. Uma pequena quantidade de ruído foi adicionada às observações na parcela para permitir que mais observações fossem vistas.
+</p>
+</div>
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span>  <span class="op">&lt;-</span> <span class="va">p.</span></code></pre></div>
+<p>Pudemos avaliar o segundo pressuposto do modelo de regressão logística – independência dos desfechos – utilizando os resíduos do modelo. Os resíduos de um modelo de regressão logística são calculados da mesma forma que na regressão múltipla: o resultado observado menos o resultado esperado. Para a regressão logística, o valor esperado do resultado é a probabilidade ajustada para a observação, e o resíduo pode ser escrito como</p>
+<p><span class="math display">\[\begin{align*}
+e_i = Y_i - \hat{p}_i
+\end{align*}\]</span></p>
+<p>Poderíamos plotar esses resíduos contra uma variedade de variáveis ou em sua ordem de coleta, como fizemos com os resíduos em regressão múltipla. No entanto, como o modelo precisará ser revisado para classificar efetivamente o spam e já foi visto gráficos residuais semelhantes, nós não vamos investigar os resíduos aqui.</p>
+</div>
+<div id="improvingTheSetOfVariablesForASpamFilter" class="section level3" number="8.4.5">
+<h3>
+<span class="header-section-number">8.4.5</span> Melhorando o conjunto de variáveis para um filtro de spam<a class="anchor" aria-label="anchor" href="#improvingTheSetOfVariablesForASpamFilter"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se estivéssemos criando um filtro de spam para um serviço de e-mail que gerenciava muitas contas (por exemplo, Gmail ou Hotmail), gastaríamos muito mais tempo pensando em variáveis adicionais que poderiam ser úteis para classificar e-mails como spam ou não. Também usaríamos transformações ou outras técnicas que nos ajudariam a incluir variáveis numéricas fortemente distorcidas como preditores.</p>
+<p>Reserve alguns minutos para pensar em variáveis adicionais que podem ser úteis na identificação de spam. Abaixo está uma lista de variáveis que achamos que podem ser úteis:</p>
+<ul>
+<li><p><strong>(1)</strong> Uma variável indicadora pode ser usada para representar se houve correspondência bidirecional prévia com o remetente de uma mensagem. Por exemplo, se você enviou uma mensagem para <a href="mailto:joao@exemplo.com" class="email">joao@exemplo.com</a> e, em seguida, João enviou um e-mail para você, essa variável levaria o valor 1 para o e-mail que João enviou. Se você nunca tivesse enviado um e-mail para John, a variável seria definida como 0.</p></li>
+<li><p><strong>(2)</strong> Uma segunda variável indicadora poderia utilizar as informações de sinalização de spam anteriores da conta. A variável pode ter valor 1 se o remetente da mensagem já enviou mensagens marcadas como spam.</p></li>
+<li><p><strong>(3)</strong> Uma terceira variável indicadora pode sinalizar emails que contêm links incluídos em mensagens de spam anteriores. Se tal link for encontrado, defina a variável como 1 para o email. Caso contrário, defina-a como 0.</p></li>
+</ul>
+<p>As variáveis descritas acima adotam uma das duas abordagens. A variável (1) é especialmente projetada para aproveitar o fato de que o spam raramente é enviado entre indivíduos que possuem comunicação bidirecional. Variáveis (2) e (3) são especialmente projetadas para sinalizar spammers (quem envia muito spam) comuns ou spams comuns. Enquanto nós teríamos que verificar usando os dados que cada uma das variáveis é efetiva, estas parecem ser idéias promissoras.</p>
+<p>A Tabela <a href="ch8-reg-mult-log.html#tab:emailTableOfSpamAnd">8.10</a> mostra uma tabela de contingência para spam e também para a nova variável descrita em (1) acima. Se olharmos para os 1.090 e-mails em que houve correspondência com o remetente nos últimos 30 dias, nenhuma dessas mensagens foi spam. Isso sugere que a variável (1) seria muito eficaz para classificar com precisão algumas mensagens como não spam. Com essa variável única, poderíamos enviar cerca de 28% de mensagens para a caixa de entrada com confiança de que quase nenhuma é spam.</p>
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">table10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">367</span>, <span class="fl">0</span>, <span class="fl">367</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2464</span>, <span class="fl">1090</span>, <span class="fl">3554</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2831</span>, <span class="fl">1090</span>, <span class="fl">3921</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">table10</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'troca de emails prévia (não)'</span>, <span class="st">'troca de emails prévia (sim)'</span>, <span class="st">'Total'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">table10</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'spam'</span>, <span class="st">'não spam'</span>, <span class="st">'total'</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">table10</span>, align <span class="op">=</span> <span class="st">'c'</span>, 
+             caption <span class="op">=</span> <span class="st">'Uma tabela de contingência para spam e uma nova variável que representa se houve correspondência com o remetente nos últimos 30 dias.'</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:emailTableOfSpamAnd">Tabela 8.10: </span>Uma tabela de contingência para spam e uma nova variável que representa se houve correspondência com o remetente nos últimos 30 dias.</caption>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="center">troca de emails prévia (não)</th>
+<th align="center">troca de emails prévia (sim)</th>
+<th align="center">Total</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">spam</td>
+<td align="center">367</td>
+<td align="center">0</td>
+<td align="center">367</td>
+</tr>
+<tr class="even">
+<td align="left">não spam</td>
+<td align="center">2464</td>
+<td align="center">1090</td>
+<td align="center">3554</td>
+</tr>
+<tr class="odd">
+<td align="left">total</td>
+<td align="center">2831</td>
+<td align="center">1090</td>
+<td align="center">3921</td>
+</tr>
+</tbody>
+</table></div>
+<p>As variáveis descritas em (2) e (3) forneceriam uma excelente base para distinguir mensagens provenientes de spammers conhecidos ou mensagens que recebam uma forma conhecida de spam. Para utilizar essas variáveis, precisaríamos criar bancos de dados: um contendo endereços de e-mail de spammers conhecidos e um contendo URLs encontrados em mensagens de spam conhecidas. Nosso acesso a essas informações é limitado, por isso não podemos implementar essas duas variáveis neste livro. No entanto, se formos contratados por um serviço de e-mail para criar um filtro de spam, esses serão os próximos passos importantes.</p>
+<p>Além de encontrar mais e melhores preditores, precisaríamos criar um modelo de regressão logística personalizado para cada conta de e-mail. Isso pode soar como uma tarefa intimidadora, mas sua complexidade não é tão assustadora quanto parece à primeira vista. Salvaremos os detalhes de um curso de estatística em que a programação de computadores desempenha um papel mais central.</p>
+<p>Para a tarefa extremamente desafiadora de classificar mensagens de spam, fizemos muito progresso. Vimos que variáveis simples de e-mail, como o formato, a inclusão de certas palavras e outras características circunstanciais, fornecem informações úteis para a classificação de spam. Muitos desafios permanecem, desde a melhor compreensão da regressão logística até a realização da programação de computadores necessária, mas a conclusão de tal tarefa está quase ao seu alcance.</p>
+<hr>
+<center>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/88x31.png"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</center>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="ch7-reg-simples.html"><span class="header-section-number">7</span> Introdução à Regressão Linear</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ch8-reg-mult-log"><span class="header-section-number">8</span> Regressão Múltipla e Logística</a></li>
+<li>
+<a class="nav-link" href="#introductionToMultipleRegression"><span class="header-section-number">8.1</span> Introdução à regressão múltipla</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#twoSingleVariableModelsForMarioKartData"><span class="header-section-number">8.1.1</span> Um modelo de variável única para os dados do Mario Kart</a></li>
+<li><a class="nav-link" href="#includingAndAssessingManyVariablesInAModel"><span class="header-section-number">8.1.2</span> Incluindo e avaliando muitas variáveis em um modelo</a></li>
+<li><a class="nav-link" href="#R2adj"><span class="header-section-number">8.1.3</span> \(R^2\) ajustado como melhor estimativa da variância explicada</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#modelSelection"><span class="header-section-number">8.2</span> Seleção de modelos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#notUsefulVariables"><span class="header-section-number">8.2.1</span> Identificando variáveis no modelo que podem não ser úteis</a></li>
+<li><a class="nav-link" href="#twoStrategies"><span class="header-section-number">8.2.2</span> Duas estratégias de seleção de modelo</a></li>
+<li><a class="nav-link" href="#pValueAlternativeToR2adj"><span class="header-section-number">8.2.3</span> A abordagem do p-valor, uma alternativa para o \(R^2\) ajustado</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#multipleRegressionModelAssumptions"><span class="header-section-number">8.3</span> Verificando os pressupostos do modelo usando gráficos</a></li>
+<li>
+<a class="nav-link" href="#logisticRegression"><span class="header-section-number">8.4</span> Introdução à regressão logística</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#eMailData"><span class="header-section-number">8.4.1</span> Dados e-mail</a></li>
+<li><a class="nav-link" href="#modelingTheProbabilityOfAnEvent"><span class="header-section-number">8.4.2</span> Modelando a probabilidade de um evento</a></li>
+<li><a class="nav-link" href="#practicalDecisionsOnEMailApp"><span class="header-section-number">8.4.3</span> Decisões práticas no aplicativo de e-mail</a></li>
+<li><a class="nav-link" href="#diagnosticsForTheEmailSorter"><span class="header-section-number">8.4.4</span> Diagnóstico para o classificador de e-mail</a></li>
+<li><a class="nav-link" href="#improvingTheSetOfVariablesForASpamFilter"><span class="header-section-number">8.4.5</span> Melhorando o conjunto de variáveis para um filtro de spam</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/Probabilidade-e-Estatistica-EAD/livro/blob/master/08-reg-mult-log.Rmd">Ver código da página atual <i class="fab fa-github"></i></a></li>
+          <!--
+          <li><a id="book-edit" href="#">Edite essa página <i class="fab fa-github"></i></a></li>
+          -->
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Adaptado por <a href="https://github.com/ghsaul" style="color:white">Gabriel Holmer Saul</a></p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Esse livro foi construido com o pacote do R <a class="text-light" href="https://bookdown.org">bookdown</a>.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>

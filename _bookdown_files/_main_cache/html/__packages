@@ -1,0 +1,14 @@
+base
+ggplot2
+openintro
+gridExtra
+ggmosaic
+dplyr
+knitr
+qqplotr
+gganimate
+magick
+plotly
+tidyr
+Ecfun
+Ecdat

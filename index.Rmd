@@ -1,0 +1,55 @@
+--- 
+title: "Livro de Probabilidade e Estatística EAD - UFRGS"
+site: bookdown::bookdown_site
+knit: "bookdown::render_book"
+output:
+  bookdown::bs4_book
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+---
+
+
+```{r htmlTemp3, echo=FALSE, eval=TRUE}
+# https://stackoverflow.com/questions/37755037/how-to-add-code-folding-to-output-chunks-in-rmarkdown-html-documents
+# Segundo metodo da resposta do usuario Martin Schmelzer
+# Botao de mostrar/esconder codigo
+
+hideall <- readr::read_lines("js/hideAll.js")
+
+htmlhead <- 
+  paste('
+<script>',
+paste(hideall, collapse = "\n"),
+'</script>
+', sep = "\n")
+
+readr::write_lines(htmlhead, path = "header.html")
+```
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  cache = TRUE)
+
+require(ggplot2)
+theme_set(theme_gray())
+```
+
+# Prefácio {-}
+
+![](images/imagem_site_disciplina.png)
+
+Este material é baseado no livro desenvolvido pela [OpenIntro](https://www.openintro.org/), [OpenIntro Statistics](https://leanpub.com/openintro-statistics), que fornece uma introdução à estatística, a nível de graduação. O material original está disponível no [github](https://github.com/OpenIntroStat/openintro-statistics) em formato TeX. Ao longo deste livro, é possível consultar o código de todos os gráficos e tabelas clicando no botão "Mostrar código" correspondente. O código completo deste livro encontra-se no [github](https://github.com/Probabilidade-e-Estatistica-EAD/livro2) da disciplina.
+
+Tanto este material adaptado, quanto o original, estão sob mesma licença no [Creative Commons](https://creativecommons.org/). 
+
+
+<div align="right"><strong>Tradução e Adaptação: <br></strong> Juliana Sena de Souza <br> Gabriel Holmer Saul <br> Márcia Helena Barbian <br> Lisiane Priscila Roldão Selau	 <br> Markus Chagas Stein	<br> Rodrigo Citton Padilha dos Reis</div>
+
+<center><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</center>
+
+![](images/before_site_disciplina.png)

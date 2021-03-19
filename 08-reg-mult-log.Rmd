@@ -1,0 +1,927 @@
+# Regressão Múltipla e Logística {#ch8-reg-mult-log}
+
+
+Os princípios da regressão linear simples estabelecem a base para métodos de regressão mais sofisticados usados em uma ampla gama de configurações desafiadoras. Neste capítulo, nós exploramos a __regressão múltipla__, que introduz a possibilidade de mais de um preditor; e a __regressão logística__, uma técnica para prever resultados categóricos com duas categorias possíveis.
+
+
+## Introdução à regressão múltipla {#introductionToMultipleRegression}
+
+A regressão múltipla estende a regressão simples de duas variáveis para o caso que ainda tem uma resposta, mas muitos preditores (denotado $X_1, X_2, X_3, \dots$). O método é motivado por cenários em que muitas variáveis podem ser conectadas simultaneamente a uma saída.
+
+Vamos considerar leilões Ebay de um videogame chamado __Mario Kart__ para o Nintendo Wii. A variável de interesse resultante é o preço total de um leilão, que é o lance mais alto, mais o custo de envio. Vamos tentar determinar como o preço total é relacionado a cada característica em um leilão e simultaneamente controlar outras variáveis. Por exemplo, todas as outras características mantidas constantes são leilões mais longos associados a preços mais altos ou mais baixos? E, em média, quanto mais os compradores tendem a pagar por rodas adicionais do Wii (volantes de plástico que prendem ao controle do Wii) em leilões? A regressão múltipla nos ajudará a responder essas e outras perguntas.
+
+O conjunto de dados inclui resultados de 141 leilões^[Diez DM, Barr CD, Cetinkaya-Rundel M. 2015.: OpenIntro data sets and supplement functions: github.com/OpenIntroOrg/openintro-r-package]. Quatro observações deste conjunto de dados são mostradas na Tabela \@ref(tab:marioKartDataMatrix) e descrições para cada variável são mostradas na Tabela  \@ref(tab:marioKartVariables). Observe que as variáveis `condição` e `foto stock` são variáveis indicadoras. Por exemplo, as variáveis **cond_nova** assume o valor 1 se o jogo em leilão for novo e 0 se for usado. A utilização de variáveis indicadoras no lugar de nomes de categorias permite que essas variáveis sejam usadas diretamente na regressão. A regressão múltipla também permite variáveis categóricas com muitos níveis, embora não tenhamos essas variáveis nessa análise, e salvamos esses detalhes para um segundo ou terceiro curso.
+
+```{r marioKartDataMatrix}
+require(openintro)
+data("marioKart")
+
+temp <- marioKart[,c('totalPr', 'cond', 'stockPhoto', 'duration', 'wheels')]
+
+temp$cond <- ifelse(temp$cond == 'used', 0, 1)
+temp$stockPhoto <- ifelse(temp$stockPhoto == 'yes', 1, 0)
+
+names(temp) <- c('preço', 'condição', 'foto', 'duração', 'rodas')
+
+
+
+knitr::kable(head(temp, 4), caption = 'Quatro observações do conjunto de dados Mario Kart')
+```
+
+```{r marioKartVariables}
+
+descs <- c('preço do leilão final mais custo de transporte, em dólares americanos',
+           'a variável categória, que é 1 quando o jogo é novo e 0 se usado',
+           'a variável categórica, que é 1 se a foto principal do leilão era uma foto do estoque e 0 se fosse única para aquele leilão',
+           'duração do leilão em dias, valores entre 1 a 10', 
+           'o número de rodas de Wii incluídas na seção (uma roda de wii é um acessório em formato de roda para auxiliar ao jogar Mario Kart Wii')
+
+table2 <- data.frame(cbind(names(temp), descs))
+names(table2) <- c('Variável', 'Descrição')
+
+knitr::kable(table2, align = 'r', 
+             caption = 'Variáveis e suas descrições para o conjunto de dados Mario Kart')
+```
+
+
+### Um modelo de variável única para os dados do Mario Kart {#twoSingleVariableModelsForMarioKartData}
+
+Vamos ajustar um modelo de regressão linear com a condição do jogo como um preditor do preço do leilão. O modelo pode ser escrito como
+
+\begin{align*}
+\widehat{preço} &= 42.87 + 10.90\times cond\_\hspace{0.3mm}nova
+\end{align*}
+
+Os resultados deste modelo são mostrados na Tabela \@ref(tab:singleVarModelsForPriceUsingCond) e um gráfico de dispersão por preço *versus* condição de jogo é mostrado na Figura \@ref(fig:marioKartSingle).
+
+```{r singleVarModelsForPriceUsingCond}
+
+data(marioKart)
+d <- marioKart[marioKart$totalPr < 100,]
+d$cond <- ifelse(d$cond == 'used', 0, 1)
+g <- lm(totalPr ~ cond, data = d)
+
+table3 <- data.frame(summary(g)$coefficients)
+names(table3) <- c('Estimativa', 'Erro Padrão', 'Valor t', 'Pr(>|t|)')
+rownames(table3) <- c('(Intercepto)', 'Condição')
+
+knitr::kable(table3, digits = 3, align = 'c', 
+             caption = 'Resumo de um modelo linear para prever o preço do leilão com base na condição do jogo.')
+```
+
+```{r marioKartSingle, fig.cap = 'Gráfico de dispersão do preço total do leilão contra a condição do jogo. A linha dos mínimos quadrados também é mostrada.'}
+
+library(openintro)
+data(marioKart)
+mk      <- marioKart[marioKart$totalPr < 100, ]
+mk$cond <- relevel(mk$cond, "used")
+cond <- as.numeric(ifelse(mk$cond == "new", 1, 0))
+
+g <- lm(mk$totalPr ~ cond)
+
+ggplot(mapping = aes(as.factor(cond), mk$totalPr)) + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  geom_point(color = 'skyblue3') + 
+  labs(y = 'Preço Total', x = 'Condição') + 
+  geom_abline(slope = g$coefficients[2], intercept = g$coefficients[1])
+
+
+```
+
+***
+```{exercise}
+
+Examine a Figura \@ref(fig:marioKartSingle). O modelo linear parece razoável?^[Sim. A variabilidade constante, os resíduos quase normais e a linearidade parecem razoáveis.]
+```
+
+***
+
+```{example}
+Interprete o coeficiente para a condição do jogo no modelo. Este coeficiente é significativamente diferente de 0?
+```
+
+
+Note que `condição` é uma variável categórica de dois níveis que recebe o valor 1 quando o jogo é novo e o valor 0 quando o jogo é usado. Então, 10.90 significa que o modelo prevê um extra de \$10. 90 para aqueles jogos que são novos versus aqueles que são usados. Examinando a saída de regressão na Tabela \@ref(tab:singleVarModelsForPriceUsingCond), podemos ver que o p-valor para `condição` é muito próximo de zero, indicando que há fortes evidências de que o coeficiente é diferente de zero ao usar esse modelo simples de uma variável.
+
+### Incluindo e avaliando muitas variáveis em um modelo {#includingAndAssessingManyVariablesInAModel}
+
+Às vezes, há estruturas subjacentes ou relacionamentos entre variáveis preditoras. Por exemplo, os novos jogos vendidos no Ebay tendem a vir com mais rodas do Wii, o que pode ter levado a preços mais altos para esses leilões. Gostaríamos de encaixar um modelo que inclua todas as variáveis potencialmente importantes simultaneamente. Isso nos ajudaria a avaliar a relação entre uma variável preditora e o resultado enquanto controlamos a influência potencial de outras variáveis. Essa é a estratégia usada na __regressão múltipla__. Embora permaneçamos cautelosos em fazer quaisquer interpretações causais usando a regressão múltipla, tais modelos são um primeiro passo comum no fornecimento de evidências de uma conexão causal.
+
+Queremos construir um modelo que responda não apenas à condição do jogo, mas simultaneamente responde por três outras variáveis: `foto_stock`, `duração`, e `rodas`.
+
+\begin{align}
+\widehat{preço}
+	&= \beta_0 + \beta_1\times cond\_nova +
+		\beta_2\times foto\_stock \notag \\
+	&\qquad\  + \beta_3 \times  duração +
+		\beta_4 \times  rodas \notag \\
+\hat{y}
+	&= \beta_0 + \beta_1 x_1 + \beta_2 x_2 +
+		\beta_3 x_3 + \beta_4 x_4
+(\#eq:eqForMultipleRegrOfTotalPrForAllPredictors)
+\end{align}
+
+Nesta equação, $Y$ representa o preço total, $X_1$ indica se o jogo é novo, $X_2$ indica se uma foto foi usada, $X_3$ é a duração do leilão e $X_4$ é o número de rodas de Wii incluídas no jogo. Assim como no caso do preditor único, um modelo de regressão múltipla pode estar faltando componentes importantes ou pode não representar precisamente a relação entre o resultado e as variáveis explicativas disponíveis. Enquanto nenhum modelo é perfeito, nós desejamos explorar a possibilidade de que este possa encaixar os dados razoavelmente bem.
+
+Nós estimamos os parâmetros $\beta_0, \beta_1,\dots, \beta_4$ da mesma forma que fizemos no caso de um único preditor. Nós selecionamos $b_0, b_1, \dots, b_4$ que minimizam a soma dos resíduos quadrados:
+
+\begin{align}
+SSE = e_1^2 + e_2^2 + \dots + e_{141}^2
+	  = \sum_{i=1}^{141} e_i^2
+	  = \sum_{i=1}^{141} \left(y_i - \hat{y}_i\right)^2
+(\#eq:sumOfSqResInMultRegr)
+\end{align}
+
+Aqui há 141 resíduos, um para cada observação. Normalmente usamos um computador para minimizar a soma na Equação \@ref(eq:sumOfSqResInMultRegr) e calcular estimativas pontuais, como mostrado na saída da amostra na Tabela \@ref(tab:outputForMultipleRegrOutputForAllPredictors). Usando essa saída, identificamos as estimativas pontuais $b_i$ de cada $\beta_i$, assim como fizemos no caso de um preditor.
+
+```{r outputForMultipleRegrOutputForAllPredictors}
+d$stockPhoto <- ifelse(d$stockPhoto == 'yes', 1, 0)
+
+g <- lm(totalPr ~ cond + stockPhoto + duration + wheels, data = d)
+
+table4 <- data.frame(summary(g)$coefficients)
+names(table4) <- c('Estimativa', 'Erro Padrão', 'Valor t', 'Pr(>|t|)')
+rownames(table4) <- c('(Intercepto)', 'Condição', 'Foto', 'Duração', 'Rodas')
+
+
+knitr::kable(table4, align = 'c', digits = 4, caption = 'Saída para o modelo de regressão onde preço é o resultado e condição, foto, duração e rodas são os preditores.')
+```
+
+<div class="alert alert-info">
+  <strong>Modelo de Regressão Múltipla</strong>: Um modelo de regressão múltipla é um modelo linear com muitos preditores. Em geral, escrevemos o modelo como
+  
+\begin{align*}
+\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k %+ \epsilon
+\end{align*}
+
+quando há $k$ preditores. Costumamos estimar os parâmetros $\beta_i$ usando um computador.
+</div>
+
+***
+```{exercise, label = 'eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients'}
+Escreva o modelo na Equação \@ref(eq:eqForMultipleRegrOfTotalPrForAllPredictors) usando as estimativas pontuais da Tabela \@ref(tab:outputForMultipleRegrOutputForAllPredictors). Quantos preditores existem neste modelo?^[$\hat{y} = 36,21 + 5,13x_1 + 1,08x_2 – 0,03x_3 + 7,29x_4$, e existem $k=4$ variáveis preditoras.]
+```
+
+***
+
+***
+```{exercise}
+O que $\beta_4$, o coeficiente da variável $x_4$ (rodas Wii), representa? Qual é a estimativa pontual de $\beta_4$?^[É a diferença média no preço do leilão para cada roda Wii incluída ao manter as outras variáveis constantes. A estimativa pontual é $b_4 = 7.29$.]
+```
+
+***
+
+***
+```{exercise, label = 'computeMultipleRegressionResidualForMarioKart'}
+Calcule o resíduo da primeira observação na Tabela \@ref(tab:marioKartDataMatrix) usando a equação identificada na Prática Orientada \@ref(exr:eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients).^[$e_i = y_i - \hat{y_i} = 51,55 – 49,62 = 1,93$, onde 49,62 foi calculado utilizando os valores das variáveis da observação e a equação identificada na Prática Orientada \@ref(exr:eqForMultipleRegrOfTotalPrForAllPredictorsWithCoefficients).]
+```
+
+***
+
+```{example, label = 'colinearityOfCondNewAndStockPhoto'}
+Estimamos um coeficiente para `condição` na Seção \@ref(twoSingleVariableModelsForMarioKartData) de $b_1 = 10,90$ com um erro padrão $EP_{b_1} = 1,26$ ao usar regressão linear simples. Por que pode haver uma diferença entre essa estimativa e aquela na configuração de regressão múltipla?
+```
+
+Se examinássemos os dados cuidadosamente, veríamos que alguns preditores estão correlacionados. Por exemplo, quando estimamos a conexão do resultado `preço` e o preditor `condição` usando a regressão linear simples, não conseguimos controlar outras variáveis, como o número de rodas Wii incluídas no leilão. Esse modelo foi influenciado pela variável de confusão `rodas`. Quando usamos as duas variáveis, esse viés subjacente e não intencional específico é reduzido ou eliminado (embora viés de outras variáveis confusas ainda possa permanecer).
+
+Exemplo \@ref(exm:colinearityOfCondNewAndStockPhoto) descreve um problema comum em regressão múltipla: correlação entre variáveis preditoras. Dizemos que as duas variáveis preditoras são __colineares__ (pronunciado como co-lineares) quando eles são correlacionados e essa colinearidade complica a estimação do modelo. Embora seja impossível evitar que a colinearidade surja em dados observacionais, os experimentos geralmente são projetados para impedir que os preditores sejam colineares.
+
+***
+```{exercise}
+O valor estimado do intercepto é 36,21, e pode-se ficar tentado a fazer alguma interpretação desse coeficiente, tal como, é o preço previsto do modelo quando cada uma das variáveis toma o valor zero: o jogo é usado, a imagem primária não é uma foto de estoque, a duração do leilão é de zero dias, e não há rodas incluídas. Existe algum ganho ao fazer essa interpretação?^[Três das variáveis (condição, foto, e rodas) assumem o valor 0, mas a duração do leilão é sempre um ou mais dias. Se o leilão não estiver em dia, ninguém poderá fazer lances! Isso significa que o preço total do leilão seria sempre zero para tal leilão; a interpretação do intercepto nesse cenário não é perspicaz.]
+```
+
+***
+
+### $R^2$ ajustado como melhor estimativa da variância explicada {#R2adj}
+
+Nós usamos pela primeira vez $R^2$  para determinar a quantidade de variabilidade na resposta que foi explicada pelo modelo:
+
+\begin{align*}
+R^2 = 1 - \frac{\text{variabilidade nos resíduos}}{\text{variabilidade no resultado}}
+	= 1 - \frac{Var(e_i)}{Var(y_i)}
+\end{align*}
+
+onde $e_i$ representa os resíduos do modelo e $y_i$ os resultados. Esta equação permanece válida na estrutura de regressão múltipla, mas um pequeno aprimoramento pode ser ainda mais informativo.
+
+***
+```{exercise, label = 'computeUnadjustedR2ForAllPredictorsInMarioKart'}
+A variância dos resíduos para o modelo dado na Prática Orientada \@ref(exr:computeMultipleRegressionResidualForMarioKart) é 23,34 e a variação do preço total em todos os leilões é de 83,06. Calcule $R^2$ para este modelo.^[$R^2 = 1 - \frac{23,34}{83,06} = 0,719$.]
+```
+
+***
+
+Essa estratégia para estimar $R^2$ é aceitável quando há apenas uma única variável. No entanto, torna-se menos útil quando existem muitas variáveis. O $R^2$ regular é uma estimativa menor da quantidade de variabilidade explicada pelo modelo. Para obter uma estimativa melhor, usamos o valor ajustado de $R^2$.
+
+<div class="alert alert-info">
+  <strong>$\mathbf{R^2}$ ajustado como uma ferramenta para avaliação de modelo</strong>: O $\mathbf{R^2}$ ajustado é calculado como
+  
+\begin{align*}
+R_{aj}^{2} = 1-\frac{Var(e_i) / (n-k-1)}{Var(y_i) / (n-1)}
+	= 1-\frac{Var(e_i)}{Var(y_i)} \times \frac{n-1}{n-k-1}
+\end{align*}
+
+onde $n$ é o número de casos usados para ajustar o modelo e $k$ é o número de variáveis preditoras no modelo.
+</div>
+
+
+Como $k$ nunca é negativo, o $R^2$ ajustado será menor -- muitas vezes um pouco menor -- do que o $R^2$ não ajustado. O raciocínio por trás do $R^2$ ajustado está nos __graus de liberdade__ associados a cada variação.^[Na regressão múltipla, os graus de liberdade associados à variância da estimativa dos resíduos são $n-k-1$, não $n-1$. Por exemplo, se fôssemos fazer previsões para novos dados usando nosso modelo atual, descobriríamos que o $R^2$ não ajustado é uma estimativa excessivamente otimista da redução na variação na resposta, e usando os graus de liberdade na fórmula do $R^2$ ajustado ajuda a corrigir este viés.]
+
+***
+```{exercise}
+Houve $n=141$ leilões no conjunto de dados e $k=4$ variáveis preditoras no modelo. Use $n$, $k$ e as variações da Prática Orientada \@ref(exr:computeUnadjustedR2ForAllPredictorsInMarioKart) para calcular o $R_{aj}^2$ para o modelo Mario Kart.^[$R_{aj}^2 = 1 - \frac{23.34}{83.06}\times \frac{141-1}{141-4-1} = 0.711$.]
+```
+
+***
+
+***
+```{exercise}
+Suponha que você tenha adicionado outro preditor ao modelo, mas a variância dos erros $Var(e_i)$ não caiu. O que aconteceria com o $R^2$? O que aconteceria com o $R^2$ ajustado?^[O $R^2$ não ajustado permaneceria o mesmo e o $R^2$ ajustado cairia.]
+```
+
+***
+
+$R^2$ ajustado poderia ter sido usado na regressão linear simples. No entanto, quando há apenas $k=1$ preditores, o ajuste $R^2$ está muito próximo do valor normal de $R^2$, portanto, essa nuance não é normalmente importante quando se considera apenas um preditor.
+
+## Seleção de modelos{#modelSelection}
+
+O melhor modelo nem sempre é o mais complicado. Às vezes, incluir variáveis que não são evidentemente importantes pode reduzir a precisão das previsões. Nesta seção, discutiremos as estratégias de seleção de modelos, que nos ajudarão a eliminar as variáveis do modelo que são consideradas menos importantes.
+
+Na prática, o modelo que inclui todas as variáveis explicativas disponíveis é geralmente chamado de __modelo completo__. O modelo completo pode não ser o melhor modelo e, se não for, queremos identificar um modelo menor que seja preferível.
+
+
+### Identificando variáveis no modelo que podem não ser úteis {#notUsefulVariables}
+
+O $R^2$ ajustado descreve a força de um ajuste de modelo e é uma ferramenta útil para avaliar quais preditores estão adicionando valor ao modelo, em que _adicionando valor_ significa que eles estão (provavelmente) melhorando a precisão na previsão de resultados.
+
+Vamos considerar dois modelos, que são mostrados nas Tabelas \@ref(tab:outputForMultipleRegrOutputForAllPredictors2) e \@ref(tab:marioKartMultipleRegressionModelAllButDuration). A primeira tabela resume o modelo completo já que inclui todos preditores, enquanto a segunda não inclui a variável `duração`.
+
+```{r outputForMultipleRegrOutputForAllPredictors2}
+table5 <- table4
+table5[6,] <- c(0.7108, '', '', '')
+rownames(table5) <- c(rownames(table4), 'R² adj')
+
+knitr::kable(table5, digits = 3, 
+             caption = 'O ajuste para o modelo de regressão completo, incluindo o valor ajustado de R2')
+
+```
+
+```{r marioKartMultipleRegressionModelAllButDuration}
+
+g <- lm(totalPr ~ cond + stockPhoto + wheels, data = d)
+
+table6 <- data.frame(round(summary(g)$coefficients,3))
+colnames(table6) <- colnames(table5)
+table6[5,] <- c(0.7128, '', '', '')
+rownames(table6) <- c('(Intercepto)', 'Condição', 'Foto', 'Rodas', 'R² adj')
+
+
+knitr::kable(table6, caption = 'O ajuste para o modelo de regressão para preditores condição, foto e rodas.')
+```
+
+```{example}
+Qual dos dois modelos é melhor?
+```
+
+
+Nós comparamos o $R^2$ ajustado de cada modelo para determinar qual escolher. O primeiro modelo tem um $R^2_{aj}$ menor que o $R^2_{aj}$ do segundo modelo, então preferimos o segundo modelo ao primeiro.
+
+Será que o modelo sem `duração` é melhor do que o modelo com `duração`? Nós não podemos ter certeza, mas com base no $R^2$ ajustado, esta é a nossa melhor avaliação.
+
+
+### Duas estratégias de seleção de modelo {#twoStrategies}
+
+Duas estratégias comuns para adicionar ou remover variáveis em um modelo de regressão múltipla são chamadas de __eliminação regressiva__ e __seleção progressiva__. Essas técnicas são frequentemente chamadas de estratégias de seleção de modelos _gradual_, porque elas adicionam ou excluem uma variável de cada vez, conforme elas "escalam" os preditores candidatos.
+
+__Eliminação regressiva__ (backward elimination) começa com o modelo que inclui todas as possíveis variáveis preditoras. As variáveis são eliminadas uma por vez do modelo até que não possamos melhorar o $R^2$ ajustado. A estratégia dentro de cada etapa de eliminação é eliminar a variável que leva à maior melhoria no $R^2$ ajustado.
+
+```{example, label = 'backwardEliminationExampleWMarioKartData'}
+Resultados correspondentes ao modelo completo para os dados são mostrados na Tabela \@ref(tab:outputForMultipleRegrOutputForAllPredictors2). Como devemos proceder com a estratégia de eliminação regressiva?
+```
+
+
+Nossa linha de base para o $R^2$ ajustado do modelo completo é $R^2_{aj} = 0,7108$, e precisamos determinar se descartar um preditor melhorará o $R^2$ ajustado. Para verificar, ajustamos quatro modelos, cada um com um preditor diferente, e registramos os $R^2$ ajustados de cada:
+
+```{r}
+R <- matrix(c(0.6626, 0.7107, 0.7128, 0.3487), ncol = 4, nrow = 1)
+rownames(R) <- c('R² aj')
+colnames(R) <- c('condição', 'foto', 'duração', 'rodas')
+
+knitr::kable(R)
+```
+
+
+O terceiro modelo sem `duração` tem o maior $R^2$ ajustado de 0.7128, então nós o comparamos com o $R^2$ ajustado para o modelo completo. Porque eliminando `duração` leva a um modelo com um maior $R^2$ ajustado, nóstiramos `duração` do modelo.
+
+Como eliminamos um preditor do modelo na primeira etapa, vemos se devemos eliminar quaisquer preditores adicionais. Nossa linha de base ajustada $R^2$ é agora $R^2_{aj} = 0.7128$. Agora, encaixamos três novos modelos, que consideram a eliminação de cada um dos três preditores restantes:
+
+```{r}
+R_v2 <- matrix(c(0.6587, 0.7124, 0.3414), ncol = 3, nrow = 1)
+rownames(R_v2) <- c('R² aj')
+colnames(R_v2) <- c('condição', 'foto', 'rodas')
+
+knitr::kable(R_v2)
+```
+
+Nenhum desses modelos leva a uma melhoria do $R^2$ ajustado, portanto, não eliminamos nenhum dos preditores restantes. Ou seja, após a eliminação regressiva, ficamos com o modelo que mantém condição, foto e rodas, que podemos resumir usando os coeficientes da Tabela \@ref(tab:marioKartMultipleRegressionModelAllButDuration):
+
+\begin{align*}
+\hat{y} \ &= \ b_0 + b_1x_1 + b_2x_2 + b_4x_4 \\
+\widehat{preço} &= \ 36,05 + 5,18 \times \text{cond\_nova} + 1,12 \times \textfoto\_stock} + 7,30 \times \text{rodas}
+\end{align*}
+
+A estratégia de __seleção progressiva__ é o reverso da técnica de eliminação regressiva. Em vez de eliminar as variáveis uma por vez, adicionamos as variáveis uma por vez até não encontrarmos nenhuma variável que melhore o modelo (medida pelo $R^2$ ajustado).
+
+```{example, label = 'forwardEliminationExampleWMarioKartData'}
+Construa um modelo para o conjunto de dadosusando a estratégia de seleção progressiva.
+```
+
+Começamos com o modelo que não inclui variáveis. Em seguida, ajustamos cada um dos modelos possíveis com apenas uma variável. Ou seja, nós ajustamos no modelo incluindo apenas `condição`, então o modelo incluindo apenas `foto`, então um modelo com apenas `duração`, e um modelo com apenas `rodas`. Cada um dos quatro modelos fornece um valor ajustado de $R^2$:
+
+```{r}
+R_v3 <- matrix(c(0.3459, 0.0332, 0.1338, 0.6390), ncol = 4, nrow = 1)
+rownames(R_v3) <- c('R² aj')
+colnames(R_v3) <- c('condição', 'foto', 'duração', 'rodas')
+
+knitr::kable(R_v3)
+```
+
+Nesta primeira etapa, comparamos o $R^2$ ajustado com um modelo de linha de base que não possui preditores. O modelo sem preditores sempre tem $R_{aj}^2 = 0$. O modelo com um preditor que tem o maior $R^2$ ajustado é o modelo com o preditor `rodas`, e porque esse $R^2$ ajustado é maior que o $R^2$ ajustado do modelo sem preditores ($R_{aj}^2 = 0$), vamos adicionar essa variável ao nosso modelo.
+
+Repetimos o processo novamente, desta vez considerando modelos de 2 preditores onde um dos preditores é `rodas` e com uma nova linha de base $R^2_{aj} = 0.6390$:
+
+```{r}
+R_v4 <- matrix(c(0.7124, 0.6587, 0.6528), ncol = 3, nrow = 1)
+rownames(R_v4) <- c('R² aj')
+colnames(R_v4) <- c('condição', 'foto', 'duração')
+
+knitr::kable(R_v4)
+```
+
+O melhor preditor nesta fase, `condição`, tem um maior $R^2$ ajustado (0.7124) que a linha de base (0.6390), então também o adicionamos no modelo.
+
+Como adicionamos novamente uma variável ao modelo, continuamos e verificamos se seria vantajoso adicionar uma terceira variável:
+
+```{r}
+R_v5 <- matrix(c(0.7128, 0.7107), ncol = 2, nrow = 1)
+rownames(R_v5) <- c('R² aj')
+colnames(R_v5) <- c('foto', 'duração')
+
+knitr::kable(R_v5)
+```
+
+O modelo adicionando `foto` tem maior $R^2$ ajustado (0.7124 para 0.7128), então nós o adicionamos no modelo.
+
+Porque nós adicionamos novamente um preditor, nós verificamos se adicionando a última variável, `duração`, irá melhorar o $R^2$ ajustado. Nós comparamos o $R^2$ ajustado do modelo com duração e os outros três preditores (0,7108) para o modelo que considera apenas `rodas`, `condição`, e `foto` (0,7128). Adicionar `duração` não melhora o $R^2$ ajustado, por isso não o adicionamos ao modelo, e chegamos ao mesmo modelo que identificamos a partir da eliminação regressiva.
+
+<div class="alert alert-info">
+  <strong>Estratégias de seleção de modelos</strong>: A eliminação regressiva começa com o maior modelo e elimina as variáveis uma a uma até que estejamos satisfeitos de que todas as variáveis restantes são importantes para o modelo. A seleção progressiva começa sem nenhuma variável incluída no modelo, depois adiciona variáveis de acordo com sua importância até que nenhuma outra variável importante seja encontrada.
+</div>
+
+Não há garantia de que a eliminação regressiva e a seleção progressiva chegarão ao mesmo modelo final. Se ambas as técnicas são testadas e chegam a modelos diferentes, escolhemos o modelo com o maior $R_{aj}^2$; Outras opções de escolha existem, mas estão além do escopo deste livro.
+
+### A abordagem do p-valor, uma alternativa para o $R^2$ ajustado {#pValueAlternativeToR2adj}
+
+O p-valor pode ser usado como uma alternativa para o ajuste de $R^2$ para a seleção do modelo.
+
+Na eliminação regressiva, identificaríamos o preditor correspondente ao maior p-valor. Se o p-valor estiver acima do nível de significância, geralmente $\alpha = 0,05$, então abandonaríamos essa variável, reformaríamos o modelo e repetiríamos o processo. Se o maior p-valor for menor que $\alpha = 0,05$, então não eliminaríamos nenhum preditor e o modelo atual seria nosso modelo de melhor ajuste.
+
+Na seleção direta com p-valores, invertemos o processo. Começamos com um modelo que não possui preditores, então ajustamos um modelo para cada possível preditor, identificando o modelo em que o p-valor do preditor correspondente é o menor. Se esse p-valor for menor que $\alpha = 0,05$, nós o adicionamos ao modelo e repetimos o processo, considerando se devemos adicionar mais variáveis uma por vez. Quando nenhum dos preditores restantes puder ser adicionado ao modelo e tiver um p-valor menor que 0,05, então paramos de adicionar variáveis e o modelo atual seria nosso modelo de melhor ajuste.
+
+***
+```{exercise, labe3l = 'marioKartMultipleRegressionModelAllButDuration'}
+Examine a Tabela \@ref(tab:marioKartMultipleRegressionModelAllButDuration), que considera o modelo incluindo os preditores `condição`, `foto` e `rodas`. Se estivéssemos usando a abordagem de p-valor com eliminação regressiva e estivéssemos considerando esse modelo, qual dessas três variáveis estaria pronta para eliminação? Nós abandonaríamos essa variável ou a manteríamos no modelo?^[O preditor foto está pronto para eliminação, pois tem o maior p-valor. Além disso, como esse p-valor é maior que 0,05, na verdade o eliminamos do modelo.]
+```
+
+***
+
+Embora as abordagens do $R^2$ ajustado e do p-valor sejam semelhantes, elas às vezes levam a modelos diferentes, com a abordagem do $R^2$ ajustado tendendo a incluir mais preditores no modelo final. Por exemplo, se tivéssemos usado a abordagem do p-valor com os dados do leilão, não teríamos incluído o preditor `foto` no modelo final.
+
+<div class="alert alert-info">
+  <strong>Quando usar o $R^2$ ajustado e quando usar a abordagem do p-valor</strong>: Quando o único objetivo é melhorar a precisão da previsão, use $R^2$ ajustado. Esse é comumente o caso em aplicativos de aprendizado de máquina.
+
+Quando nos preocupamos em entender quais variáveis são estatisticamente significantes preditores da resposta, ou se existe interesse em produzir um modelo mais simples ao custo potencial de uma pequena precisão de predição, então a abordagem do p-valor é preferida.
+</div>
+
+Independentemente de você usar a abordagem do $R^2$ ajustado ou do p-valor, ou se você usar a eliminação regressiva ou seleção progressiva, nosso trabalho não está feito após a seleção de variáveis. Devemos ainda verificar se as condições do modelo são razoáveis.
+
+## Verificando os pressupostos do modelo usando gráficos {#multipleRegressionModelAssumptions}
+
+
+Métodos de regressão múltipla usando o modelo
+
+\begin{align*}
+\hat{y} &= \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
+\end{align*}
+
+geralmente dependem dos seguintes quatro pressupostos:
+
++ os resíduos do modelo são quase normais,
+
++ a variabilidade dos resíduos é quase constante,
+
++ os resíduos são independentes, e
+
++ cada variável é linearmente relacionada ao resultado.
+
+Os __Gráficos de diagnóstico__ podem ser usados para verificar cada uma dessas suposições. Vamos considerar o modelo dos dados do leilão Mario Kart, e verificar se há alguma preocupação notável:
+
+\begin{align*}
+\widehat{preço} &= \ 36,05 + 5,18 \times \text{cond\_nova} + 1,12 \times \text{foto\_stock} + 7,30 \times \text{rodas}
+\end{align*}
+
+
++ __Gráfico de probabilidade normal.__ Um gráfico de probabilidade normal dos resíduos é mostrado na Figura \@ref(fig:mkDiagnosticNormalQuantilePlot). Enquanto o enredo exibe algumas pequenas irregularidades, não há outliers que possam ser motivo de preocupação. Em um gráfico de probabilidade normal para resíduos, tendemos a estar mais preocupados com resíduos que parecem ser outliers, uma vez que indicam caudas longas na distribuição de resíduos.
+
+```{r mkDiagnosticNormalQuantilePlot, fig.cap = 'Um gráfico de probabilidade normal dos resíduos é útil na identificação de observações que podem ser outliers.'}
+library(openintro)
+data(marioKart)
+toss <- which(marioKart$totalPr > 80)
+keep <- c("totalPr",
+          "cond",
+          "stockPhoto",
+          "duration",
+          "wheels",
+          "shipSp")
+d <- marioKart[-toss, keep]
+d$stockPhoto <- (d$stockPhoto == "yes") + 0
+d$cond <- (d$cond == "new") + 0
+thisOne <- names(d) == "cond"
+names(d)[thisOne] <- "condNew"
+d$shipSp <- as.character(d$shipSp)
+these <- d$shipSp %in%
+         c("firstClass", "priority", "parcel", "media")
+d$shipSp[these] <- "usps"
+d$shipSp[grep("ups", d$shipSp)] <- "ups"
+these <- d$shipSp %in% c("other", "standard")
+d$shipSp[these] <- "unknown"
+d$shipSp <- as.factor(d$shipSp)
+d <- d[,-which(colnames(d) == "shipSp")]
+
+fit <- lm(totalPr ~ condNew + stockPhoto + wheels, data = d)
+
+e <- fit$res
+f <- fit$fit
+
+# mkDiagnosticNormalQuantilePlot.pdf
+ggplot(data = data.frame(e), aes(sample = e)) + 
+  stat_qq(color = 'skyblue3') +
+  stat_qq_line(color = 'skyblue3', linetype = 'dashed') + 
+  theme(axis.ticks.y = element_blank(), axis.text.y = element_blank()) +
+  labs(x = "Quantis Teóricos",y = "Resíduos")  +  
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+```
+
+
++ __Valores absolutos dos resíduos em relação aos valores ajustados.__ Um gráfico do valor absoluto dos resíduos em relação aos seus valores ajustados correspondentes ($\hat{y}_i$) é mostrado na Figura \@ref(fig:mkDiagnosticEvsAbsF). Este gráfico é útil para verificar a condição de que a variação dos resíduos é aproximadamente constante. Não vemos desvios óbvios da variação constante neste exemplo.
+
+```{r mkDiagnosticEvsAbsF, fig.cap = 'Comparando o valor absoluto dos resíduos com os valores ajustados é útil na identificação de desvios da suposição de variância constante.'}
+# mkDiagnosticEvsAbsF.pdf
+ggplot() + 
+  labs(x = "Valores Ajustados", y = "Valores Absolutos dos Resíduos")  +  
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  geom_point(aes(x = f, y = abs(e)), color = 'skyblue3')
+```
+
++ __Resíduos em ordem de coleta de dados.__ Um gráfico dos resíduos na ordem em que seus leilões correspondentes foram observados é mostrado na Figura \@ref(fig:mkDiagnosticInOrder). Tal enredo é útil para identificar qualquer ligação entre casos que estão próximos uns dos outros. Poderíamos procurar preços em queda ao longo do tempo ou se houvesse uma hora do dia em que os leilões tendiam a obter um preço mais alto. Aqui não vemos nenhuma estrutura que indique um problema.~[Uma verificação especialmente rigorosa usaria os métodos de __séries temporais__. Por exemplo, podemos verificar se os resíduos consecutivos estão correlacionados. Fazer isso com esses resíduos não gera correlações estatisticamente significativas.]
+
+```{r mkDiagnosticInOrder, fig.cap = 'Plotar os resíduos na ordem em que as observações correspondentes foram coletadas ajuda a identificar as conexões entre as observações sucessivas. Se parece que observações consecutivas tendem a estar próximas umas das outras, isso indica que a suposição de independência das observações falharia.'}
+# mkDiagnosticInOrder.pdf
+ggplot() + 
+  labs(x = "Ordem de Coleta", y = "Resíduos")  +  
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  geom_point(aes(x = 1:length(e), y = e), color = 'skyblue3')
+
+```
+
++ __Residuos contra cada variável preditora.__ Consideramos um gráfico dos resíduos em relação à variável `condição`, os resíduos contra a variável `foto`e resíduos contra a variável `roda`. Estes gráficos são mostradas na Figura \@ref(fig:mkDiagnosticEvsVariables). Para a variável de condição de dois níveis, garantimos que não veremos nenhuma tendência restante e, em vez disso, estamos verificando se a variabilidade não flutua entre os grupos, o que não acontece. No entanto, olhando para a variável estoque de fotos, descobrimos que há alguma diferença na variabilidade dos resíduos nos dois grupos. Adicionalmente, quando consideramos os resíduos contra a variável `rodas`, nós vemos alguma estrutura possível. Parece haver curvatura nos resíduos, indicando que a relação provavelmente não é linear.
+
+```{r mkDiagnosticEvsVariables, fig.cap = 'Para as variáveis condição e foto, verificamos as diferenças no formato de distribuição ou na variabilidade dos resíduos. No caso da variável foto, vemos um pouco menos de variabilidade no grupo foto única do que no outro grupo. Para preditores numéricos, também verificamos tendências ou outras estruturas. Vemos uma ligeira reverência nos resíduos contra a variável rodas na parte de baixo.', out.height='100%', fig.height = 7}
+# mkDiagnosticEvsVariables.pdf
+g1 <- ggplot(mapping = aes(as.factor(d$condNew), e)) + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  labs(x = "Condição", y = "Resíduos")  +  
+  geom_boxplot() + 
+  geom_point(aes(x = as.factor(0), y = e[d$condNew == 0]), color = 'skyblue3') + 
+  geom_point(aes(x = as.factor(1), y = e[d$condNew == 1]), color = 'skyblue3') + 
+  scale_x_discrete(breaks = seq(0, 1, by = 1), labels = c('Usado', 'Novo'))  
+
+
+g2 <- ggplot(mapping = aes(as.factor(d$stockPhoto), e)) + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  labs(x = "Tipo de Foto", y = "Resíduos")  +  
+  geom_boxplot() + 
+  geom_point(aes(x = as.factor(0), y = e[d$stockPhoto == 0]), color = 'skyblue3') + 
+  geom_point(aes(x = as.factor(1), y = e[d$stockPhoto == 1]), color = 'skyblue3') + 
+  scale_x_discrete(breaks = seq(0, 1, by = 1), labels = c('Única', 'Estoque'))  
+
+g3 <- ggplot(mapping = aes(d$wheels, e)) + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  labs(x = "Número de Rodas", y = "Resíduos") + 
+  geom_point(color = 'skyblue3')
+
+gridExtra::grid.arrange(g1, g2, g3, ncol = 1)
+```
+
+É necessário resumir os diagnósticos para qualquer ajuste de modelo. Se os diagnósticos suportarem as suposições do modelo, isso melhoraria a credibilidade nos resultados. Se a avaliação diagnóstica mostrar a estrutura subjacente remanescente nos resíduos, devemos tentar ajustar o modelo para considerar essa estrutura. Se não formos capazes de fazê-lo, poderemos ainda relatar o modelo, mas também observar suas deficiências. No caso dos dados do leilão, relatamos que parece haver uma variação não constante na variável `fotos` e que pode haver uma relação não linear entre o preço total e o número de rodas incluídas em um leilão. Esta informação seria importante para os compradores e vendedores que podem rever a análise, e omitir esta informação pode ser um revés para as pessoas que o modelo pode ajudar.
+
+<div class="alert alert-info">
+  <strong>"Todos os modelos estão errados, mas alguns são úteis"" - George E.P. Box</strong>: A verdade é que nenhum modelo é perfeito. No entanto, até modelos imperfeitos podem ser úteis. Relatar um modelo falho pode ser razoável desde que seja claro e relate as deficiências do modelo.
+</div>
+
+<div class="alert alert-info">
+  <strong> Não relate os resultados quando as suposições forem totalmente violadas</strong>: Embora haja uma pequena margem de manobra nas suposições do modelo, não vá longe demais. Se as suposições do modelo forem claramente violadas, considere um novo modelo, mesmo que isso signifique aprender mais métodos estatísticos ou contratar alguém que possa ajudar.
+</div>
+
+<div class="alert alert-info">
+  <strong>Intervalos de confiança em regressão múltipla</strong>: Intervalos de confiança para coeficientes em regressão múltipla podem ser calculados usando a mesma fórmula como no modelo preditor único:
+  
+\begin{align*}
+b_i \ \pm\ t_{df}^{\star}EP_{b_{i}}
+\end{align*}
+
+onde $t_{df}^{\star}$ é o valor $t$ apropriado correspondente ao nível de confiança e aos graus de liberdade do modelo, $df=n-k-1$.
+</div>
+
+
+## Introdução à regressão logística {#logisticRegression}
+
+Nesta seção, apresentamos a __regressão logística__ como uma ferramenta para construir modelos quando existe uma variável de resposta categórica com dois níveis. A regressão logística é um tipo de __modelo linear generalizado__ (MLG) para variáveis de resposta onde a regressão múltipla regular não funciona muito bem. Em particular, a variável resposta nessas configurações geralmente assume um formato em que os residuos parecem completamente diferentes da distribuição normal.
+
+Os MLG podem ser considerados como uma abordagem de modelagem de dois estágios. Primeiro modelamos a variável de resposta usando uma distribuição de probabilidade, como a distribuição binomial ou de Poisson. Segundo, modelamos o parâmetro da distribuição usando uma coleção de preditores e uma forma especial de regressão múltipla.
+
+Na Seção \@ref(logisticRegression) vamos revisitar o conjunto de dados `email`. Esses e-mails foram coletados de uma única conta de e-mail e trabalharemos no desenvolvimento de um filtro de spam básico usando esses dados. A variável resposta, `spam`, foi codificado para ter valor 0 quando uma mensagem não é spam e 1 quando é spam. Nossa tarefa será criar um modelo apropriado que classifique mensagens como spam ou não spam, usando características de email codificadas como variáveis preditoras. Embora esse modelo não seja o mesmo daqueles usados em filtros de spam de grande escala, ele compartilha muitos dos mesmos recursos. 
+
+### Dados e-mail {#eMailData}
+
+O conjunto de dados `email` foi apresentado pela primeira vez no Capítulo de introdução, com um número relativamente pequeno de variáveis. Na verdade, existem muitas outras variáveis disponíveis que podem ser úteis para classificar o spam. As descrições dessas variáveis são apresentadas na Tabela \@ref(tab:emailVariables). A variável *spam* será o resultado, e as outras 10 variáveis serão os preditores do modelo. Embora tenhamos limitado que os preditores usados nesta seção sejam variáveis categóricas (em que muitos são representados como variáveis indicadoras), preditores numéricos também podem ser usados na regressão logística. Veja a nota de rodapé para uma discussão adicional sobre este tópico.^[Lembre-se que se outliers estão presentes em variáveis preditoras, as observações correspondentes podem ser especialmente influentes no modelo resultante. Essa é a motivação para omitir as variáveis numéricas, como o número de caracteres e as quebras de linha nos e-mails, que vimos anteriormente. Estas variáveis exibiram uma inclinação extrema. Poderíamos resolver esse problema transformando essas variáveis (por exemplo, usando uma transformação logarítmica), mas omitiremos essa investigação adicional para fins de brevidade.]
+
+```{r emailVariables}
+
+data("email")
+
+aux <- email[,c('spam', 'to_multiple', 'cc', 'attach', 'dollar', 'winner', 
+                'inherit', 'password', 'format', 're_subj', 'exclaim_subj')]
+
+names(aux) <- c('spam', 'a_multiplos', 'cc', 'anexo', 'dolar', 'ganhador',
+                'herdar', 'senha', 'formatacao', 're_assun', 'exclamacao_assun')
+
+des_email <- c('Especifica se a mensagem era spam', 
+               'uma variável indicadora de se mais de uma pessoa estava no campo A do email', 
+               'um indicador se alguém estava no campo cc do email', 
+               'um indicador se tinha um anexo, como um documento ou imagem', 
+               'um indicador se a palavra dólar ou simbolo $ apareceu no email',
+               'um indicador se a palavra ganhador apareceu no email', 
+               'um indicador se a palavra herdar (ou uma variação, como heranca), apareceu no email', 
+               'um indicador se a palavra senha estava presente no email', 
+               'indica se o email tinha formatação especial, como negritos, tabelas ou links', 
+               'indica se re: estava incluida no começo do assunto do email',
+               'indica se tinha algum ponto de exclamação no assunto do email')
+
+table7 <- data.frame(cbind(names(aux), des_email))
+colnames(table7) <- c('Variável', 'Descrição')
+
+knitr::kable(table7, caption = 'Descrições de 11 variáveis no conjunto de dados email. Observe que todas as variáveis são variáveis indicadoras, que tomam o valor 1 se a característica especificada estiver presente e 0 caso contrário.')
+```
+
+
+### Modelando a probabilidade de um evento {#modelingTheProbabilityOfAnEvent}
+
+<div class="alert alert-info">
+  <strong>Notação para um modelo de regressão logística</strong>: A variável de resultado para um MLG é denotada por $Y_i$, onde o índice $i$ é usado para representar a observação $i$. No aplicativo de e-mail, $Y_i$ será usado para representar se o e-mail $i$ é spam ($Y_i=1$) ou não ($Y_i=0$). 
+  
+As variáveis preditoras são representadas da seguinte forma: $x_{1,i}$ é o valor da variável 1 para observação $i$, $x_{2,i}$ é o valor da variável 2 para observação $i$ e assim por diante.
+</div>
+
+A regressão logística é um modelo linear generalizado em que o resultado é uma variável categórica de dois níveis. O resultado, $Y_i$, recebe o valor 1 (em nosso aplicativo, isso representa uma mensagem de spam) com probabilidade $p_i$ e o valor 0 com probabilidade $1-p_i$. É a probabilidade $p_i$ que modelamos em relação às variáveis preditoras.
+
+O modelo de regressão logística relaciona a probabilidade de um e-mail ser spam ($p_i$) aos preditores $x_{1,i}, x_{2,i}, \dots, x_{k,i}$ através de um quadro muito parecido com o de regressão múltipla:
+
+\begin{align}
+transformação(p_{i}) = \beta_0 + \beta_1x_{1,i} + \beta_2 x_{2,i} + \cdots \beta_k x_{k,i}
+(\#eq:linkTransformationEquation)
+\end{align}
+
+Queremos escolher uma transformação na Equação \@ref(eq:linkTransformationEquation) que faz sentido prático e matemático. Por exemplo, queremos uma transformação que faça o leque de possibilidades do lado esquerdo da Equação \@ref9EQ:linkTransformationEquation) igual ao intervalo de possibilidades para o lado direito; se não houvesse transformação para essa equação, o lado esquerdo só poderia ter valores entre 0 e 1, mas o lado direito poderia obter valores fora desse intervalo. Uma transformação comum para $p_i$ é o __transformação logit__, que pode ser escrito como
+
+\begin{align*}
+logit(p_i) = \log_{e}\left( \frac{p_i}{1-p_i} \right)
+\end{align*}
+
+A transformação logit é mostrada na Figura \@ref(fig:logitTransformationFigureHoriz). Abaixo, nós reescrevemos a Equação \@ref(eq:linkTransformationEquation) usando a transformação logit de $p_i$:
+
+\begin{align*}
+\log_{e}\left( \frac{p_i}{1-p_i} \right)
+	= \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + \cdots + \beta_k x_{k,i}
+\end{align*}
+
+No nosso exemplo de spam, existem 10 variáveis preditoras, então $k=10$. Este modelo não é muito intuitivo, mas ainda tem alguma semelhança com a regressão múltipla, e podemos ajustar este modelo usando *software*. De fato, uma vez que examinamos os resultados do *software*, começaremos a sentir que estamos de volta à regressão múltipla, mesmo que a interpretação dos coeficientes seja mais complexa.
+
+```{r logitTransformationFigureHoriz, fig.cap = 'Valores de pi contra valores de logit(pi)'}
+p  <- seq(0.0001, 0.9999, 0.0002)
+lp <- log(p/(1-p))
+
+pts  <- seq(0.01, 0.99, length.out = 25)
+R    <- c(-6,6)
+adj  <- 0.07
+adj1 <- 0.02
+
+#-------------------------------------------------------------------------------
+this <- which.min(abs(p - 0.2))
+LP <- c(seq(6, -5, -1))
+P <- exp(LP) / (1 + exp(LP))
+POS <- c(3, 1, 3, 1, 2, 2, 2, 2, 4, 3, 1, 3)
+xOFF <- c()
+Round <- c(3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 3)
+
+t1 <- t2 <- labs <- vector()
+
+for (i in 1:length(LP)) {
+  t1[i]   <- format(round(c(LP, 0.9), Round[i]))[i]
+  t2[i]   <- format(round(P, Round[i]))[i]
+  
+  labs[i] <- paste0("(", t1[i], ", ", t2[i], ")")
+}
+
+ggplot() + 
+  geom_line(aes(lp, p)) + 
+  labs(x = expression(logit(p[i])), y = expression(p[i])) + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  geom_hline(yintercept = 0:1, linetype = 'dashed', color = 'skyblue3') + 
+  geom_point(aes(LP, P), color = 'red') + 
+  annotate(geom = "text", x = as.numeric(t1), y = as.numeric(t2), size = 3, label = paste0(labs))
+
+```
+
+```{example, label = 'logisticExampleWithToMultiple'}
+Aqui criamos um filtro de spam com um único preditor: `a_múltiplos`. Essa variável indica se mais de um endereço de e-mail foi listado no campo do e-mail. O seguinte modelo de regressão logística foi ajustado usando software estatístico:
+```
+
+\begin{align*}
+\log\left( \frac{p_i}{1-p_i} \right) = -2.12 - 1.81\times\text{a\_múltiplos}
+\end{align*}
+
+Se um email for selecionado aleatoriamente e tiver apenas um endereço no campo, qual é a probabilidade de ser spam? E se mais de um endereço estiver listado no campo?
+
+Se houver apenas um e-mail no campo de destinatários, `a_multiplicar` toma o valor 0 e o lado direito da equação do modelo é igual a -2,12. Resolvendo para $p_i$: $\frac{e^{-2.12}}{1 + e^{-2.12}} = 0.11$. Assim como rotulamos um valor ajustado de $y_i$ com um "chapéu" em uma variável simples e em uma regressão múltipla, faremos o mesmo para essa probabilidade: $\hat{p}_i = 0.11$.
+
+Se houver mais de um endereço listado no campo de destinatários, o lado direito da equação do modelo será $-2.12 - 1.81\times1 = -3.93$, que corresponde a uma probabilidade $\hat{p}_i = 0.02$.
+
+Observe que podemos examinar -2,12 e -3,93 na Figura \@ref(fig:logitTransformationFigureHoriz) para estimar a probabilidade antes de calcular formalmente o valor.
+
+Para converter de valores na escala de regressão (por exemplo, -2,12 e -3,93 no Exemplo \@ref(exm:logisticExampleWithToMultiple)), use a seguinte fórmula, que é o resultado da resolução de $p_i$ no modelo de regressão:
+
+\begin{align*}
+p_i
+	= \frac{e^{\beta_0 + \beta_1 x_{1,i}+\cdots+\beta_k x_{k,i}}}
+		{\ 1\ \ +\ \ e^{\beta_0 + \beta_1 x_{1,i}+\cdots+\beta_k x_{k,i}}\ }
+\end{align*}
+
+Tal como acontece com a maioria dos problemas de dados aplicados, substituímos as estimativas pontuais dos parâmetros (o $\beta_i$) para que possamos fazer uso desta fórmula. No Exemplo \@ref(exm:logisticExampleWithToMultiple), as probabilidades foram calculadas como
+
+\begin{align*}
+&\frac{\ e^{-2.12}\ }{\ 1\ +\ e^{-2.12}\ } = 0.11 && \frac{\ e^{-2.12 - 1.81}\ }{\ 1\ +\ e^{-2.12 - 1.81}\ } = 0.02
+\end{align*}
+
+Embora as informações sobre se o e-mail é endereçado a várias pessoas seja um começo útil na classificação de e-mails como spam ou não, as probabilidades de 11\% e 2\% não são drasticamente diferentes, e nenhuma delas fornece evidências muito fortes sobre quais mensagens de e-mail específicas são spam. Para obter estimativas mais precisas, precisaremos incluir muito mais variáveis no modelo.
+
+Usamos software estatístico para ajustar o modelo de regressão logística com todos os dez preditores descritos na Tabela \@ref(tab:emailVariables). Como a regressão múltipla, o resultado pode ser apresentado em uma tabela de resumo, que é mostrada na Tabela \@ref(tab:emailLogisticModelResults). A estrutura desta tabela é quase idêntica à da regressão múltipla; a única diferença notável é que os p-valores são calculados usando a distribuição normal em vez da distribuição-$t$.
+
+```{r emailLogisticModelResults}
+aux$ganhador <- ifelse(aux$ganhador == 'yes', 1, 0)
+md <- glm(spam ~ . , data = aux, family = binomial)
+
+table8 <- data.frame(summary(md)$coefficients)
+colnames(table8) <- c('Estimativa', 'Erro Padrão', 'Valor Z', 'Pr(>|z|)')
+
+knitr::kable(table8, digits = 3, caption = 'Tabela de resumo para o modelo de regressão logística completa para o exemplo de filtro de spam.')
+```
+
+Assim como a regressão múltipla, poderíamos cortar algumas variáveis do modelo usando o p-valor. Usando a eliminação regressiva com um ponto de corte de p-valor de 0,05 (comece com o modelo completo e apare os preditores com valores de p maiores que 0,05), acabamos por eliminar os preditores `exclamação_asun`, `dólar`, `herdar`, e `cc`. O restante desta seção contará com este modelo menor, que é resumido na Tabela \@ref(tab:emailLogisticReducedModel).
+
+```{r emailLogisticReducedModel}
+
+md2 <- glm(spam ~ a_multiplos + ganhador + formatacao + re_assun + 
+            anexo + senha, data = aux, family = binomial)
+
+table9 <- data.frame(summary(md2)$coefficients)
+colnames(table9) <- c('Estimativa', 'Erro Padrão', 'Valor Z', 'Pr(>|z|)')
+
+knitr::kable(table9, digits = 3 , caption = 'Tabela de resumo para o modelo de regressão logística para o filtro de spam, onde a seleção de variáveis foi executada.')
+```
+
+***
+```{exercise}
+Examine o resumo do modelo reduzido na Tabela \@ref(tab:emailLogisticReducedModel), e, em particular, examine a linha a_múltiplos. A estimativa pontual é a mesma que encontramos antes, -1,81, ou é diferente? Explique por que isso pode acontecer.^[A nova estimativa é diferente: -2,75. Esse novo valor representa o coeficiente estimado quando também estamos contabilizando outras variáveis no modelo de regressão logística.]
+```
+
+***
+
+As estimativas pontuais geralmente mudam um pouco -- e muitas vezes -- dependendo de quais outras variáveis estão incluídas no modelo. Isso geralmente é devido à colinearidade nas variáveis preditoras. Anteriormente, vimos isso no exemplo do leilão do Ebay quando comparamos o coeficiente de `condição` em um modelo de variável única e o coeficiente correspondente no modelo de regressão múltipla que usou três variáveis adicionais.
+
+```{example, label = 'exampleForSpamAndWinner'}
+Os filtros de spam são criados para serem automatizados, o que significa que uma parte do software é gravada para coletar informações sobre os e-mails à medida que eles chegam e essas informações são colocadas na forma de variáveis. Essas variáveis são então colocadas em um algoritmo que usa um modelo estatístico, como o que ajustamos, para classificar o email. Suponha que escrevamos software para um filtro de spam usando o modelo reduzido mostrado na Tabela \@ref(tab:emailLogisticReducedModel). Se um e-mail recebido tiver a palavra "vencedor", isso aumentará ou diminuirá a probabilidade calculada do modelo de que o e-mail recebido é spam?
+```
+
+O coeficiente estimado de __ganhador__ é positivo (1,7250). Um coeficiente estimado positivo na regressão logística, assim como na regressão múltipla, corresponde a uma associação positiva entre o preditor e as variáveis de resposta ao considerar as demais variáveis do modelo. Como a variável de resposta assume valor 1 se um email é spam e 0 caso contrário, o coeficiente positivo indica que a presença de "vencedor"" em um email aumenta a probabilidade de que a mensagem seja spam.
+
+```{example, label = 'exampleForSpamAndFormat'}
+Suponha que o mesmo email do Exemplo \@ref(exm:exampleForSpamAndWinner) estava no formato HTML, significando a variável `formatação` levou valor 1. Esta característica aumenta ou diminui a probabilidade de o email ser spam de acordo com o modelo?
+```
+
+Como HTML corresponde a um valor de 1 na variável `formatação` e o coeficiente dessa variável é negativo (-1,5569), isso reduziria a estimativa de probabilidade proveniente do modelo.
+
+
+### Decisões práticas no aplicativo de e-mail {#practicalDecisionsOnEMailApp}
+
+Examplos \@ref(exm:exampleForSpamAndWinner) e \@ref(exm:exampleForSpamAndFormat) destacaram uma característica fundamental da regressão logística e múltipla. No exemplo do filtro de spam, algumas características do e-mail empurram a classificação de um e-mail na direção do spam, enquanto outras características o empurram na direção oposta.
+
+Se implementássemos um filtro de spam usando o modelo adequado, cada e-mail futuro analisado se encaixaria em uma das três categorias com base nas características do e-mail:
+
++ As características do e-mail geralmente indicam que o e-mail não é spam e, portanto, a probabilidade resultante de que o e-mail é spam é bastante baixa, digamos, abaixo de 0,05.
+
++ As características geralmente indicam que o email é spam e, portanto, a probabilidade resultante de o email ser spam é muito grande, digamos, acima de 0,95.
+
++ As características se equilibram umas às outras em termos de evidência a favor e contra a mensagem sendo classificada como spam. Sua probabilidade cai no intervalo restante, ou seja, o e-mail não pode ser classificado adequadamente como spam ou não spam.
+
+Se estivéssemos gerenciando um serviço de e-mail, teríamos que pensar sobre o que deveria ser feito em cada uma dessas três instâncias. Em um aplicativo de email, geralmente há apenas duas possibilidades: filtrar o email da caixa de entrada normal e colocá-lo em um "spambox", ou deixar que o email vá para a caixa de entrada normal.
+
+***
+```{exercise}
+O primeiro e o segundo cenários são intuitivos. Se a evidência sugerir fortemente que uma mensagem não é spam, envie-a para a caixa de entrada. Se a evidência sugerir fortemente que a mensagem é spam, envie-a para o spambox. Como devemos lidar com os e-mails na terceira categoria?^[Neste aplicativo em particular, devemos enviar mais e-mails para a caixa de entrada, em vez de colocar mensagens boas na spambox. Então, em resumo: os e-mails da primeira e da última categorias vão para a caixa de entrada normal e os do segundo cenário vão para a caixa de spambox.]
+```
+
+***
+
+***
+```{exercise}
+Suponha que aplicamos o modelo logístico que construímos como filtro de spam e que 100 mensagens são colocadas na spambox ao longo de 3 meses. Se usássemos as diretrizes acima para colocar mensagens na spambox, sobre quantas mensagens legítimas (não spam) você esperaria encontrar entre as 100 mensagens?^[Primeiro, note que propusemos um ponto de corte para a probabilidade prevista de 0,95 para spam. Na pior das hipóteses, todas as mensagens na spambox tinham a probabilidade mínima igual a cerca de 0,95. Assim, devemos esperar encontrar cerca de 5 ou menos mensagens legítimas entre as 100 mensagens colocadas no spambox.]
+```
+
+***
+
+Quase qualquer classificador terá algum erro. Nas diretrizes do filtro de spam acima, decidimos que não há problema em permitir que até 5\% das mensagens na caixa de spam sejam mensagens reais. Se quiséssemos dificultar um pouco a classificação de mensagens como spam, poderíamos usar um limite de 0,99. Isso teria dois efeitos. Por elevar o padrão do que pode ser classificado como spam, reduz o número de bons emails classificados como spam. No entanto, ele também não classificará corretamente uma fração aumentada de mensagens spam. Não importa a complexidade e a confiança que possamos ter em nosso modelo, essas considerações práticas são absolutamente cruciais para criar um filtro de spam útil. Sem eles, poderíamos fazer mais mal do que bem usando nosso modelo estatístico.
+
+
+### Diagnóstico para o classificador de e-mail {#diagnosticsForTheEmailSorter}
+
+<div class="alert alert-info">
+  <strong>Condições de regressão logística</strong>: Existem duas condições chave para ajustar um modelo de regressão logística: 
+  
++ Cada preditor $x_i$ está linearmente relacionado a logit$(p_i)$ se todos os outros preditores forem mantidos constantes.
+
++ O modelo que relaciona o parâmetro $p_i$ com os preditores $x_{1,i}, x_{2,i}, \dots, x_{k,i}$ assemelha-se muito à verdadeira relação entre o parâmetro e os preditores.
+
++ Cada resultado $Y_i$ é independente dos outros resultados.
+</div>
+
+
+A primeira condição do modelo de regressão logística não é facilmente verificada sem uma quantidade razoavelmente grande de dados. Felizmente, temos 3.921 e-mails em nosso conjunto de dados! Vamos primeiro visualizar esses dados traçando a classificação real dos e-mails em relação às probabilidades ajustadas do modelo, como mostrado na Figura~ \@ref(fig:logisticModelPredict). A grande maioria dos emails (spam ou não) ainda tem probabilidades abaixo de 0,5.
+
+```{r logisticModelPredict, fig.cap = 'A probabilidade prevista de que cada um dos 3.912 e-mails seja spam é classificada por seu agrupamento, spam ou não. Ruídos (pequenos deslocamentos verticais aleatórios) foram adicionados a cada ponto para que os pontos com valores quase idênticos não sejam representados exatamente um em cima do outro. Isto torna possível ver mais observações.'}
+
+library(splines)
+data(email)
+e <- email
+e$cc       <- ifelse(email$cc > 0, 1, 0)
+e$attach   <- ifelse(email$attach > 0, 1, 0)
+e$dollar   <- ifelse(email$dollar > 0, 1, 0)
+e$inherit  <- ifelse(email$inherit > 0, 1, 0)
+e$password <- ifelse(email$password > 0, 1, 0)
+g <- glm(spam ~ to_multiple + winner + format + 
+                re_subj + exclaim_subj +
+                attach + dollar +
+                inherit + password, # +
+                #num_char + line_breaks + exclaim_mess,
+                data = e, family = binomial)
+# summary(g)
+p  <- predict(g, type = "response")
+p. <- p
+
+# logisticModelPredict
+set.seed(1)
+noise <- rnorm(nrow(e), sd = 0.08)
+ggplot() + 
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1)) + 
+  geom_point(aes(p, e$spam + noise), color = 'skyblue3') + 
+  labs(x = 'Probabilidade Predita', y = NULL) + 
+  xlim(0, 1) + 
+  scale_y_continuous(breaks = seq(0, 1, by = 1), labels = c('0 \n(Não é Spam)', '1 \n(Spam)')) + 
+  theme(axis.text.y = element_text(angle = 90, hjust = .5))
+
+```
+
+A princípio, isso pode parecer muito desanimador: ajustamos um modelo logístico para criar um filtro de spam, mas nenhum e-mail tem uma probabilidade ajustada de ser spam acima de 0,75. Não se desespere; Vamos discutir maneiras de melhorar o modelo através do uso de melhores variáveis na Seção \@ref(improvingTheSetOfVariablesForASpamFilter).
+
+Gostaríamos de avaliar a qualidade do nosso modelo. Por exemplo, podemos perguntar: se olharmos para os e-mails que modelamos como tendo 10\% de chance de ser spam, descobrimos que cerca de 10\% deles são realmente spam? Para nos ajudar, emprestamos um método estatístico avançado chamado __splines naturais__ que estima a probabilidade local sobre a região de 0,00 a 0,75 (a maior probabilidade prevista foi de 0,73, portanto evitamos extrapolar). Tudo o que você precisa saber sobre splines naturais para entender o que estamos fazendo é que eles são usados para encaixar linhas flexíveis em vez de linhas retas.
+
+O ajuste da curva usando splines naturais é mostrado na Figura \@ref(fig:logisticModelSpline) como uma linha preta sólida. Se o modelo logístico se ajustar bem, a curva deve seguir de perto a linha tracejada $y=x$. Adicionamos sombreamento para representar o limite de confiança da linha curva para esclarecer quais flutuações podem ser plausivelmente devido ao acaso. Mesmo com essa confiança, há pontos fracos na suposição do primeiro modelo. A curva sólida e a sua margem de confiança mergulham abaixo da linha tracejada em cerca de 0,1 a 0,3, e depois flutuam acima da linha tracejada em cerca de 0,35 a 0,55. Esses desvios indicam que o modelo que relaciona o parâmetro aos preditores não se parece muito com o relacionamento verdadeiro.
+
+```{r logisticModelSpline, fig.cap = 'A linha preta sólida fornece a estimativa empírica da probabilidade de observações com base em suas probabilidades previstas (limites de confiança também são mostrados para essa linha), que é ajustada usando splines naturais. Uma pequena quantidade de ruído foi adicionada às observações na parcela para permitir que mais observações fossem vistas.', out.height='100%', fig.height = 7}
+
+library(splines)
+data(email)
+e <- email
+
+e$cc       <- ifelse(email$cc > 0, 1, 0)
+e$attach   <- ifelse(email$attach > 0, 1, 0)
+e$dollar   <- ifelse(email$dollar > 0, 1, 0)
+e$inherit  <- ifelse(email$inherit > 0, 1, 0)
+e$password <- ifelse(email$password > 0, 1, 0)
+
+g <- glm(spam ~ to_multiple + winner + format + 
+           re_subj + exclaim_subj +
+           attach + dollar +
+           inherit + password, # +
+         #num_char + line_breaks + exclaim_mess,
+         data = e, family = binomial)
+# summary(g)
+p  <- predict(g, type = "response")
+p. <- p
+q <- p
+
+set.seed(1)
+noise <- rnorm(nrow(e), sd = 0.08)
+
+# parte do poligono 
+ns1 <- 7
+g1 <- lm(e$spam ~ ns(p, ns1))
+p  <- seq(0, max(p), length.out = 200)
+Y  <- predict(g1,
+              data.frame(ns(p, ns1)),
+              se.fit = TRUE)
+yb <- Y$fit - 1.96 * Y$se.fit
+yt <- rev(Y$fit + 1.96 * Y$se.fit)
+
+
+ggplot() + 
+  geom_point(aes(q, e$spam+noise/5), color = 'skyblue3') + 
+  geom_line(aes(0:1, 0:1), linetype = 'dashed') +   xlim(0, 1) +
+  geom_polygon(aes(c(p, rev(p)), c(yb, yt)), fill = 'gold2', alpha = 0.5) +
+  geom_line(aes(p, Y$fit)) +
+  theme(panel.border = element_rect(colour = "black", fill = NA, size = 1), 
+        axis.text.y = element_text(angle = 90, hjust = .5)) +
+  geom_segment(aes(x = 0.83, y = 0.57, xend = 0.8, yend = 0.785), 
+               arrow = arrow(length = unit(0.2, "cm"))) + 
+  geom_segment(aes(x = 0.36, y = 0.54, xend = 0.45, yend = 0.52), 
+               arrow = arrow(length = unit(0.2, "cm"))) + 
+  geom_segment(aes(x = 0.6, y = 0.36, xend = 0.7, yend = 0.61), 
+               arrow = arrow(length = unit(0.2, "cm"))) + 
+  annotate(geom = "text", x = 0.88, y = 0.48, size = 3, 
+           label = "O que esperamos \nse o modelo logístico \né razoável") + 
+  annotate(geom = "text", x = 0.25, y = 0.6, size = 3, 
+           label = "Probabilidades localmente \nestimadas com \nlimites de confiança") + 
+  annotate(geom = "text", x = 0.6, y = 0.27, size = 3, 
+           label = "Os limites se tornam \namplos porque não \nsão encontrados muitos \ndados até o momento") + 
+  labs(x = 'Probabilidade Predita', y = 'Spam') + 
+  scale_y_continuous(breaks = seq(0, 1, by = 0.2), labels = c('0 \n(Não é Spam)', '0.2', '0.4', '0.6', '0.8', '1 \n(Spam)'))  
+
+p  <- p.
+
+```
+
+
+Pudemos avaliar o segundo pressuposto do modelo de regressão logística -- independência dos desfechos -- utilizando os resíduos do modelo. Os resíduos de um modelo de regressão logística são calculados da mesma forma que na regressão múltipla: o resultado observado menos o resultado esperado. Para a regressão logística, o valor esperado do resultado é a probabilidade ajustada para a observação, e o resíduo pode ser escrito como
+
+\begin{align*}
+e_i = Y_i - \hat{p}_i
+\end{align*}
+
+Poderíamos plotar esses resíduos contra uma variedade de variáveis ou em sua ordem de coleta, como fizemos com os resíduos em regressão múltipla. No entanto, como o modelo precisará ser revisado para classificar efetivamente o spam e já foi visto gráficos residuais semelhantes, nós não vamos investigar os resíduos aqui.
+
+
+### Melhorando o conjunto de variáveis para um filtro de spam {#improvingTheSetOfVariablesForASpamFilter}
+
+Se estivéssemos criando um filtro de spam para um serviço de e-mail que gerenciava muitas contas (por exemplo, Gmail ou Hotmail), gastaríamos muito mais tempo pensando em variáveis adicionais que poderiam ser úteis para classificar e-mails como spam ou não. Também usaríamos transformações ou outras técnicas que nos ajudariam a incluir variáveis numéricas fortemente distorcidas como preditores.
+
+Reserve alguns minutos para pensar em variáveis adicionais que podem ser úteis na identificação de spam. Abaixo está uma lista de variáveis que achamos que podem ser úteis:
+
++ __(1)__ Uma variável indicadora pode ser usada para representar se houve correspondência bidirecional prévia com o remetente de uma mensagem. Por exemplo, se você enviou uma mensagem para joao@exemplo.com e, em seguida, João enviou um e-mail para você, essa variável levaria o valor 1 para o e-mail que João enviou. Se você nunca tivesse enviado um e-mail para John, a variável seria definida como 0.
+
++ __(2)__ Uma segunda variável indicadora poderia utilizar as informações de sinalização de spam anteriores da conta. A variável pode ter valor 1 se o remetente da mensagem já enviou mensagens marcadas como spam.
+
++ __(3)__ Uma terceira variável indicadora pode sinalizar emails que contêm links incluídos em mensagens de spam anteriores. Se tal link for encontrado, defina a variável como 1 para o email. Caso contrário, defina-a como 0.
+
+As variáveis descritas acima adotam uma das duas abordagens. A variável (1) é especialmente projetada para aproveitar o fato de que o spam raramente é enviado entre indivíduos que possuem comunicação bidirecional. Variáveis (2) e (3) são especialmente projetadas para sinalizar spammers (quem envia muito spam) comuns ou spams comuns. Enquanto nós teríamos que verificar usando os dados que cada uma das variáveis é efetiva, estas parecem ser idéias promissoras.
+
+A Tabela \@ref(tab:emailTableOfSpamAnd) mostra uma tabela de contingência para spam e também para a nova variável descrita em (1) acima. Se olharmos para os 1.090 e-mails em que houve correspondência com o remetente nos últimos 30 dias, nenhuma dessas mensagens foi spam. Isso sugere que a variável (1) seria muito eficaz para classificar com precisão algumas mensagens como não spam. Com essa variável única, poderíamos enviar cerca de 28\% de mensagens para a caixa de entrada com confiança de que quase nenhuma é spam.
+
+```{r emailTableOfSpamAnd}
+
+table10 <- rbind(c(367, 0, 367), c(2464, 1090, 3554), c(2831, 1090, 3921))
+colnames(table10) <- c('troca de emails prévia (não)', 'troca de emails prévia (sim)', 'Total')
+rownames(table10) <- c('spam', 'não spam', 'total')
+
+knitr::kable(table10, align = 'c', 
+             caption = 'Uma tabela de contingência para spam e uma nova variável que representa se houve correspondência com o remetente nos últimos 30 dias.')
+```
+
+
+As variáveis descritas em (2) e (3) forneceriam uma excelente base para distinguir mensagens provenientes de spammers conhecidos ou mensagens que recebam uma forma conhecida de spam. Para utilizar essas variáveis, precisaríamos criar bancos de dados: um contendo endereços de e-mail de spammers conhecidos e um contendo URLs encontrados em mensagens de spam conhecidas. Nosso acesso a essas informações é limitado, por isso não podemos implementar essas duas variáveis neste livro. No entanto, se formos contratados por um serviço de e-mail para criar um filtro de spam, esses serão os próximos passos importantes.
+
+Além de encontrar mais e melhores preditores, precisaríamos criar um modelo de regressão logística personalizado para cada conta de e-mail. Isso pode soar como uma tarefa intimidadora, mas sua complexidade não é tão assustadora quanto parece à primeira vista. Salvaremos os detalhes de um curso de estatística em que a programação de computadores desempenha um papel mais central.
+
+Para a tarefa extremamente desafiadora de classificar mensagens de spam, fizemos muito progresso. Vimos que variáveis simples de e-mail, como o formato, a inclusão de certas palavras e outras características circunstanciais, fornecem informações úteis para a classificação de spam. Muitos desafios permanecem, desde a melhor compreensão da regressão logística até a realização da programação de computadores necessária, mas a conclusão de tal tarefa está quase ao seu alcance.
+
+***
+<center><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</center>
