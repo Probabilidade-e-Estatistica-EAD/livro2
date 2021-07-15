@@ -2022,7 +2022,7 @@ $(1)\times X + (-1)\times Y$. As variações de $X$ e $Y$ são 625 e 64. Nós aj
 
 Considere novamente a Prática Orienada  \@ref(exr:elenaIsSellingATVAndBuyingAToasterOvenAtAnAuctionVariability). O coeficiente negativo para $Y$ na combinação linear foi eliminado quando nós ajustamos os coeficientes. Isso geralmente é verdade: os negativos em uma combinação linear não terão impacto sobre a variabilidade calculada para uma combinação linear, mas afetam os cálculos do valor esperado.
 
-## Distribuições contínuas (tópico especial)] {#contDist}
+## Distribuições contínuas (tópico especial) {#contDist}
 
 ```{example, label = 'usHeights'}
 Figura \@ref9fig:fdicHistograms) mostra alguns histogramas diferentes, da variável altura para 3 milhões de adultos dos EUA a partir de meados dos anos 90.^[Esta amostra pode ser considerada uma amostra aleatória simples da população dos EUA. Ele se baseia no USDA Food Commodity Intake Database.] Como a alteração do número de intervalos permite que você faça diferentes interpretações dos dados?
