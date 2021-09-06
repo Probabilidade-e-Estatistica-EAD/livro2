@@ -5,71 +5,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>5 Inferência para dados numéricos | Livro de Probabilidade e Estatística EAD - UFRGS</title>
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7.4/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="5 Inferência para dados numéricos | Livro de Probabilidade e Estatística EAD - UFRGS">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 Inferência para dados numéricos | Livro de Probabilidade e Estatística EAD - UFRGS">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4.9002/tabs.js"></script><script src="libs/bs3compat-0.2.4.9002/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.2.1/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script><script>
-    $(document).ready(function() {
-      $plots = $('img.plot');
-      $chunks = $('pre').has('code');
-      $chunks = $chunks.filter(function(idx) {
-        return $(this).children('code').outerHeight(false) > parseInt($(this).css('line-height'));
-      });
-
-      $chunks.each(function () {
-        if($(this).hasClass('r')) {
-          $(this).append("<div class=\"showopt\"><button type=\"button\" class=\"btn btn-outline-primary\">Mostrar código</button></div><br style=\"line-height:22px;\"/>");
-        } else {
-          $(this).append("<div class=\"showopt\">Show Output</div><br style=\"line-height:22px;\"/>");
-        }
-      });
-
-      $plots.each(function () {
-        $(this).wrap('<pre class=\"plot\"></pre>');
-        $(this).parent('pre.plot').prepend("<div class=\"showopt\">Show Plot</div><br style=\"line-height:22px;\"/>");
-      });
-
-      // hide all chunks when document is loaded
-      $chunks.children('code').toggle();
-      $('pre.plot').children('img').toggle();
-      // function to toggle the visibility
-      $('.showopt').click(function() {
-        var label = $(this).html();
-        if (label.indexOf("Mostrar") >= 0) {
-          $(this).html(label.replace("Mostrar", "Esconder"));
-        } else {
-          $(this).html(label.replace("Esconder", "Mostrar"));
-        }
-        $(this).siblings('code, img').slideToggle('fast', 'swing');
-      });
-    });
-    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><meta name="description" content="O capítulo anterior introduziu uma estrutura para inferência estatística baseada em intervalos de confiança e hipóteses. Neste capítulo, encontramos várias novas estimativas pontuais e cenários....">
+<meta property="og:description" content="O capítulo anterior introduziu uma estrutura para inferência estatística baseada em intervalos de confiança e hipóteses. Neste capítulo, encontramos várias novas estimativas pontuais e cenários....">
+<meta name="twitter:description" content="O capítulo anterior introduziu uma estrutura para inferência estatística baseada em intervalos de confiança e hipóteses. Neste capítulo, encontramos várias novas estimativas pontuais e cenários....">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Pular para o conteúdo principal</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
         <a href="index.html" title="">Livro de Probabilidade e Estatística EAD - UFRGS</a>
       </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar índice</span></button>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
     <div id="main-nav" class="collapse-lg">
       <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
 </form>
-      
-      <!--Adicionando bota de retorno a pagina index do livro-->
-      
-      <a href="/probabilidade-estatistica/livro/index.html"><i class="fas fa-arrow-alt-circle-left"></i> Voltar para o site</a>
 
-      <nav aria-label="indice"><h2>Índice</h2>
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Prefácio</a></li>
 <li><a class="" href="ch1-intro.html"><span class="header-section-number">1</span> Introdução aos Bancos de Dados</a></li>
@@ -83,11 +51,11 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Probabilidade-e-Estatistica-EAD/livro2">Ver código do livro <i class="fab fa-github"></i></a></p>
+          
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="ch5-inf-num" class="section level1" number="5">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="ch5-inf-num" class="section level1">
 <h1>
 <span class="header-section-number">5</span> Inferência para dados numéricos<a class="anchor" aria-label="anchor" href="#ch5-inf-num"><i class="fas fa-link"></i></a>
 </h1>
@@ -97,7 +65,7 @@
 <li><p>Identifique uma distribuição apropriada para a estimativa pontual ou estatística de teste.</p></li>
 <li><p>Aplique as ideias de Capítulo anterior usando a distribuição da etapa 2.</p></li>
 </ul>
-<div id="oneSampleMeanTDistribution" class="section level2" number="5.1">
+<div id="oneSampleMeanTDistribution" class="section level2">
 <h2>
 <span class="header-section-number">5.1</span> Uma média amostral com a distribuição-<span class="math inline">\(t\)</span><a class="anchor" aria-label="anchor" href="#oneSampleMeanTDistribution"><i class="fas fa-link"></i></a>
 </h2>
@@ -107,7 +75,7 @@
 <li><p>O erro padrão calculado é normalmente muito preciso ao usar uma amostra grande.</p></li>
 </ul>
 <p>Então, o que devemos fazer quando o tamanho da amostra é pequeno? Como vamos discutir mais a frente, se os dados da população forem quase normais, <span class="math inline">\(\overline{x}\)</span> também seguirá uma distribuição normal, que trata do primeiro problema. A precisão do erro padrão é mais complicada e, para esse desafio, apresentaremos uma nova distribuição chamada distribuição <span class="math inline">\(t\)</span>. Embora enfatizemos o uso da distribuição <span class="math inline">\(t\)</span> para amostras pequenas, essa distribuição também é geralmente usada para amostras grandes, onde produz resultados semelhantes aos da distribuição normal.</p>
-<div id="normalityCondition" class="section level3" number="5.1.1">
+<div id="normalityCondition" class="section level3">
 <h3>
 <span class="header-section-number">5.1.1</span> A condição de normalidade<a class="anchor" aria-label="anchor" href="#normalityCondition"><i class="fas fa-link"></i></a>
 </h3>
@@ -121,12 +89,12 @@
 </div>
 <p>Você pode relaxar a condição de normalidade à medida que o tamanho da amostra aumenta. Se o tamanho da amostra for 10 ou mais, uma ligeira inclinação não é problemática. Quando o tamanho da amostra atinge cerca de 30, a inclinação moderada é razoável. Dados com forte inclinação ou outliers exigem uma análise mais cautelosa.</p>
 </div>
-<div id="introTDistribution" class="section level3" number="5.1.2">
+<div id="introTDistribution" class="section level3">
 <h3>
 <span class="header-section-number">5.1.2</span> Introduzindo a distribuição -<span class="math inline">\(t\)</span><a class="anchor" aria-label="anchor" href="#introTDistribution"><i class="fas fa-link"></i></a>
 </h3>
 <p>Nos casos em que usaremos uma amostra pequena para calcular o erro padrão, será útil confiar em uma nova distribuição para cálculos de inferência: a distribuição <span class="math inline">\(t\)</span>. A distribuição-<span class="math inline">\(t\)</span>, mostrada como uma linha sólida na Figura <a href="ch5-inf-num.html#fig:tDistCompareToNormalDist">5.1</a>, tem um formato de sino. No entanto, suas caudas são mais grossas do que as do modelo normal. Isso significa que as observações têm maior probabilidade de cair além de dois desvios padrão da média do que sob a distribuição normal.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;O desvio padrão da distribuição-&lt;span class="math inline"&gt;\(t\)&lt;/span&gt; é na verdade um pouco mais de 1. No entanto, é útil sempre pensar na distribuição-&lt;span class="math inline"&gt;\(t\)&lt;/span&gt; como tendo um desvio padrão de 1 em todas as nossas aplicações. do erro padrão será um pouco menos preciso quando estamos analisando um pequeno conjunto de dados, essas caudas extra grossas da distribuição-&lt;span class="math inline"&gt;\(t\)&lt;/span&gt; são exatamente a correção que precisamos para resolver o problema de um erro padrão mal estimado.&lt;/p&gt;'><sup>194</sup></a></p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>
 <span class="va">Yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">X</span>, <span class="fl">2</span><span class="op">)</span>
@@ -139,13 +107,13 @@
         axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:tDistCompareToNormalDist"></span>
+<span style="display:block;" id="fig:tDistCompareToNormalDist"></span>
 <img src="_main_files/figure-html/tDistCompareToNormalDist-1.png" alt="Comparação de uma distribuição $t$ (linha sólida) e uma distribuição normal (linha pontilhada)." width="672"><p class="caption">
-Figura 5.1: Comparação de uma distribuição <span class="math inline">\(t\)</span> (linha sólida) e uma distribuição normal (linha pontilhada).
+Figure 5.1: Comparação de uma distribuição <span class="math inline">\(t\)</span> (linha sólida) e uma distribuição normal (linha pontilhada).
 </p>
 </div>
 <p>A distribuição-<span class="math inline">\(t\)</span>, sempre centrada em zero, tem um único parâmetro: os graus de liberdade. O <strong>grau de liberdade (df)</strong> descreve a forma precisa da distribuição-<span class="math inline">\(t\)</span> em forma de sino. Várias distribuições-<span class="math inline">\(t\)</span> são mostradas na Figura <a href="ch5-inf-num.html#fig:tDistConvergeToNormalDist">5.2</a>. Quando há mais graus de liberdade, a distribuição-<span class="math inline">\(t\)</span> parece muito com a distribuição normal padrão.</p>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">0.02</span><span class="op">)</span>
 <span class="va">conv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">X</span>,
                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, 
@@ -176,9 +144,9 @@ Figura 5.1: Comparação de uma distribuição <span class="math inline">\(t\)</
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:tDistConvergeToNormalDist"></span>
+<span style="display:block;" id="fig:tDistConvergeToNormalDist"></span>
 <img src="_main_files/figure-html/tDistConvergeToNormalDist-1.png" alt="Quanto maiores os graus de liberdade, mais próxima a distribuição t se assemelha ao modelo normal padrão." width="672"><p class="caption">
-Figura 5.2: Quanto maiores os graus de liberdade, mais próxima a distribuição t se assemelha ao modelo normal padrão.
+Figure 5.2: Quanto maiores os graus de liberdade, mais próxima a distribuição t se assemelha ao modelo normal padrão.
 </p>
 </div>
 <div class="alert alert-info">
@@ -311,10 +279,11 @@ Figura 5.2: Quanto maiores os graus de liberdade, mais próxima a distribuição
 </div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-187" class="example"><strong>Exemplo 5.1  </strong></span>Qual a proporção da distribuição de <span class="math inline">\(t\)</span> com 18 graus de liberdade abaixo de -2.10?
+<span id="exm:unnamed-chunk-187" class="example"><strong>Example 5.1  </strong></span>Qual a proporção da distribuição de <span class="math inline">\(t\)</span> com 18 graus de liberdade abaixo de -2.10?
 </div>
+
 <p>Assim como um problema de probabilidade normal, primeiro desenhamos a distribuição (Figura <a href="ch5-inf-num.html#fig:tDistDF18LeftTail2Point10">5.3</a>) e sombreamos a área abaixo de -2.10. Para encontrar esta área, identificamos a linha apropriada: <span class="math inline">\(df=18\)</span>. Em seguida, identificamos a coluna contendo o valor absoluto de -2.10; é a terceira coluna. Como estamos procurando apenas uma cauda, examinamos a linha superior da tabela, que mostra que uma área de cauda para um valor na terceira linha corresponde a 0.025. Cerca de 2.5% da distribuição está abaixo de -2.10. No próximo exemplo, encontramos um caso em que o valor exato de <span class="math inline">\(t\)</span> não está listado na tabela.</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">X</span>, <span class="fl">18</span><span class="op">)</span>
 
@@ -329,24 +298,26 @@ Figura 5.2: Quanto maiores os graus de liberdade, mais próxima a distribuição
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="op">-</span><span class="fl">0.001</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:tDistDF18LeftTail2Point10"></span>
+<span style="display:block;" id="fig:tDistDF18LeftTail2Point10"></span>
 <img src="_main_files/figure-html/tDistDF18LeftTail2Point10-1.png" alt="A distribuição-t com 18 graus de liberdade. A área abaixo de -2,10 foi sombreada." width="672"><p class="caption">
-Figura 5.3: A distribuição-t com 18 graus de liberdade. A área abaixo de -2,10 foi sombreada.
+Figure 5.3: A distribuição-t com 18 graus de liberdade. A área abaixo de -2,10 foi sombreada.
 </p>
 </div>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-188" class="example"><strong>Exemplo 5.2  </strong></span>A distribuição-<span class="math inline">\(t\)</span> com 20 graus de liberdade é mostrada no painel esquerdo da Figura <a href="ch5-inf-num.html#fig:tDistDF20RightTail1Point65">5.4</a>. Estimar a proporção da distribuição caindo acima de 1.65.</p>
+<p><span id="exm:unnamed-chunk-188" class="example"><strong>Example 5.2  </strong></span>A distribuição-<span class="math inline">\(t\)</span> com 20 graus de liberdade é mostrada no painel esquerdo da Figura <a href="ch5-inf-num.html#fig:tDistDF20RightTail1Point65">5.4</a>. Estimar a proporção da distribuição caindo acima de 1.65.</p>
 </div>
+
 <p>Identificamos a linha na tabela <span class="math inline">\(t\)</span> usando os graus de liberdade: <span class="math inline">\(df = 20\)</span>. Então procuramos 1.65; não está listado. Ela fica entre a primeira e a segunda coluna. Uma vez que esses valores limitam 1.65, suas áreas de cauda irão ligar a área da cauda correspondente a 1.65. Identificamos a área de cauda da primeira e segunda colunas, 0.050 e 0.10, e concluímos que entre 5% e 10% da distribuição é mais do que 1.65 desvios-padrão acima da média. Se quisermos, podemos identificar a área exata usando software estatístico: 0.0573.</p>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">1.65</span>, df <span class="op">=</span> <span class="fl">20</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-190" class="example"><strong>Exemplo 5.3  </strong></span>A distribuição-<span class="math inline">\(t\)</span> com 2 graus de liberdade é mostrada no painel direito da Figura <a href="ch5-inf-num.html#fig:tDistDF20RightTail1Point65">5.4</a>. Estimar a proporção da distribuição que cai mais de 3 desvios da média (acima ou abaixo).
+<span id="exm:unnamed-chunk-190" class="example"><strong>Example 5.3  </strong></span>A distribuição-<span class="math inline">\(t\)</span> com 2 graus de liberdade é mostrada no painel direito da Figura <a href="ch5-inf-num.html#fig:tDistDF20RightTail1Point65">5.4</a>. Estimar a proporção da distribuição que cai mais de 3 desvios da média (acima ou abaixo).
 </div>
+
 <p>Como antes, primeiro identifique a linha apropriada: <span class="math inline">\(df = 2\)</span>. Em seguida, encontre as colunas que capturam as 3 unidades: <span class="math inline">\(2.92 &lt; 3 &lt; 4.30\)</span>. Usamos a segunda e terceira coluna. Finalmente, encontramos os limites para as áreas da cauda observando os dois valores finais: 0.05 e 0.10. Usamos os dois valores finais porque estamos procurando por duas caudas (simétricas).</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">0.02</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">X</span>, <span class="fl">12</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">Y</span><span class="op">)</span>
@@ -376,18 +347,19 @@ Figura 5.3: A distribuição-t com 18 graus de liberdade. A área abaixo de -2,1
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:tDistDF20RightTail1Point65"></span>
+<span style="display:block;" id="fig:tDistDF20RightTail1Point65"></span>
 <img src="_main_files/figure-html/tDistDF20RightTail1Point65-1.png" alt="Esquerda: A distribuição-t com 20 graus de liberdade, com a área acima de 1,65 sombreada. Direita: A distribuição-t com 2 graus de liberdade, com a área além de 3 unidades sombreada" width="672" height="20%"><p class="caption">
-Figura 5.4: Esquerda: A distribuição-t com 20 graus de liberdade, com a área acima de 1,65 sombreada. Direita: A distribuição-t com 2 graus de liberdade, com a área além de 3 unidades sombreada
+Figure 5.4: Esquerda: A distribuição-t com 20 graus de liberdade, com a área acima de 1,65 sombreada. Direita: A distribuição-t com 2 graus de liberdade, com a área além de 3 unidades sombreada
 </p>
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-191" class="exercise"><strong>Prática Orientada 5.1  </strong></span>Que proporção da distribuição-<span class="math inline">\(t\)</span> com 19 graus de liberdade fica acima de -1.79 unidades?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Nós encontramos a área sombreada acima de -1.79 (nós deixamos a imagem para você desenhar). A cauda esquerda pequena está entre 0.025 e 0.05, portanto a região superior maior deve ter uma área entre 0.95 e 0.975.&lt;/p&gt;"><sup>196</sup></a>
+<span id="exr:unnamed-chunk-191" class="exercise"><strong>Exercise 5.1  </strong></span>Que proporção da distribuição-<span class="math inline">\(t\)</span> com 19 graus de liberdade fica acima de -1.79 unidades?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Nós encontramos a área sombreada acima de -1.79 (nós deixamos a imagem para você desenhar). A cauda esquerda pequena está entre 0.025 e 0.05, portanto a região superior maior deve ter uma área entre 0.95 e 0.975.&lt;/p&gt;"><sup>196</sup></a>
 </div>
+
 <hr>
 </div>
-<div id="conditionTDistributionOneMean" class="section level3" number="5.1.3">
+<div id="conditionTDistributionOneMean" class="section level3">
 <h3>
 <span class="header-section-number">5.1.3</span> Condições para usar a distribuição-t para inferência de uma média<a class="anchor" aria-label="anchor" href="#conditionTDistributionOneMean"><i class="fas fa-link"></i></a>
 </h3>
@@ -401,22 +373,22 @@ Figura 5.4: Esquerda: A distribuição-t com 20 graus de liberdade, com a área 
 <p><strong>Quando usar a distribuição-<span class="math inline">\(t\)</span></strong>: Use a distribuição t para inferência da média da amostra quando as observações são independentes e quase normais. Você pode relaxar a condição de normalidade à medida que o tamanho da amostra aumenta. Por exemplo, a distribuição de dados pode ser moderadamente distorcida quando o tamanho da amostra é de pelo menos 30.</p>
 </div>
 </div>
-<div id="oneSampleTConfidenceIntervals" class="section level3" number="5.1.4">
+<div id="oneSampleTConfidenceIntervals" class="section level3">
 <h3>
 <span class="header-section-number">5.1.4</span> Uma amostra t - Intervalos de Confiança<a class="anchor" aria-label="anchor" href="#oneSampleTConfidenceIntervals"><i class="fas fa-link"></i></a>
 </h3>
 <p>Os golfinhos estão no topo da cadeia alimentar oceânica, o que faz com que substâncias perigosas, como o mercúrio, se concentrem em seus órgãos e músculos. Este é um problema importante para os golfinhos e outros animais, como os humanos, que ocasionalmente os comem. Por exemplo, isso é particularmente relevante no Japão, onde as refeições escolares incluem golfinhos às vezes<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Photo by Mike Baird&lt;/p&gt;"><sup>197</sup></a>.</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">'images/c5/rissosDolphin.jpg'</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-192"></span>
+<span style="display:block;" id="fig:unnamed-chunk-192"></span>
 <img src="images/c5/rissosDolphin.jpg" alt="Um golfinho de risso" width="400"><p class="caption">
-Figura 5.5: Um golfinho de risso
+Figure 5.5: Um golfinho de risso
 </p>
 </div>
 <p>Aqui nós identificamos um intervalo de confiança para o conteúdo médio de mercúrio no músculo de golfinhos usando uma amostra de 19 golfinhos da região de Taiji, no Japão.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Taiji foi destaque no filme &lt;em&gt;The Cove&lt;/em&gt; e é uma fonte significativa de carne de golfinhos e baleias no Japão. Milhares de golfinhos passam pela área de Taiji anualmente, e vamos assumir que estes 19 golfinhos representam uma amostra aleatória simples desses golfinhos. Referência de dados: Endo T e Haraguchi K. 2009. Níveis elevados de mercúrio em amostras de cabelo de residentes de Taiji, uma cidade baleeira japonesa. Boletim da Poluição Marinha 60 (5): 743-747.&lt;/p&gt;"><sup>198</sup></a> Os dados estão resumidos na Tabela <a href="ch5-inf-num.html#tab:summaryStatsOfHgInMuscleOfRissosDolphins">5.1</a>. Os valores mínimo e máximo observados podem ser usados para avaliar se existem ou não valores óbvios ou outliers.</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="fl">4.4</span>, <span class="fl">2.3</span>, <span class="fl">1.7</span>, <span class="fl">9.2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"média"</span>, <span class="st">"s"</span>, <span class="st">"mínimo"</span>, <span class="st">"máximo"</span><span class="op">)</span>
 
@@ -424,7 +396,7 @@ Figura 5.5: Um golfinho de risso
              caption <span class="op">=</span> <span class="st">"Resumo do conteúdo de mercúrio no músculo de 19 golfinhos de Risso da área de Taiji. As medições são em mu/wet g (microgramas de mercúrio por grama úmida de músculo)."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:summaryStatsOfHgInMuscleOfRissosDolphins">Tabela 5.1: </span>Resumo do conteúdo de mercúrio no músculo de 19 golfinhos de Risso da área de Taiji. As medições são em mu/wet g (microgramas de mercúrio por grama úmida de músculo).</caption>
+<span id="tab:summaryStatsOfHgInMuscleOfRissosDolphins">Table 5.1: </span>Resumo do conteúdo de mercúrio no músculo de 19 golfinhos de Risso da área de Taiji. As medições são em mu/wet g (microgramas de mercúrio por grama úmida de músculo).</caption>
 <thead><tr class="header">
 <th align="right">n</th>
 <th align="right">média</th>
@@ -441,8 +413,9 @@ Figura 5.5: Um golfinho de risso
 </tr></tbody>
 </table></div>
 <div class="example">
-<span id="exm:unnamed-chunk-193" class="example"><strong>Exemplo 5.4  </strong></span>As condições de independência e normalidade estão satisfeitas para este conjunto de dados?
+<span id="exm:unnamed-chunk-193" class="example"><strong>Example 5.4  </strong></span>As condições de independência e normalidade estão satisfeitas para este conjunto de dados?
 </div>
+
 <p>As observações são uma amostra aleatória simples, portanto a independência é razoável. As estatísticas resumidas na Tabela <a href="ch5-inf-num.html#tab:summaryStatsOfHgInMuscleOfRissosDolphins">5.1</a> não sugerem qualquer distorção ou outliers, todas as observações estão dentro de 2.5 desvios padrão da média. Com base nessa evidência, a suposição de normalidade parece razoável.</p>
 <p>No modelo normal, usamos <span class="math inline">\(z ^ {\star}\)</span> e o erro padrão para determinar a largura de um intervalo de confiança. Revisamos a fórmula do intervalo de confiança quando usamos a distribuição-<span class="math inline">\(t\)</span>:</p>
 <p><span class="math display" id="eq:eqt">\[\begin{eqnarray*}
@@ -477,21 +450,24 @@ Figura 5.5: Um golfinho de risso
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:po1" class="exercise"><strong>Prática Orientada 5.2  </strong></span>A página da FDA fornece alguns dados sobre o teor de mercúrio do peixe.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;www.fda.gov/food/foodborneillnesscontaminants/metals/ucm115644.htm&lt;/p&gt;"><sup>199</sup></a> Com base em uma amostra de 15 peixes brancos corvina (Pacífico), a média e o desvio padrão da amostra foram computados como 0.287 e 0.069 ppm (partes por milhão), respectivamente. As 15 observações variaram de 0.18 a 0.41 ppm. Vamos supor que essas observações sejam independentes. Com base nas estatísticas de resumo dos dados, você tem alguma objeção à condição de normalidade das observações individuais?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Não há nenhum outliers óbvio; todas as observações estão dentro de 2 desvios padrão da média. Se houver inclinação, não é evidente. Não há bandeiras vermelhas para o modelo normal baseado nesta informação (limitada), e não temos razão para acreditar que o teor de mercúrio não é quase normal neste tipo de peixe.&lt;/p&gt;"><sup>200</sup></a>
+<span id="exr:po1" class="exercise"><strong>Exercise 5.2  </strong></span>A página da FDA fornece alguns dados sobre o teor de mercúrio do peixe.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;www.fda.gov/food/foodborneillnesscontaminants/metals/ucm115644.htm&lt;/p&gt;"><sup>199</sup></a> Com base em uma amostra de 15 peixes brancos corvina (Pacífico), a média e o desvio padrão da amostra foram computados como 0.287 e 0.069 ppm (partes por milhão), respectivamente. As 15 observações variaram de 0.18 a 0.41 ppm. Vamos supor que essas observações sejam independentes. Com base nas estatísticas de resumo dos dados, você tem alguma objeção à condição de normalidade das observações individuais?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Não há nenhum outliers óbvio; todas as observações estão dentro de 2 desvios padrão da média. Se houver inclinação, não é evidente. Não há bandeiras vermelhas para o modelo normal baseado nesta informação (limitada), e não temos razão para acreditar que o teor de mercúrio não é quase normal neste tipo de peixe.&lt;/p&gt;"><sup>200</sup></a>
 </div>
+
 <hr>
 <div class="example">
-<span id="exm:ex1" class="example"><strong>Exemplo 5.5  </strong></span>Estimar o desvio padrão de <span class="math inline">\(\bar{x}=0.287\)</span> ppm usando os resumos de dados na Prática Orientada <a href="ch5-inf-num.html#exr:po1">5.2</a> Se quisermos usar a distribuição-<span class="math inline">\(t\)</span> para criar um intervalo de confiança de 90% para a média real do conteúdo de mercúrio, identifique os graus de liberdade que devemos usar e também encontre <span class="math inline">\(t^{\star}_{df}\)</span>.
+<span id="exm:ex1" class="example"><strong>Example 5.5  </strong></span>Estimar o desvio padrão de <span class="math inline">\(\bar{x}=0.287\)</span> ppm usando os resumos de dados na Prática Orientada <a href="ch5-inf-num.html#exr:po1">5.2</a> Se quisermos usar a distribuição-<span class="math inline">\(t\)</span> para criar um intervalo de confiança de 90% para a média real do conteúdo de mercúrio, identifique os graus de liberdade que devemos usar e também encontre <span class="math inline">\(t^{\star}_{df}\)</span>.
 </div>
+
 <p>O erro padrão:<span class="math inline">\(EP = \frac{0.069}{\sqrt{15}} = 0.0178\)</span>. Graus de liberdade: <span class="math inline">\(df = n - 1 = 14\)</span>.</p>
 <p>Olhando na coluna onde duas caudas é de 0.100 (para um intervalo de confiança de 90%) e linha <span class="math inline">\(df=14\)</span>, nós identificamos <span class="math inline">\(t^{\star}_{14} = 1.76\)</span>.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-194" class="exercise"><strong>Prática Orientada 5.3  </strong></span>Usando os resultados da Prática Orientada <a href="ch5-inf-num.html#exr:po1">5.2</a> e do Exemplo <a href="ch5-inf-num.html#exm:ex1">5.5</a>, calcular um intervalo de confiança de 90% para o teor médio de mercúrio do peixe branco corvoro (Pacífico).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(\bar{x} \ \pm\ t^{\star}_{14} EP \ \to\  0.287 \ \pm\  1.76\times 0.0178\ \to\ (0.256, 0.318)\)&lt;/span&gt;. Temos 90% de certeza de que o teor médio de mercúrio do peixe branco corvoroeiro (Pacífico) está entre 0.256 e 0.318 ppm.&lt;/p&gt;'><sup>201</sup></a>
+<span id="exr:unnamed-chunk-194" class="exercise"><strong>Exercise 5.3  </strong></span>Usando os resultados da Prática Orientada <a href="ch5-inf-num.html#exr:po1">5.2</a> e do Exemplo <a href="ch5-inf-num.html#exm:ex1">5.5</a>, calcular um intervalo de confiança de 90% para o teor médio de mercúrio do peixe branco corvoro (Pacífico).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(\bar{x} \ \pm\ t^{\star}_{14} EP \ \to\  0.287 \ \pm\  1.76\times 0.0178\ \to\ (0.256, 0.318)\)&lt;/span&gt;. Temos 90% de certeza de que o teor médio de mercúrio do peixe branco corvoroeiro (Pacífico) está entre 0.256 e 0.318 ppm.&lt;/p&gt;'><sup>201</sup></a>
 </div>
+
 <hr>
 </div>
-<div id="testsTOneSample" class="section level3" number="5.1.5">
+<div id="testsTOneSample" class="section level3">
 <h3>
 <span class="header-section-number">5.1.5</span> Uma amostra de testes-t<a class="anchor" aria-label="anchor" href="#testsTOneSample"><i class="fas fa-link"></i></a>
 </h3>
@@ -499,14 +475,16 @@ Figura 5.5: Um golfinho de risso
 <p>O tempo médio de todos os corredores que terminaram a corrida Cherry Blossom em 2006 foi de 93.29 minutos (93 minutos e cerca de 17 segundos). Queremos determinar o uso de dados de 100 participantes na Corrida das Floradas de Cerejeira de 2012 para descobrir se os corredores nesta corrida estão ficando mais rápidos ou mais lentos contra a outra possibilidade de que não houve nenhuma mudança.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-195" class="exercise"><strong>Prática Orientada 5.4  </strong></span>Quais são as hipóteses apropriadas para esse contexto?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt;: O tempo médio das 10 milhas foi o mesmo para 2006 e 2012. &lt;span class="math inline"&gt;\(\mu = 93.29\)&lt;/span&gt; minutos. &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;: O tempo médio das 10 milhas para 2012 foi &lt;strong&gt;diferente&lt;/strong&gt; que o de 2006.&lt;span class="math inline"&gt;\(\mu \neq 93.29\)&lt;/span&gt; minutos.&lt;/p&gt;'><sup>203</sup></a>
+<span id="exr:unnamed-chunk-195" class="exercise"><strong>Exercise 5.4  </strong></span>Quais são as hipóteses apropriadas para esse contexto?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt;: O tempo médio das 10 milhas foi o mesmo para 2006 e 2012. &lt;span class="math inline"&gt;\(\mu = 93.29\)&lt;/span&gt; minutos. &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;: O tempo médio das 10 milhas para 2012 foi &lt;strong&gt;diferente&lt;/strong&gt; que o de 2006.&lt;span class="math inline"&gt;\(\mu \neq 93.29\)&lt;/span&gt; minutos.&lt;/p&gt;'><sup>203</sup></a>
 </div>
+
 <hr>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-196" class="exercise"><strong>Prática Orientada 5.5  </strong></span>Os dados provêm de uma amostra aleatória simples portanto as observações são independentes. No entanto, devemos nos preocupar com a distorção nos dados? Veja Figura <a href="ch5-inf-num.html#fig:run10SampTimeHistogram">5.6</a> para um histograma.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Com uma amostra de 100, devemos apenas nos preocupar se houver um desvio muito forte. O histograma dos dados sugere, na pior das hipóteses, ligeira inclinação.&lt;/p&gt;"><sup>204</sup></a>
+<span id="exr:unnamed-chunk-196" class="exercise"><strong>Exercise 5.5  </strong></span>Os dados provêm de uma amostra aleatória simples portanto as observações são independentes. No entanto, devemos nos preocupar com a distorção nos dados? Veja Figura <a href="ch5-inf-num.html#fig:run10SampTimeHistogram">5.6</a> para um histograma.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Com uma amostra de 100, devemos apenas nos preocupar se houver um desvio muito forte. O histograma dos dados sugere, na pior das hipóteses, ligeira inclinação.&lt;/p&gt;"><sup>204</sup></a>
 </div>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">run10Samp</span><span class="op">)</span>
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="va">run10Samp</span>
@@ -516,29 +494,30 @@ Figura 5.5: Um golfinho de risso
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Tempo (em minutos)"</span>, y <span class="op">=</span> <span class="st">"Frequência"</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:run10SampTimeHistogram"></span>
+<span style="display:block;" id="fig:run10SampTimeHistogram"></span>
 <img src="_main_files/figure-html/run10SampTimeHistogram-1.png" alt="Um histograma de tempo para os dados da amostra Cherry Blossom Race." width="672"><p class="caption">
-Figura 5.6: Um histograma de tempo para os dados da amostra Cherry Blossom Race.
+Figure 5.6: Um histograma de tempo para os dados da amostra Cherry Blossom Race.
 </p>
 </div>
 <hr>
 <p>Com a independência satisfeita e ligeira inclinação que não é uma preocupação para uma amostra desse tamanho, podemos prosseguir com a realização de um teste de hipótese usando a distribuição-<span class="math inline">\(t\)</span>.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-197" class="exercise"><strong>Prática Orientada 5.6  </strong></span>A média amostral e o desvio padrão amostral da amostra de 100 corredores da Corrida Cherry Blossom 2012 são 95.61 e 15.78 minutos, respectivamente. Lembre-se de que o tamanho da amostra é 100. Qual é o p-valor para o teste e qual é a sua conclusão?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Com as condições satisfeitas para a distribuição-&lt;span class="math inline"&gt;\(t\)&lt;/span&gt;, podemos calcular o erro padrão (&lt;span class="math inline"&gt;\(EP = 15.78 / \sqrt{100} = 1.58\)&lt;/span&gt; e o T-escore: &lt;span class="math inline"&gt;\(T = \frac{95.61 - 93.29}{1.58} = 1.47\)&lt;/span&gt;. (Há mais sobre isso após a prática orientada, mas um T-escore e Z-escore são calculados da mesma forma.) Para $ df = 100 - 1 = 99 $, encontraríamos $ T = 1.47 $ para cair entre primeira e segunda coluna, o que significa que o p-valor está entre 0,10 e 0,20 (use $ df = 90 $ e considere duas caudas, pois o teste é bilateral). O p-valor também poderia ter sido calculado mais precisamente com o software estatístico: 0,1447. Como o p-valor é maior que 0,05, não rejeitamos a hipótese nula. Ou seja, os dados não fornecem evidências sólidas de que o tempo médio de execução da Cherry Blossom Run em 2012 seja diferente da média de 2006.&lt;/p&gt;'><sup>205</sup></a>
+<span id="exr:unnamed-chunk-197" class="exercise"><strong>Exercise 5.6  </strong></span>A média amostral e o desvio padrão amostral da amostra de 100 corredores da Corrida Cherry Blossom 2012 são 95.61 e 15.78 minutos, respectivamente. Lembre-se de que o tamanho da amostra é 100. Qual é o p-valor para o teste e qual é a sua conclusão?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Com as condições satisfeitas para a distribuição-&lt;span class="math inline"&gt;\(t\)&lt;/span&gt;, podemos calcular o erro padrão (&lt;span class="math inline"&gt;\(EP = 15.78 / \sqrt{100} = 1.58\)&lt;/span&gt; e o T-escore: &lt;span class="math inline"&gt;\(T = \frac{95.61 - 93.29}{1.58} = 1.47\)&lt;/span&gt;. (Há mais sobre isso após a prática orientada, mas um T-escore e Z-escore são calculados da mesma forma.) Para $ df = 100 - 1 = 99 $, encontraríamos $ T = 1.47 $ para cair entre primeira e segunda coluna, o que significa que o p-valor está entre 0,10 e 0,20 (use $ df = 90 $ e considere duas caudas, pois o teste é bilateral). O p-valor também poderia ter sido calculado mais precisamente com o software estatístico: 0,1447. Como o p-valor é maior que 0,05, não rejeitamos a hipótese nula. Ou seja, os dados não fornecem evidências sólidas de que o tempo médio de execução da Cherry Blossom Run em 2012 seja diferente da média de 2006.&lt;/p&gt;'><sup>205</sup></a>
 </div>
+
 <hr>
 <div class="alert alert-info">
 <p><strong>Quando usamos uma distribuição-<span class="math inline">\(t\)</span>, usamos um T-escore (igual ao Z-escore)</strong>: Para nos ajudar a lembrar de usar a distribuição-<span class="math inline">\(t\)</span>, usamos <span class="math inline">\(T\)</span> para representar a estatística de teste, e geralmente chamamos isso de <em>T-escore</em>. O escore Z e o escore T são calculados exatamente da mesma maneira e são conceitualmente idênticos: cada um representa quantos erros-padrão o valor observado é do valor nulo.</p>
 </div>
 </div>
 </div>
-<div id="pairedData" class="section level2" number="5.2">
+<div id="pairedData" class="section level2">
 <h2>
 <span class="header-section-number">5.2</span> Dados pareados<a class="anchor" aria-label="anchor" href="#pairedData"><i class="fas fa-link"></i></a>
 </h2>
 <p>Os livros didáticos são realmente mais baratos online? Aqui nós comparamos o preço dos livros didáticos na livraria da Universidade da Califórnia, Los Angeles (UCLA) e os preços na Amazon.com. Setenta e três cursos da UCLA foram amostrados aleatoriamente na primavera de 2010.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Quando uma turma tinha vários livros, apenas o livro mais caro era considerado.&lt;/p&gt;"><sup>206</sup></a> Uma parte do conjunto de dados é mostrada na Tabela <a href="ch5-inf-num.html#tab:textbooksDF">5.2</a>.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">)</span>
 
@@ -546,7 +525,7 @@ Figura 5.6: Um histograma de tempo para os dados da amostra Cherry Blossom Race.
              caption <span class="op">=</span> <span class="st">"Seis casos do conjunto de dados 'livros texto'."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:textbooksDF">Tabela 5.2: </span>Seis casos do conjunto de dados ‘livros texto.’</caption>
+<span id="tab:textbooksDF">Table 5.2: </span>Seis casos do conjunto de dados ‘livros texto’.</caption>
 <thead><tr class="header">
 <th align="center">deptAbbr</th>
 <th align="center">course</th>
@@ -614,7 +593,7 @@ Figura 5.6: Um histograma de tempo para os dados da amostra Cherry Blossom Race.
 </tbody>
 </table></div>
 </div>
-<div id="pairedObservations" class="section level2" number="5.3">
+<div id="pairedObservations" class="section level2">
 <h2>
 <span class="header-section-number">5.3</span> Observações Pareadas<a class="anchor" aria-label="anchor" href="#pairedObservations"><i class="fas fa-link"></i></a>
 </h2>
@@ -627,28 +606,29 @@ Figura 5.6: Um histograma de tempo para os dados da amostra Cherry Blossom Race.
 \text{preço UCLA} - \text{preço Amazon}
 \end{eqnarray*}\]</span></p>
 <p>para cada livro. É importante que subtraímos sempre usando uma ordem consistente; aqui os preços da Amazon são sempre subtraídos dos preços da UCLA. Um histograma dessas diferenças é mostrado na Figura <a href="ch5-inf-num.html#fig:diffInTextbookPricesS10">5.7</a>. Usar diferenças entre observações pareadas é uma maneira comum e útil de analisar dados pareados.</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">textbooks</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diff</span><span class="op">)</span>, bins <span class="op">=</span> <span class="fl">8</span>, color <span class="op">=</span> <span class="st">"white"</span>, fill <span class="op">=</span> <span class="st">"#E97C31"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Preço UCLA - Preço Amazon (USD)"</span>, y <span class="op">=</span> <span class="st">"Frequência"</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:diffInTextbookPricesS10"></span>
+<span style="display:block;" id="fig:diffInTextbookPricesS10"></span>
 <img src="_main_files/figure-html/diffInTextbookPricesS10-1.png" alt="Histograma da diferença de preço para cada livro amostrado. Estes dados são fortemente distorcidos." width="672"><p class="caption">
-Figura 5.7: Histograma da diferença de preço para cada livro amostrado. Estes dados são fortemente distorcidos.
+Figure 5.7: Histograma da diferença de preço para cada livro amostrado. Estes dados são fortemente distorcidos.
 </p>
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-198" class="exercise"><strong>Prática Orientada 5.7  </strong></span>A primeira diferença mostrada na Tabela <a href="ch5-inf-num.html#tab:textbooksDF">5.2</a> é calculada como <span class="math inline">\(27.67-27.95 = -0.2\)</span>. Verifique se as diferenças são calculadas corretamente para observações 2 e 3.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Observação 2: $ 40.59 - 31.14 = 9.45 $. Observação 3: $ 31.68 - 32.00 = -0.32 $.&lt;/p&gt;"><sup>207</sup></a>
+<span id="exr:unnamed-chunk-198" class="exercise"><strong>Exercise 5.7  </strong></span>A primeira diferença mostrada na Tabela <a href="ch5-inf-num.html#tab:textbooksDF">5.2</a> é calculada como <span class="math inline">\(27.67-27.95 = -0.2\)</span>. Verifique se as diferenças são calculadas corretamente para observações 2 e 3.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Observação 2: $ 40.59 - 31.14 = 9.45 $. Observação 3: $ 31.68 - 32.00 = -0.32 $.&lt;/p&gt;"><sup>207</sup></a>
 </div>
+
 <hr>
-<div id="inferencePairedData" class="section level3" number="5.3.1">
+<div id="inferencePairedData" class="section level3">
 <h3>
 <span class="header-section-number">5.3.1</span> Inferência para dados pareados<a class="anchor" aria-label="anchor" href="#inferencePairedData"><i class="fas fa-link"></i></a>
 </h3>
 <p>Para analisar um conjunto de dados pareados, simplesmente analisamos as diferenças. Podemos usar as mesmas técnicas de distribuição-<span class="math inline">\(t\)</span> que aplicamos na última seção.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sum.estat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span>, 
                <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span>, 
                <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span><span class="op">)</span>
@@ -658,7 +638,7 @@ Figura 5.7: Histograma da diferença de preço para cada livro amostrado. Estes 
              caption <span class="op">=</span> <span class="st">"Estatísticas resumidas para as diferenças de preço. Havia 73 livros, então há 73 diferenças."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:textbooksSummaryStats">Tabela 5.3: </span>Estatísticas resumidas para as diferenças de preço. Havia 73 livros, então há 73 diferenças.</caption>
+<span id="tab:textbooksSummaryStats">Table 5.3: </span>Estatísticas resumidas para as diferenças de preço. Havia 73 livros, então há 73 diferenças.</caption>
 <thead><tr class="header">
 <th align="center">n</th>
 <th align="center">média</th>
@@ -671,13 +651,14 @@ Figura 5.7: Histograma da diferença de preço para cada livro amostrado. Estes 
 </tr></tbody>
 </table></div>
 <div class="example">
-<span id="exm:htForDiffInUCLAAndAmazonTextbookPrices" class="example"><strong>Exemplo 5.6  </strong></span>Configurar e implementar um teste de hipótese para determinar se, em média, há uma diferença entre o preço da Amazon para um livro e o preço da livraria da UCLA.
+<span id="exm:htForDiffInUCLAAndAmazonTextbookPrices" class="example"><strong>Example 5.6  </strong></span>Configurar e implementar um teste de hipótese para determinar se, em média, há uma diferença entre o preço da Amazon para um livro e o preço da livraria da UCLA.
 </div>
+
 <p>Estamos considerando dois cenários: não há diferença ou há alguma diferença nos preços médios.</p>
-<span class="math display">\[\begin{cases}
-  H_0: \mu_{dif}=0 &amp; \mbox{ Não há diferença no preço médio do livro didático.} \\
-  H_1: \mu_{dif}\neq0 &amp; \mbox{ Há diferença no preço médio do livro didático.}
-\end{cases}\]</span>
+<p>\begin{cases}
+H_0: <em>{dif}=0 &amp;  \
+H_1: </em>{dif}0 &amp; 
+\end{cases}</p>
 <p>A distribuição-<span class="math inline">\(t\)</span> pode ser usada para essa aplicação? As observações são baseadas em uma amostra aleatória simples de menos de 10% de todos os livros vendidos na livraria, portanto a independência é razoável. Enquanto a distribuição é fortemente distorcida, a amostra é razoavelmente grande (<span class="math inline">\(n = 73\)</span>), para que possamos prosseguir. Como as condições são razoavelmente satisfeitas, podemos aplicar a distribuição-<span class="math inline">\(t\)</span> a essa configuração.</p>
 <p>Calculamos o erro padrão associado a <span class="math inline">\(\bar{x}_{dif}\)</span> usando o desvio padrão das diferenças (<span class="math inline">\(s_{_{dif}}=14.26\)</span>) e o número de diferenças (<span class="math inline">\(n_{_{dif}}=73\)</span>):
 <span class="math display">\[EP_{\bar{x}_{dif}} = \frac{s_{dif}}{\sqrt{n_{dif}}} = \frac{14.26}{\sqrt{73}} = 1.67\]</span>.</p>
@@ -686,10 +667,10 @@ Figura 5.7: Histograma da diferença de preço para cada livro amostrado. Estes 
 T = \frac{\bar{x}_{dif} - 0}{EP_{x_{dif}}} = \frac{12.76 - 0}{1.67} = 7.65
 \end{align*}\]</span></p>
 <p>Os graus de liberdade são <span class="math inline">\(df = 73 - 1 = 72\)</span>. Esse valor é maior que qualquer outro na linha de 70 GL (arredondamos para baixo para <span class="math inline">\(GL\)</span> ao usar a tabela), significando que o p-valor bilateral é menor que 0.01. Se usássemos software estatístico, descobriríamos que o p-valor é menor que 1 em 10 bilhões!</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">7.65</span>, df <span class="op">=</span> <span class="fl">72</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Como o p-valor é menor que 0.05, rejeitamos a hipótese nula. Nós encontramos evidências convincentes de que a Amazon era, em média, mais barata do que a livraria da UCLA para os livros didáticos da UCLA.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">X</span>, <span class="fl">72</span><span class="op">)</span>
 
@@ -713,26 +694,27 @@ T = \frac{\bar{x}_{dif} - 0}{EP_{x_{dif}}} = \frac{12.76 - 0}{1.67} = 7.65
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">12.76</span>, y <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">15</span>, yend <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"#EAB217"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:textbooksS10HTTails"></span>
+<span style="display:block;" id="fig:textbooksS10HTTails"></span>
 <img src="_main_files/figure-html/textbooksS10HTTails-1.png" alt="Distribuição da amostragem para a diferença média dos preços dos livros, se a diferença média real for zero." width="672"><p class="caption">
-Figura 5.8: Distribuição da amostragem para a diferença média dos preços dos livros, se a diferença média real for zero.
+Figure 5.8: Distribuição da amostragem para a diferença média dos preços dos livros, se a diferença média real for zero.
 </p>
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-200" class="exercise"><strong>Prática Orientada 5.8  </strong></span>Crie um intervalo de confiança de 95% para a diferença de preço médio entre livros na livraria da UCLA e livros na Amazon.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;As condições já foram verificadas e o erro padrão calculado no Exemplo &lt;a href="ch5-inf-num.html#exm:htForDiffInUCLAAndAmazonTextbookPrices"&gt;5.6&lt;/a&gt;. Para encontrar o intervalo, identifique &lt;span class="math inline"&gt;\(t^{\star}_{72}\)&lt;/span&gt; (use &lt;span class="math inline"&gt;\(GL=70\)&lt;/span&gt; na tabela, &lt;span class="math inline"&gt;\(t^{\star}_{70} = 1.99\)&lt;/span&gt;) e conecte-a, a estimativa pontual e o erro padrão na fórmula do intervalo de confiança: &lt;span class="math inline"&gt;\(\text{estimativa pontual} \ \pm\ z^{\star}EP \quad\to\quad 12.76 \ \pm\ 1.99\times 1.67 \quad\to\quad (9.44, 16.08)\)&lt;/span&gt;
+<span id="exr:unnamed-chunk-200" class="exercise"><strong>Exercise 5.8  </strong></span>Crie um intervalo de confiança de 95% para a diferença de preço médio entre livros na livraria da UCLA e livros na Amazon.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;As condições já foram verificadas e o erro padrão calculado no Exemplo &lt;a href="ch5-inf-num.html#exm:htForDiffInUCLAAndAmazonTextbookPrices"&gt;5.6&lt;/a&gt;. Para encontrar o intervalo, identifique &lt;span class="math inline"&gt;\(t^{\star}_{72}\)&lt;/span&gt; (use &lt;span class="math inline"&gt;\(GL=70\)&lt;/span&gt; na tabela, &lt;span class="math inline"&gt;\(t^{\star}_{70} = 1.99\)&lt;/span&gt;) e conecte-a, a estimativa pontual e o erro padrão na fórmula do intervalo de confiança: &lt;span class="math inline"&gt;\(\text{estimativa pontual} \ \pm\ z^{\star}EP \quad\to\quad 12.76 \ \pm\ 1.99\times 1.67 \quad\to\quad (9.44, 16.08)\)&lt;/span&gt;
 Temos 95% de confiança de que a Amazon está, em média, entre $9.44 e $16.08 mais barata que a livraria da UCLA para os livros didáticos da UCLA.&lt;/p&gt;'><sup>208</sup></a>
 </div>
+
 <hr>
 </div>
 </div>
-<div id="differenceTwoMeans" class="section level2" number="5.4">
+<div id="differenceTwoMeans" class="section level2">
 <h2>
 <span class="header-section-number">5.4</span> Diferença entre duas médias<a class="anchor" aria-label="anchor" href="#differenceTwoMeans"><i class="fas fa-link"></i></a>
 </h2>
 <p>Nesta seção, consideramos uma diferença em duas médias populacionais, <span class="math inline">\(\mu_1 - \mu_2\)</span>, sob a condição de que os dados não estejam pareados. Assim como com uma única amostra, identificamos condições para garantir que podemos usar a distribuição-<span class="math inline">\(t\)</span> com uma estimativa pontual da diferença, <span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span>.</p>
 <p>Aplicamos esses métodos em três contextos: determinando se as células-tronco podem melhorar a função cardíaca, explorando o impacto do hábito de fumar das mulheres grávidas em recém-nascidos e investigando se há evidência estatisticamente significativa de que uma variação de um exame é mais difícil que outra variação. Esta seção é motivada por questões como “Existem evidências convincentes de que recém-nascidos de mães que fumam têm um peso médio ao nascer diferente do que recém-nascidos de mães que não fumam?”</p>
-<div id="confidenceIntervalsMeanDifference" class="section level3" number="5.4.1">
+<div id="confidenceIntervalsMeanDifference" class="section level3">
 <h3>
 <span class="header-section-number">5.4.1</span> Intervalo de confiança para diferença de médias<a class="anchor" aria-label="anchor" href="#confidenceIntervalsMeanDifference"><i class="fas fa-link"></i></a>
 </h3>
@@ -741,7 +723,7 @@ Temos 95% de confiança de que a Amazon está, em média, entre $9.44 e $16.08 m
 <p><span class="math display">\[\begin{eqnarray*}
 \bar{x}_{cte} - \bar{x}_{con}\ =\ 3.50 - (-4.33)\ =\ 7.83
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="va">dados</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">3.5</span>, <span class="fl">5.17</span><span class="op">)</span>; <span class="va">dados</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="op">-</span><span class="fl">4.33</span>, <span class="fl">2.76</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"média"</span>, <span class="st">"desvio"</span><span class="op">)</span>
@@ -750,7 +732,7 @@ Temos 95% de confiança de que a Amazon está, em média, entre $9.44 e $16.08 m
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">dados</span>, align <span class="op">=</span> <span class="st">"c"</span>, caption <span class="op">=</span> <span class="st">"Estatísticas resumidas do estudo com células-tronco embrionárias."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:summaryStatsForSheepHeartDataWhoReceivedMiceESCs">Tabela 5.4: </span>Estatísticas resumidas do estudo com células-tronco embrionárias.</caption>
+<span id="tab:summaryStatsForSheepHeartDataWhoReceivedMiceESCs">Table 5.4: </span>Estatísticas resumidas do estudo com células-tronco embrionárias.</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">n</th>
@@ -777,15 +759,16 @@ Temos 95% de confiança de que a Amazon está, em média, entre $9.44 e $16.08 m
 </div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-201" class="example"><strong>Exemplo 5.7  </strong></span>Pode a distribuição-<span class="math inline">\(t\)</span> ser usada para fazer inferência usando a estimativa pontual, <span class="math inline">\(\bar{x}_{cte} - \bar{x}_{con} = 7.83\)</span>?
+<span id="exm:unnamed-chunk-201" class="example"><strong>Example 5.7  </strong></span>Pode a distribuição-<span class="math inline">\(t\)</span> ser usada para fazer inferência usando a estimativa pontual, <span class="math inline">\(\bar{x}_{cte} - \bar{x}_{con} = 7.83\)</span>?
 </div>
+
 <p>Verificamos as duas condições exigidas:</p>
 <ul>
 <li><p>Neste estudo, as ovelhas eram independentes umas das outras. Além disso, as distribuições na Figura <a href="ch5-inf-num.html#fig:stemCellTherapyForHearts">5.9</a> não mostram nenhum desvio claro da normalidade, onde observamos exceções proeminentes em particular para amostras tão pequenas. Estes achados implicam que cada média amostral poderia ser modelada usando uma distribuição-<span class="math inline">\(t\)</span>.</p></li>
 <li><p>As ovelhas em cada grupo também eram independentes umas das outras.</p></li>
 </ul>
 <p>Como ambas as condições são atendidas, podemos usar a distribuição-<span class="math inline">\(t\)</span> para modelar a diferença das duas médias amostrais.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">stem.cells</span><span class="op">)</span>
 <span class="va">stem.cells</span><span class="op">$</span><span class="va">dif</span> <span class="op">=</span> <span class="va">stem.cells</span><span class="op">$</span><span class="va">after</span> <span class="op">-</span> <span class="va">stem.cells</span><span class="op">$</span><span class="va">before</span> <span class="co">#diferença</span>
 
@@ -800,9 +783,9 @@ Temos 95% de confiança de que a Amazon está, em média, entre $9.44 e $16.08 m
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Mudança na função de bombeamento do coração"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:stemCellTherapyForHearts"></span>
+<span style="display:block;" id="fig:stemCellTherapyForHearts"></span>
 <img src="_main_files/figure-html/stemCellTherapyForHearts-1.png" alt="Histogramas para o grupo de células-tronco embrionárias e o grupo controle. Valores mais altos estão associados a uma melhoria maior. Não vemos qualquer evidência de distorção nesses dados; no entanto, vale a pena notar que a distorção seria difícil de detectar com uma amostra tão pequena." width="672"><p class="caption">
-Figura 5.9: Histogramas para o grupo de células-tronco embrionárias e o grupo controle. Valores mais altos estão associados a uma melhoria maior. Não vemos qualquer evidência de distorção nesses dados; no entanto, vale a pena notar que a distorção seria difícil de detectar com uma amostra tão pequena.
+Figure 5.9: Histogramas para o grupo de células-tronco embrionárias e o grupo controle. Valores mais altos estão associados a uma melhoria maior. Não vemos qualquer evidência de distorção nesses dados; no entanto, vale a pena notar que a distorção seria difícil de detectar com uma amostra tão pequena.
 </p>
 </div>
 <p>Podemos quantificar a variabilidade na estimativa pontual, <span class="math inline">\(\bar{x}_{cte} - \bar{x}_{con}\)</span>, usando a seguinte fórmula para seu erro padrão:</p>
@@ -828,8 +811,9 @@ EP_{\bar{x}_{1} - \bar{x}_{2}} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
 </div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-202" class="example"><strong>Exemplo 5.8  </strong></span>Calcule um intervalo de confiança de 95% para o efeito das CTE sobre a mudança na capacidade de bombear o coração de ovelhas após terem sofrido um ataque cardíaco.
+<span id="exm:unnamed-chunk-202" class="example"><strong>Example 5.8  </strong></span>Calcule um intervalo de confiança de 95% para o efeito das CTE sobre a mudança na capacidade de bombear o coração de ovelhas após terem sofrido um ataque cardíaco.
 </div>
+
 <p>Usaremos a diferença de amostra e o erro padrão para essa estimativa pontual de nossos cálculos anteriores:</p>
 <p><span class="math display">\[\begin{align*}
 &amp; \bar{x}_{cte} - \bar{x}_{con} = 7.83 \\
@@ -842,20 +826,20 @@ EP_{\bar{x}_{1} - \bar{x}_{2}} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
 \end{align*}\]</span></p>
 <p>Temos 95% de confiança de que as células-tronco embrionárias melhoram a função de bombeamento do coração em ovelhas que sofreram um ataque cardíaco de 3.32% a 12.34%.</p>
 </div>
-<div id="HTBasedMeanDifference" class="section level3" number="5.4.2">
+<div id="HTBasedMeanDifference" class="section level3">
 <h3>
 <span class="header-section-number">5.4.2</span> Testes de hipóteses baseados em uma diferença de médias<a class="anchor" aria-label="anchor" href="#HTBasedMeanDifference"><i class="fas fa-link"></i></a>
 </h3>
 <p>Um conjunto de dados chamado <code>bebe_fumo</code> representa uma amostra aleatória de 150 casos de mães e seus recém-nascidos na Carolina do Norte durante um ano. Quatro casos deste conjunto de dados são representados na Tabela <a href="ch5-inf-num.html#tab:babySmokeDF">5.5</a>. Estamos particularmente interessados em duas variáveis: <strong>peso</strong> e <strong>fumo</strong>. A variável <strong>peso</strong> representa os pesos dos recém-nascidos e a variável <strong>fumo</strong> descreve quais mães fumaram durante a gravidez.</p>
 <p>Gostaríamos de saber se há evidências convincentes de que os recém-nascidos de mães que fumam têm um peso médio ao nascer diferente do que os recém-nascidos de mães que não fumam? Usaremos o exemplo da Carolina do Norte para tentar responder a essa pergunta. O grupo de fumantes inclui 50 casos e o grupo de não fumantes contém 100 casos, representados na Figura <a href="ch5-inf-num.html#fig:babySmokePlotOfTwoGroupsToExamineSkew">5.10</a>.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">births</span><span class="op">)</span>
 
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">births</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">7</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"c"</span>, 
              caption <span class="op">=</span> <span class="st">"Quatro casos do conjunto de dados bebe_fumo."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:babySmokeDF">Tabela 5.5: </span>Quatro casos do conjunto de dados bebe_fumo.</caption>
+<span id="tab:babySmokeDF">Table 5.5: </span>Quatro casos do conjunto de dados bebe_fumo.</caption>
 <thead><tr class="header">
 <th align="center">fAge</th>
 <th align="center">mAge</th>
@@ -899,7 +883,7 @@ EP_{\bar{x}_{1} - \bar{x}_{2}} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   smoker <span class="op">=</span> <span class="st">"Mães Fumantes"</span>,
   nonsmoker <span class="op">=</span> <span class="st">"Mães Não-Fumantes"</span>
@@ -913,24 +897,24 @@ EP_{\bar{x}_{1} - \bar{x}_{2}} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Peso (em libras) dos recém nascidos"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:babySmokePlotOfTwoGroupsToExamineSkew"></span>
+<span style="display:block;" id="fig:babySmokePlotOfTwoGroupsToExamineSkew"></span>
 <img src="_main_files/figure-html/babySmokePlotOfTwoGroupsToExamineSkew-1.png" alt="O painel superior representa pesos de nascimento para bebês cujas mães fumaram. O painel inferior representa os pesos ao nascimento de bebês cujas mães não fumaram. As distribuições exibem moderada a forte e forte inclinação, respectivamente" width="672"><p class="caption">
-Figura 5.10: O painel superior representa pesos de nascimento para bebês cujas mães fumaram. O painel inferior representa os pesos ao nascimento de bebês cujas mães não fumaram. As distribuições exibem moderada a forte e forte inclinação, respectivamente
+Figure 5.10: O painel superior representa pesos de nascimento para bebês cujas mães fumaram. O painel inferior representa os pesos ao nascimento de bebês cujas mães não fumaram. As distribuições exibem moderada a forte e forte inclinação, respectivamente
 </p>
 </div>
 
 <div class="example">
-<span id="exm:babySmokeHTForWeight" class="example"><strong>Exemplo 5.9  </strong></span>Estabelecer hipóteses apropriadas para avaliar se existe uma relação entre o tabagismo da mãe e o peso médio ao nascer.
+<span id="exm:babySmokeHTForWeight" class="example"><strong>Example 5.9  </strong></span>Estabelecer hipóteses apropriadas para avaliar se existe uma relação entre o tabagismo da mãe e o peso médio ao nascer.
 </div>
-<p>A hipótese nula representa o caso de nenhuma diferença entre os grupos.</p>
-<span class="math display">\[\begin{cases}
-H_0: \mu_{n} - \mu_{s} = 0 &amp; \mbox{Não há diferença no peso médio ao nascer dos recém-nascidos de mães que fumavam ou não} \\
 
-H_1: \mu_{n} - \mu_{s} \neq 0 &amp; \mbox{Há alguma diferença na média dos recém-nascidos de mães que fumavam e não fumavam}
-\end{cases}\]</span>
+<p>A hipótese nula representa o caso de nenhuma diferença entre os grupos.</p>
+<p>\begin{cases}
+H_0: <em>{n} - </em>{s} = 0 &amp;  \</p>
+<p>H_1: <em>{n} - </em>{s} 0 &amp; 
+\end{cases}</p>
 <p>onde <span class="math inline">\(\mu_{n}\)</span> representa mães não fumantes e <span class="math inline">\(\mu_s\)</span> representa mães que fumavam.</p>
 <p>Verificamos as duas condições necessárias para aplicar a distribuição-<span class="math inline">\(t\)</span> à diferença nas médias amostrais. (1) Como os dados provêm de uma amostra aleatória simples e consistem em menos de 10% de todos os casos, as observações são independentes. Além disso, embora cada distribuição seja fortemente distorcida, os tamanhos de amostra de 50 e 100 tornariam razoável modelar cada um separadamente usando uma distribuição-<span class="math inline">\(t\)</span>. A inclinação é razoável para esses tamanhos de amostra de 50 e 100. (2) O raciocínio de independência aplicado em (1) também garante que as observações em cada amostra sejam independentes. Como ambas as condições são satisfeitas, a diferença nas médias da amostra pode ser modelada usando uma distribuição-<span class="math inline">\(t\)</span>.</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">sm</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">births</span><span class="op">$</span><span class="va">weight</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">births</span><span class="op">$</span><span class="va">smoke</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 <span class="va">sm</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">births</span><span class="op">$</span><span class="va">weight</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">births</span><span class="op">$</span><span class="va">smoke</span><span class="op">)</span>, <span class="va">sd</span><span class="op">)</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>
@@ -942,7 +926,7 @@ H_1: \mu_{n} - \mu_{s} \neq 0 &amp; \mbox{Há alguma diferença na média dos re
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">sm</span>,<span class="fl">2</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"c"</span>, caption <span class="op">=</span> <span class="st">"Estatísticas resumidas para o conjunto de dados"</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:summaryStatsOfBirthWeightForNewbornsFromSmokingAndNonsmokingMothers">Tabela 5.6: </span>Estatísticas resumidas para o conjunto de dados</caption>
+<span id="tab:summaryStatsOfBirthWeightForNewbornsFromSmokingAndNonsmokingMothers">Table 5.6: </span>Estatísticas resumidas para o conjunto de dados</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">Não Fumante</th>
@@ -968,7 +952,7 @@ H_1: \mu_{n} - \mu_{s} \neq 0 &amp; \mbox{Há alguma diferença na média dos re
 </table></div>
 <hr>
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-203" class="exercise"><strong>Prática Orientada 5.9  </strong></span>As estatísticas resumidas na Tabela <a href="ch5-inf-num.html#tab:summaryStatsOfBirthWeightForNewbornsFromSmokingAndNonsmokingMothers">5.6</a> pode ser útil para este exercício.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;(a) A diferença nas médias amostrais é uma estimativa pontual apropriada: &lt;span class="math inline"&gt;\(\bar{x}_{n} - \bar{x}_{s} = 0.40\)&lt;/span&gt;. (b) O erro padrão da estimativa pode ser estimado usando Equação (&lt;a href="ch5-inf-num.html#eq:seOfDifferenceInMeans"&gt;(5.2)&lt;/a&gt;): EP =   =  = 0.26&lt;/p&gt;'><sup>210</sup></a></p>
+<p><span id="exr:unnamed-chunk-203" class="exercise"><strong>Exercise 5.9  </strong></span>As estatísticas resumidas na Tabela <a href="ch5-inf-num.html#tab:summaryStatsOfBirthWeightForNewbornsFromSmokingAndNonsmokingMothers">5.6</a> pode ser útil para este exercício.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;(a) A diferença nas médias amostrais é uma estimativa pontual apropriada: &lt;span class="math inline"&gt;\(\bar{x}_{n} - \bar{x}_{s} = 0.40\)&lt;/span&gt;. (b) O erro padrão da estimativa pode ser estimado usando Equação (&lt;a href="ch5-inf-num.html#eq:seOfDifferenceInMeans"&gt;(5.2)&lt;/a&gt;): EP =   =  = 0.26&lt;/p&gt;'><sup>210</sup></a></p>
 <ul>
 <li><ol style="list-style-type: lower-alpha">
 <li>Qual é a estimativa pontual da diferença de população?, <span class="math inline">\(\mu_{n} - \mu_{s}\)</span>?</li>
@@ -981,10 +965,11 @@ H_1: \mu_{n} - \mu_{s} \neq 0 &amp; \mbox{Há alguma diferença na média dos re
 
 <hr>
 <div class="example">
-<span id="exm:pictureOfPValueForEstimateOfDiffOfMeansOfBirthWeights" class="example"><strong>Exemplo 5.10  </strong></span>Desenhe uma figura para representar o p-valor para o teste de hipótese de Exemplo <a href="ch5-inf-num.html#exm:babySmokeHTForWeight">5.9</a>.
+<span id="exm:pictureOfPValueForEstimateOfDiffOfMeansOfBirthWeights" class="example"><strong>Example 5.10  </strong></span>Desenhe uma figura para representar o p-valor para o teste de hipótese de Exemplo <a href="ch5-inf-num.html#exm:babySmokeHTForWeight">5.9</a>.
 </div>
+
 <p>Para descrever o p-valor, desenhamos a distribuição da estimativa pontual como se <span class="math inline">\(H_0\)</span> fosse verdadeiro e áreas de sombra representando pelo menos tanta evidência contra <span class="math inline">\(H_0\)</span> quanto o que foi observado. Ambas as caudas estão sombreadas porque é um teste bilateral.</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>
@@ -1002,9 +987,10 @@ H_1: \mu_{n} - \mu_{s} \neq 0 &amp; \mbox{Há alguma diferença na média dos re
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-204-1.png" width="672"></div>
 
 <div class="example">
-<p><span id="exm:babySmokeHTForWeightComputePValueAndEvalHT" class="example"><strong>Exemplo 5.11  </strong></span>
+<p><span id="exm:babySmokeHTForWeightComputePValueAndEvalHT" class="example"><strong>Example 5.11  </strong></span>
 Calcule o p-valor do teste de hipótese usando a figura do Exemplo <a href="ch5-inf-num.html#exm:pictureOfPValueForEstimateOfDiffOfMeansOfBirthWeights">5.10</a> e avalie as hipóteses usando um nível de significância de <span class="math inline">\(\alpha=0.05\)</span>.</p>
 </div>
+
 <p>Começamos calculando o T-escore:</p>
 <p><span class="math display">\[\begin{eqnarray*}
 T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
@@ -1012,13 +998,15 @@ T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
 <p>Em seguida, comparamos esse valor com valores na tabela <span class="math inline">\(T\)</span>, onde usamos o menor de <span class="math inline">\(n_n-1 = 99\)</span> e <span class="math inline">\(n_s - 1 = 49\)</span> como os graus de liberdade: <span class="math inline">\(GL = 49\)</span>. O T-escore fica entre a primeira e a segunda colunas na linha <span class="math inline">\(GL = 49\)</span> da tabela <span class="math inline">\(t\)</span>, o que significa que o p-valor bilateral fica entre 0.10 e 0.20. Este p-valor é maior que o valor de significância, 0.05, então nós falhamos em rejeitar a hipótese nula. Não há evidências suficientes para dizer que há uma diferença no peso médio ao nascer de recém-nascidos de mães da Carolina do Norte que fumaram durante a gravidez e recém-nascidos de mães da Carolina do Norte que não fumaram durante a gravidez.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-205" class="exercise"><strong>Prática Orientada 5.10  </strong></span>A conclusão para o Exemplo <a href="ch5-inf-num.html#exm:babySmokeHTForWeightComputePValueAndEvalHT">5.11</a> significa que o tabagismo e o peso médio ao nascer não estão relacionados?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Absolutamente não. É possível que haja alguma diferença, mas não a detectamos. Se houver uma diferença, fizemos um erro Tipo II. Aviso: também não temos informações suficientes para, se houver uma diferença real, dizer com confiança em qual direção essa diferença estaria.&lt;/p&gt;"><sup>211</sup></a>
+<span id="exr:unnamed-chunk-205" class="exercise"><strong>Exercise 5.10  </strong></span>A conclusão para o Exemplo <a href="ch5-inf-num.html#exm:babySmokeHTForWeightComputePValueAndEvalHT">5.11</a> significa que o tabagismo e o peso médio ao nascer não estão relacionados?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Absolutamente não. É possível que haja alguma diferença, mas não a detectamos. Se houver uma diferença, fizemos um erro Tipo II. Aviso: também não temos informações suficientes para, se houver uma diferença real, dizer com confiança em qual direção essa diferença estaria.&lt;/p&gt;"><sup>211</sup></a>
 </div>
+
 <hr>
 <hr>
 <div class="exercise">
-<span id="exr:babySmokeHTIDingHowToDetectDifferences" class="exercise"><strong>Prática Orientada 5.11  </strong></span>Se fizermos um Erro Tipo II e houver uma diferença, o que poderíamos ter feito de forma diferente na coleta de dados para ter maior probabilidade de detectar a diferença?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Poderíamos ter coletado mais dados. Se os tamanhos das amostras são maiores, tendemos a ter uma chance melhor de encontrar uma diferença se existir.&lt;/p&gt;"><sup>212</sup></a>
+<span id="exr:babySmokeHTIDingHowToDetectDifferences" class="exercise"><strong>Exercise 5.11  </strong></span>Se fizermos um Erro Tipo II e houver uma diferença, o que poderíamos ter feito de forma diferente na coleta de dados para ter maior probabilidade de detectar a diferença?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Poderíamos ter coletado mais dados. Se os tamanhos das amostras são maiores, tendemos a ter uma chance melhor de encontrar uma diferença se existir.&lt;/p&gt;"><sup>212</sup></a>
 </div>
+
 <hr>
 <p>Embora tenhamos usado esse conjunto de dados relativamente pequeno como exemplo, conjuntos de dados maiores mostram que as mulheres que fumam tendem a ter recém-nascidos menores. De fato, algumas pessoas na indústria do tabaco realmente tiveram a audácia de citar benefícios em fumar:</p>
 <blockquote>
@@ -1026,12 +1014,12 @@ T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
 </blockquote>
 <p><strong>Checagem de fatos</strong>: os bebês de mulheres que fumam não são tão saudáveis quanto os bebês de mulheres que não fumam.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Você pode assistir a um episódio de John Oliver para explorar as ofensas atuais da indústria do tabaco. Por favor, esteja ciente de que há alguma linguagem adulta&lt;/p&gt;"><sup>213</sup></a></p>
 </div>
-<div id="caseStudyTwoVersions" class="section level3" number="5.4.3">
+<div id="caseStudyTwoVersions" class="section level3">
 <h3>
 <span class="header-section-number">5.4.3</span> Estudo de caso: duas versões de um exame<a class="anchor" aria-label="anchor" href="#caseStudyTwoVersions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Uma instrutor decidiu executar duas pequenas variações do mesmo exame. Antes de distribuir os exames, ele misturou os exames para garantir que cada aluno recebesse uma versão aleatória. As estatísticas resumidas de como os alunos se saíram nesses dois exames são mostradas na Tabela <a href="ch5-inf-num.html#tab:summaryStatsForTwoVersionsOfExams">5.7</a>. Antecipando as reclamações dos alunos que fizeram o exame da versão B, ela gostaria de avaliar se a diferença observada nos grupos é tão grande que fornece evidências convincentes de que a versão B era mais difícil (em média) do que a versão A.</p>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">est_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">79.4</span>, <span class="fl">14</span>, <span class="fl">45</span>, <span class="fl">100</span>, <span class="fl">27</span>, <span class="fl">74.1</span>, <span class="fl">20</span>, <span class="fl">32</span>, <span class="fl">100</span><span class="op">)</span>, 
                   ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -1042,7 +1030,7 @@ T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
              caption <span class="op">=</span> <span class="st">"Estatísticas resumidas das pontuações para cada versão do exame."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:summaryStatsForTwoVersionsOfExams">Tabela 5.7: </span>Estatísticas resumidas das pontuações para cada versão do exame.</caption>
+<span id="tab:summaryStatsForTwoVersionsOfExams">Table 5.7: </span>Estatísticas resumidas das pontuações para cada versão do exame.</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">n</th>
@@ -1072,12 +1060,13 @@ T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
 </table></div>
 <hr>
 <div class="exercise">
-<span id="exr:htSetupForEvaluatingTwoExamVersions" class="exercise"><strong>Prática Orientada 5.12  </strong></span>Construir hipóteses para avaliar se a diferença observada nas médias amostrais,<span class="math inline">\(\bar{x}_A - \bar{x}_B=5.3\)</span>, é devido ao acaso.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Como a professora não esperava que um exame fosse mais difícil antes de examinar os resultados do teste, ela deveria usar um teste de hipóteses bilateral. &lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt;: os exames são igualmente difíceis, em média. &lt;span class="math inline"&gt;\(\mu_A - \mu_B = 0\)&lt;/span&gt;. &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;: um exame foi mais difícil do que o outro, em média. &lt;span class="math inline"&gt;\(\mu_A - \mu_B \neq 0\)&lt;/span&gt;.&lt;/p&gt;'><sup>214</sup></a>
+<span id="exr:htSetupForEvaluatingTwoExamVersions" class="exercise"><strong>Exercise 5.12  </strong></span>Construir hipóteses para avaliar se a diferença observada nas médias amostrais,<span class="math inline">\(\bar{x}_A - \bar{x}_B=5.3\)</span>, é devido ao acaso.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Como a professora não esperava que um exame fosse mais difícil antes de examinar os resultados do teste, ela deveria usar um teste de hipóteses bilateral. &lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt;: os exames são igualmente difíceis, em média. &lt;span class="math inline"&gt;\(\mu_A - \mu_B = 0\)&lt;/span&gt;. &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;: um exame foi mais difícil do que o outro, em média. &lt;span class="math inline"&gt;\(\mu_A - \mu_B \neq 0\)&lt;/span&gt;.&lt;/p&gt;'><sup>214</sup></a>
 </div>
+
 <hr>
 <hr>
 <div class="exercise">
-<p><span id="exr:conditionsForTDistForEvaluatingTwoExamVersions" class="exercise"><strong>Prática Orientada 5.13  </strong></span>Avaliar as hipóteses na Prática Orientada <a href="ch5-inf-num.html#exr:htSetupForEvaluatingTwoExamVersions">5.12</a> usando a distribuição-<span class="math inline">\(t\)</span>, devemos primeiro verificar as suposições.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;(a) É provavelmente razoável concluir que as pontuações são independentes, desde que não haja trapaça. (b) As estatísticas resumidas sugerem que os dados são aproximadamente simétricos em relação à média, e parece razoável sugerir que os dados possam ser normais. Observe que, como essas amostras estão próximas de 30, o desvio moderado dos dados seria aceitável. (c) Parece razoável supor que as amostras são independentes, uma vez que os exames foram distribuídos aleatoriamente.&lt;/p&gt;"><sup>215</sup></a></p>
+<p><span id="exr:conditionsForTDistForEvaluatingTwoExamVersions" class="exercise"><strong>Exercise 5.13  </strong></span>Avaliar as hipóteses na Prática Orientada <a href="ch5-inf-num.html#exr:htSetupForEvaluatingTwoExamVersions">5.12</a> usando a distribuição-<span class="math inline">\(t\)</span>, devemos primeiro verificar as suposições.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;(a) É provavelmente razoável concluir que as pontuações são independentes, desde que não haja trapaça. (b) As estatísticas resumidas sugerem que os dados são aproximadamente simétricos em relação à média, e parece razoável sugerir que os dados possam ser normais. Observe que, como essas amostras estão próximas de 30, o desvio moderado dos dados seria aceitável. (c) Parece razoável supor que as amostras são independentes, uma vez que os exames foram distribuídos aleatoriamente.&lt;/p&gt;"><sup>215</sup></a></p>
 <ul>
 <li><ol style="list-style-type: lower-alpha">
 <li>Parece razoável que as pontuações sejam independentes dentro de cada grupo?</li>
@@ -1090,6 +1079,7 @@ T = \frac{\ 0.40 - 0\ }{0.26} = 1.54
 </ol></li>
 </ul>
 </div>
+
 <hr>
 <p>Depois de verificar as condições de cada amostra e confirmar que as amostras são independentes uma da outra, estamos prontos para realizar o teste usando a distribuição-<span class="math inline">\(t\)</span>. Neste caso, estamos estimando a verdadeira diferença nas pontuações médias dos testes usando os dados da amostra, então a estimativa pontual é <span class="math inline">\(\bar{x}_A - \bar{x}_B = 5.3\)</span>. O erro padrão da estimativa pode ser calculado como</p>
 <p><span class="math display">\[\begin{eqnarray*}
@@ -1100,7 +1090,7 @@ EP = \sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}} = \sqrt{\frac{14^2}{30} + \fra
 T = \frac{\text{estimativa pontual} - \text{valor nulo}}{EP} = \frac{(79.4-74.1) - 0}{4.62} = 1.15
 \end{eqnarray*}\]</span></p>
 <p>Se tivermos um computador à mão, podemos identificar os graus de liberdade como 45.97. Caso contrário, usamos o menor de <span class="math inline">\(n_1-1\)</span> e <span class="math inline">\(n_2-1\)</span>: <span class="math inline">\(GL=26\)</span>.</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">X</span>, df <span class="op">=</span> <span class="fl">26</span><span class="op">)</span>
@@ -1116,18 +1106,19 @@ T = \frac{\text{estimativa pontual} - \text{valor nulo}}{EP} = \frac{(79.4-74.1)
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:pValueOfTwoTailAreaOfExamVersionsWhereDFIs26"></span>
+<span style="display:block;" id="fig:pValueOfTwoTailAreaOfExamVersionsWhereDFIs26"></span>
 <img src="_main_files/figure-html/pValueOfTwoTailAreaOfExamVersionsWhereDFIs26-1.png" alt="A distribuição-t com 26 graus de liberdade. " width="672"><p class="caption">
-Figura 5.11: A distribuição-t com 26 graus de liberdade.
+Figure 5.11: A distribuição-t com 26 graus de liberdade.
 </p>
 </div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-206" class="example"><strong>Exemplo 5.12  </strong></span>Identifique o p-valor usando <span class="math inline">\(GL = 26\)</span> e forneça uma conclusão no contexto do estudo de caso.
+<span id="exm:unnamed-chunk-206" class="example"><strong>Example 5.12  </strong></span>Identifique o p-valor usando <span class="math inline">\(GL = 26\)</span> e forneça uma conclusão no contexto do estudo de caso.
 </div>
+
 <p>Examinamos a linha <span class="math inline">\(GL = 26\)</span> na tabela-<span class="math inline">\(t\)</span>. Como esse valor é menor que o valor na coluna da esquerda, o p-valor é maior que 0,200 (duas caudas!). Como o p-valor é tão grande, não rejeitamos a hipótese nula. Ou seja, os dados não mostram convincentemente que uma versão de exame é mais difícil do que a outra, e a professora não deve ser convencida de que deve adicionar pontos aos resultados do exame da Versão B.</p>
 </div>
-<div id="inferenceSummaryTDistribution" class="section level3" number="5.4.4">
+<div id="inferenceSummaryTDistribution" class="section level3">
 <h3>
 <span class="header-section-number">5.4.4</span> Resumo da inferência usando a distribuição-<span class="math inline">\(t\)</span><a class="anchor" aria-label="anchor" href="#inferenceSummaryTDistribution"><i class="fas fa-link"></i></a>
 </h3>
@@ -1153,7 +1144,7 @@ Figura 5.11: A distribuição-t com 26 graus de liberdade.
 <li><p>Coloque as conclusões no contexto e em linguagem clara, para que até mesmo os não estatísticos possam entender os resultados.</p></li>
 </ul>
 </div>
-<div id="examiningSEFormula" class="section level3" number="5.4.5">
+<div id="examiningSEFormula" class="section level3">
 <h3>
 <span class="header-section-number">5.4.5</span> Examinando a fórmula do erro padrão (tópico especial)<a class="anchor" aria-label="anchor" href="#examiningSEFormula"><i class="fas fa-link"></i></a>
 </h3>
@@ -1172,15 +1163,16 @@ EP_{\bar{x}_{1} - \bar{x}_{2}}
 <p>Esta relação especial segue da teoria da probabilidade.</p>
 <hr>
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-207" class="exercise"><strong>Prática Orientada 5.14  </strong></span>Nós podemos reescrever a Equação (<a href="ch5-inf-num.html#eq:seOfDiffOfMeansInTermsOfSEOfIndividualMeans">(5.3)</a>) de uma maneira diferente:</p>
+<p><span id="exr:unnamed-chunk-207" class="exercise"><strong>Exercise 5.14  </strong></span>Nós podemos reescrever a Equação (<a href="ch5-inf-num.html#eq:seOfDiffOfMeansInTermsOfSEOfIndividualMeans">(5.3)</a>) de uma maneira diferente:</p>
 <p><span class="math display">\[\begin{eqnarray*}
 EP_{\bar{x}_{1} - \bar{x}_{2}}^2 = EP_{\bar{x}_1}^2 + EP_{\bar{x}_2}^2
 \end{eqnarray*}\]</span></p>
 Explique de onde vem essa fórmula usando as idéias da teoria da probabilidade.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;O erro padrão ao quadrado representa a variação da estimativa. Se &lt;span class="math inline"&gt;\(X\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(Y\)&lt;/span&gt; são duas variáveis aleatórias com variâncias &lt;span class="math inline"&gt;\(\sigma_x^2\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(\sigma_y^2\)&lt;/span&gt;, então a variância de &lt;span class="math inline"&gt;\(X-Y\)&lt;/span&gt; é &lt;span class="math inline"&gt;\(\sigma_x^2 + \sigma_y^2\)&lt;/span&gt;. Da mesma forma, a variância correspondente a &lt;span class="math inline"&gt;\(\bar{x}_1 - \bar{x}_2\)&lt;/span&gt; é &lt;span class="math inline"&gt;\(\sigma_{\bar{x}_1}^2 + \sigma_{\bar{x}_2}^2\)&lt;/span&gt;. Porque &lt;span class="math inline"&gt;\(\sigma_{\bar{x}_1}^2\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(\sigma_{\bar{x}_2}^2\)&lt;/span&gt; são apenas outra maneira de escrever &lt;span class="math inline"&gt;\(EP_{\bar{x}_1}^2\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(EP_{\bar{x}_2}^2\)&lt;/span&gt;, a variação associada com &lt;span class="math inline"&gt;\(\bar{x}_1 - \bar{x}_2\)&lt;/span&gt; pode ser escrito como &lt;span class="math inline"&gt;\(EP_{\bar{x}_1}^2 + EP_{\bar{x}_2}^2\)&lt;/span&gt;.&lt;/p&gt;'><sup>216</sup></a>
 </div>
+
 <hr>
 </div>
-<div id="estimateSDGrouped" class="section level3" number="5.4.6">
+<div id="estimateSDGrouped" class="section level3">
 <h3>
 <span class="header-section-number">5.4.6</span> Estimativa de desvio padrão agrupada (tópico especial)<a class="anchor" aria-label="anchor" href="#estimateSDGrouped"><i class="fas fa-link"></i></a>
 </h3>
@@ -1199,7 +1191,7 @@ GL = n_1 + n_2 - 2
 </div>
 </div>
 </div>
-<div id="powerCalculationsDifferenceMeans" class="section level2" number="5.5">
+<div id="powerCalculationsDifferenceMeans" class="section level2">
 <h2>
 <span class="header-section-number">5.5</span> Cálculos de potência para uma diferença de médias (tópico especial)<a class="anchor" aria-label="anchor" href="#powerCalculationsDifferenceMeans"><i class="fas fa-link"></i></a>
 </h2>
@@ -1209,15 +1201,16 @@ GL = n_1 + n_2 - 2
 <li><p>A coleta de dados pode ser cara e, em experimentos envolvendo pessoas, pode haver algum risco para os pacientes.</p></li>
 </ul>
 <p>Nesta seção, nos concentramos no contexto de um ensaio clínico, que é um experimento relacionado à saúde, no qual o sujeito é uma pessoa, e determinaremos um tamanho de amostra apropriado, em que possamos ter <span class="math inline">\(80\%\)</span> de certeza de que detectaríamos qualquer problema importante.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Mesmo que não o cobrimos explicitamente, o planejamento similar do tamanho da amostra também é útil para estudos observacionais.&lt;/p&gt;"><sup>217</sup></a></p>
-<div id="passingTestProposal" class="section level3" number="5.5.1">
+<div id="passingTestProposal" class="section level3">
 <h3>
 <span class="header-section-number">5.5.1</span> Passando pelas propostas de um teste<a class="anchor" aria-label="anchor" href="#passingTestProposal"><i class="fas fa-link"></i></a>
 </h3>
 <p>Nós vamos passar pelos passos de um teste de hipótese. Isso nos ajudará a enquadrar nossos cálculos para determinar um tamanho de amostra apropriado para o estudo.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-208" class="example"><strong>Exemplo 5.13  </strong></span>Suponha que uma empresa farmacêutica tenha desenvolvido uma nova droga para baixar a pressão sanguínea e esteja preparando um ensaio clínico (experimento) para testar a eficácia da droga. Eles recrutam pessoas que estão tomando uma medicação padrão de pressão sanguínea. As pessoas do grupo de controle continuarão a tomar a medicação atual por meio de pílulas genéricas para garantir a cegueira. Anote as hipóteses para um teste de hipóteses bilateral neste contexto.
+<span id="exm:unnamed-chunk-208" class="example"><strong>Example 5.13  </strong></span>Suponha que uma empresa farmacêutica tenha desenvolvido uma nova droga para baixar a pressão sanguínea e esteja preparando um ensaio clínico (experimento) para testar a eficácia da droga. Eles recrutam pessoas que estão tomando uma medicação padrão de pressão sanguínea. As pessoas do grupo de controle continuarão a tomar a medicação atual por meio de pílulas genéricas para garantir a cegueira. Anote as hipóteses para um teste de hipóteses bilateral neste contexto.
 </div>
+
 <p>Geralmente, os ensaios clínicos usam uma hipótese alternativa bilateral, então abaixo estão hipóteses adequadas para este contexto:</p>
 <p><span class="math display">\[
 \begin{cases}
@@ -1235,8 +1228,9 @@ GL = n_1 + n_2 - 2
 <p>Alguns pesquisadores podem argumentar a favor de um teste unilateral aqui, onde a alternativa consideraria apenas se o novo medicamento funciona melhor do que o medicamento padrão. No entanto, seria muito informativo saber se o novo medicamento tem um desempenho pior do que o medicamento padrão, por isso, usamos um teste bilateral para considerar essa possibilidade durante a análise.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-209" class="example"><strong>Exemplo 5.14  </strong></span>Os pesquisadores gostariam de realizar o ensaio clínico em pacientes com pressão arterial sistólica entre 140 e 180 mmHg. Suponha que estudos publicados anteriormente sugiram que o desvio padrão das pressões sanguíneas dos pacientes será de aproximadamente 12 mmHg e a distribuição das pressões sanguíneas dos pacientes será aproximadamente simétrica.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Neste estudo em particular, geralmente medimos a pressão arterial de cada paciente no início e no final do estudo e, em seguida, a medição do resultado do estudo seria a variação média da pressão arterial. Isto é, ambos &lt;span class="math inline"&gt;\(\mu_{trmt}\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(\mu_{ctrl}\)&lt;/span&gt; representaria diferenças médias. Isto é o que você pode pensar como uma estrutura de teste emparelhada de 2 amostras, e nós a analisaríamos exatamente como um teste de hipótese para uma diferença na mudança média para os pacientes. Nos cálculos que realizamos aqui, vamos supor que 12 ~mmHg é o desvio padrão previsto da diferença de pressão arterial de um paciente ao longo do estudo.&lt;/p&gt;'><sup>218</sup></a> Se tivéssemos 100 pacientes por grupo, qual seria o erro padrão aproximado para <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span>?
+<span id="exm:unnamed-chunk-209" class="example"><strong>Example 5.14  </strong></span>Os pesquisadores gostariam de realizar o ensaio clínico em pacientes com pressão arterial sistólica entre 140 e 180 mmHg. Suponha que estudos publicados anteriormente sugiram que o desvio padrão das pressões sanguíneas dos pacientes será de aproximadamente 12 mmHg e a distribuição das pressões sanguíneas dos pacientes será aproximadamente simétrica.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Neste estudo em particular, geralmente medimos a pressão arterial de cada paciente no início e no final do estudo e, em seguida, a medição do resultado do estudo seria a variação média da pressão arterial. Isto é, ambos &lt;span class="math inline"&gt;\(\mu_{trmt}\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(\mu_{ctrl}\)&lt;/span&gt; representaria diferenças médias. Isto é o que você pode pensar como uma estrutura de teste emparelhada de 2 amostras, e nós a analisaríamos exatamente como um teste de hipótese para uma diferença na mudança média para os pacientes. Nos cálculos que realizamos aqui, vamos supor que 12 ~mmHg é o desvio padrão previsto da diferença de pressão arterial de um paciente ao longo do estudo.&lt;/p&gt;'><sup>218</sup></a> Se tivéssemos 100 pacientes por grupo, qual seria o erro padrão aproximado para <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span>?
 </div>
+
 <p>O erro padrão é calculado da seguinte forma:</p>
 <p><span class="math display">\[\begin{align*}
 EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
@@ -1247,10 +1241,11 @@ EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
 <p>Esta pode ser uma estimativa imperfeita do <span class="math inline">\(EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}\)</span>, já que a estimativa do desvio padrão que usamos pode não ser correta para esse grupo de pacientes. No entanto, é suficiente para nossos propósitos.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-210" class="example"><strong>Exemplo 5.15  </strong></span>Com o que a distribuição nula de <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> se parece?
+<span id="exm:unnamed-chunk-210" class="example"><strong>Example 5.15  </strong></span>Com o que a distribuição nula de <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> se parece?
 </div>
+
 <p>Os graus de liberdade são maiores que 30, então a distribuição de <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> será aproximadamente normal. O desvio padrão dessa distribuição (o erro padrão) seria de cerca de 1,70 e, sob a hipótese nula, sua média seria 0.</p>
-<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">0.01</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span>, sd <span class="op">=</span> <span class="fl">1.70</span><span class="op">)</span>
@@ -1272,13 +1267,14 @@ EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-211-1.png" width="672" height="20%"></div>
 
 <div class="example">
-<span id="exm:unnamed-chunk-212" class="example"><strong>Exemplo 5.16  </strong></span>Para quais valores de <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> rejeitaríamos a hipótese nula?
+<span id="exm:unnamed-chunk-212" class="example"><strong>Example 5.16  </strong></span>Para quais valores de <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> rejeitaríamos a hipótese nula?
 </div>
+
 <p>Para <span class="math inline">\(\alpha = 0.05\)</span>, nós rejeitaríamos <span class="math inline">\(H_0\)</span> se a diferença for na parte inferior 2.5% ou superior 2.5%:</p>
 <p><strong>Inferior 2.5%:</strong> Para o modelo normal, isso é 1.96 erros padrão abaixo de 0, portanto, qualquer diferença menor que <span class="math inline">\(-1.96 \times 1.70 = -3.332\)</span> mmHg.</p>
 <p><strong>Superior 2.5%:</strong> Para o modelo normal, isso é 1.96 erros padrão acima de 0, portanto, qualquer diferença maior que <span class="math inline">\(1.96 \times 1.70 = 3.332\)</span> mmHg.</p>
 <p>Os limites dessas <em>regiões de rejeição</em> são mostrados abaixo:</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">gg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">X</span>, y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_path</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'#E97C31'</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -1299,7 +1295,7 @@ EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-213-1.png" width="672" height="20%"></div>
 <p>Em seguida, realizaremos alguns cálculos hipotéticos para determinar a probabilidade de rejeitarmos a hipótese nula, se as hipóteses alternativas fossem realmente verdadeiras.</p>
 </div>
-<div id="calculatingEnergyTestTwoSamples" class="section level3" number="5.5.2">
+<div id="calculatingEnergyTestTwoSamples" class="section level3">
 <h3>
 <span class="header-section-number">5.5.2</span> Calculando a energia para um teste de 2 amostras<a class="anchor" aria-label="anchor" href="#calculatingEnergyTestTwoSamples"><i class="fas fa-link"></i></a>
 </h3>
@@ -1307,14 +1303,15 @@ EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
 <p>Primeiro determinamos o que é um resultado praticamente significativo. Suponha que os pesquisadores da empresa se preocupem em encontrar qualquer efeito sobre a pressão arterial que seja de 3mmHg ou maior em relação à medicação padrão. Aqui, 3mmHg é o mínimo <em>tamanho efetivo</em> de interesse, e queremos saber qual a probabilidade de detectarmos esse tamanho efetivo no estudo.</p>
 
 <div class="example">
-<span id="exm:PowerFor100AtNeg3" class="example"><strong>Exemplo 5.17  </strong></span>Suponha que decidimos prosseguir com 100 pacientes por grupo de tratamento e a nova droga reduz a pressão arterial em mais de 3mmHg em relação à medicação padrão. Qual é a probabilidade de detectarmos uma queda?
+<span id="exm:PowerFor100AtNeg3" class="example"><strong>Example 5.17  </strong></span>Suponha que decidimos prosseguir com 100 pacientes por grupo de tratamento e a nova droga reduz a pressão arterial em mais de 3mmHg em relação à medicação padrão. Qual é a probabilidade de detectarmos uma queda?
 </div>
+
 <p>Antes mesmo de fazer qualquer cálculo, observe que se <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl} = -3\)</span> mmHg, não haveria provas suficientes para rejeitar <span class="math inline">\(H_0\)</span>. Isso não é um bom sinal.</p>
 <p>Para calcular a probabilidade de rejeitarmos <span class="math inline">\(H_0\)</span>, precisamos determinar algumas coisas:</p>
 <ul>
 <li>A distribuição amostral para <span class="math inline">\(\bar{x}_{trmt} - \bar{x}_{ctrl}\)</span> quando a verdadeira diferença é -3mmHg. Isto é o mesmo que a distribuição nula, exceto que é deslocado para a esquerda por 3:</li>
 </ul>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
@@ -1343,7 +1340,7 @@ EP_{\bar{x}_{trmt} - \bar{x}_{ctrl}}
 <li><p>A fração da distribuição que cai na região de rejeição.</p></li>
 </ul>
 <p>Em suma, precisamos calcular a probabilidade de que <span class="math inline">\(x &lt; -3.332\)</span> para uma distribuição normal com média -3 e desvio padrão 1.7. Para fazer isso, primeiro sombreamos a área que queremos calcular:</p>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="va">gg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">0.01</span><span class="op">)</span>,Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span>, mean <span class="op">=</span> <span class="op">-</span><span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">1.70</span><span class="op">)</span><span class="op">)</span>
@@ -1379,7 +1376,7 @@ Z = \frac{-3.332 - (-3)}{1.7} = -0.20 \qquad \to \qquad 0.4207
 <p>O poder para o teste é 42% quando <span class="math inline">\(\mu_{trmt} - \mu_{ctrl} = -3\)</span> e cada grupo tem um tamanho de amostra de 100.</p>
 <p>No Exemplo <a href="ch5-inf-num.html#exm:PowerFor100AtNeg3">5.17</a>, ignoramos a região de rejeição superior no cálculo, que estava na direção oposta da verdade hipotética, ou seja, -3. O raciocínio? Não haveria nenhum valor em rejeitar a hipótese nula e concluir que houve um aumento quando de fato houve uma diminuição.</p>
 </div>
-<div id="determiningAppropriateSampleSize" class="section level3" number="5.5.3">
+<div id="determiningAppropriateSampleSize" class="section level3">
 <h3>
 <span class="header-section-number">5.5.3</span> Determinando um tamanho de amostra adequado<a class="anchor" aria-label="anchor" href="#determiningAppropriateSampleSize"><i class="fas fa-link"></i></a>
 </h3>
@@ -1393,7 +1390,7 @@ Z = \frac{-3.332 - (-3)}{1.7} = -0.20 \qquad \to \qquad 0.4207
 <p>Queremos evitar essa situação, por isso precisamos determinar um tamanho de amostra apropriado para garantir que possamos ter certeza de que detectaremos quaisquer efeitos que sejam importantes. Como mencionado anteriormente, uma mudança de 3mmHg foi considerada a diferença mínima que era importante. Como primeiro passo, poderíamos calcular a potência para vários tamanhos de amostras diferentes. Por exemplo, vamos tentar 500 pacientes por grupo.</p>
 <hr>
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-216" class="exercise"><strong>Prática Orientada 5.15  </strong></span>Calcule o poder de detectar uma mudança de -3 mmHg ao usar um tamanho de amostra de 500 por grupo.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;(a) O erro padrão é dado como &lt;span class="math inline"&gt;\(EP = \sqrt{\frac{12^2}{500} + \frac{12^2}{500}} = 0.76\)&lt;/span&gt;.\
+<p><span id="exr:unnamed-chunk-216" class="exercise"><strong>Exercise 5.15  </strong></span>Calcule o poder de detectar uma mudança de -3 mmHg ao usar um tamanho de amostra de 500 por grupo.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;(a) O erro padrão é dado como &lt;span class="math inline"&gt;\(EP = \sqrt{\frac{12^2}{500} + \frac{12^2}{500}} = 0.76\)&lt;/span&gt;.\
 (b) &amp;amp; (c) A distribuição nula, os limites de rejeição e a distribuição alternativa devem ser desenhados. As regiões de rejeição estão a &lt;span class="math inline"&gt;\(\pm 0.76 \times 1.96 = \pm 1.49\)&lt;/span&gt;. (d) A área da distribuição alternativa, onde &lt;span class="math inline"&gt;\(\mu_{trmt} - \mu_{ctrl} = -3\)&lt;/span&gt; deve ser sombreada. O Z-escore para a área da cauda: &lt;span class="math inline"&gt;\(Z = \frac{-1.49 - (-3)}{0.76} = 1.99 \to 0.9767\)&lt;/span&gt;. Com 500 pacientes por grupo, teríamos cerca de 97,7% de certeza (ou mais) de que detectamos quaisquer efeitos que tenham pelo menos 3 mmHg de tamanho.&lt;/p&gt;'><sup>219</sup></a></p>
 <ul>
 <li><p>(a). Determine o erro padrão (lembre-se que o desvio padrão dos pacientes deveria ser de cerca de 12mmHg).</p></li>
@@ -1410,10 +1407,11 @@ Z = \frac{-3.332 - (-3)}{1.7} = -0.20 \qquad \to \qquad 0.4207
 <p>A prática mais comum é identificar o tamanho da amostra em que a potência está em torno de 80% e, às vezes, 90%. Outros valores podem ser razoáveis para um contexto específico, mas 80% e 90% são mais comumente direcionados como um bom equilíbrio entre alta potência e não expor muitos pacientes a um novo tratamento (ou desperdiçar muito dinheiro). Poderíamos calcular o poder do teste em vários outros tamanhos de amostra possíveis até encontrarmos um que esteja próximo de 80%, mas isso é ineficiente. Em vez disso, devemos resolver o problema de trás para frente.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-217" class="example"><strong>Exemplo 5.18  </strong></span>Qual o tamanho da amostra levará a um poder de 80%?
+<span id="exm:unnamed-chunk-217" class="example"><strong>Example 5.18  </strong></span>Qual o tamanho da amostra levará a um poder de 80%?
 </div>
+
 <p>Começamos por identificar o escore Z que nos daria uma cauda inferior de 80 %: seria cerca de 0.84:</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="va">gg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">0.01</span><span class="op">)</span>,Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">X</span>, mean <span class="op">=</span> <span class="op">-</span><span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">1.70</span><span class="op">)</span><span class="op">)</span>
@@ -1453,16 +1451,18 @@ n &amp;= \frac{2.8^2}{3^2} \times \left( 12^2 + 12^2 \right) = 250.88 \\
 <p>A diferença de erro padrão de <span class="math inline">\(2.8 \times EP\)</span> é específico para um contexto em que a potência alvo é de 80% e o nível de significância é <span class="math inline">\(\alpha = 0.05\)</span>. Se a potência desejada é de 90% ou se usarmos um nível de significância diferente, usaremos algo um pouco diferente <span class="math inline">\(2.8 \times EP\)</span>.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-219" class="exercise"><strong>Prática Orientada 5.16  </strong></span>Suponha que a potência fosse <span class="math inline">\(90\%\)</span> e estivéssemos usando <span class="math inline">\(\alpha = 0.01\)</span>. Quantos erros-padrão devem separar os centros da distribuição nula e alternativa, onde a distribuição alternativa é centralizada no tamanho efetivo mínimo de interesse? Suponha que o teste tenha dois lados.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Primeiro, encontre a pontuação Z de tal forma que &lt;span class="math inline"&gt;\(90\%\)&lt;/span&gt; da distribuição esteja abaixo dela: &lt;span class="math inline"&gt;\(Z = 1.28\)&lt;/span&gt;. Em seguida, encontre os pontos de corte para as regiões de rejeição: &lt;span class="math inline"&gt;\(\pm 2.58\)&lt;/span&gt;. Então a diferença nos centros deve ser sobre &lt;span class="math inline"&gt;\(1.28 \times EP + 2.58 \times EP = 3.86 \times EP\)&lt;/span&gt;.&lt;/p&gt;'><sup>220</sup></a>
+<span id="exr:unnamed-chunk-219" class="exercise"><strong>Exercise 5.16  </strong></span>Suponha que a potência fosse <span class="math inline">\(90\%\)</span> e estivéssemos usando <span class="math inline">\(\alpha = 0.01\)</span>. Quantos erros-padrão devem separar os centros da distribuição nula e alternativa, onde a distribuição alternativa é centralizada no tamanho efetivo mínimo de interesse? Suponha que o teste tenha dois lados.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Primeiro, encontre a pontuação Z de tal forma que &lt;span class="math inline"&gt;\(90\%\)&lt;/span&gt; da distribuição esteja abaixo dela: &lt;span class="math inline"&gt;\(Z = 1.28\)&lt;/span&gt;. Em seguida, encontre os pontos de corte para as regiões de rejeição: &lt;span class="math inline"&gt;\(\pm 2.58\)&lt;/span&gt;. Então a diferença nos centros deve ser sobre &lt;span class="math inline"&gt;\(1.28 \times EP + 2.58 \times EP = 3.86 \times EP\)&lt;/span&gt;.&lt;/p&gt;'><sup>220</sup></a>
 </div>
+
 <hr>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-220" class="exercise"><strong>Prática Orientada 5.17  </strong></span>Liste algumas considerações que são importantes para determinar qual deve ser o poder de um experimento.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;As respostas vão variar, mas aqui estão algumas considerações importantes: se existe algum risco para os pacientes no estudo. O custo de inscrição de mais pacientes. A desvantagem potencial de não detectar um efeito de interesse.&lt;/p&gt;"><sup>221</sup></a>
+<span id="exr:unnamed-chunk-220" class="exercise"><strong>Exercise 5.17  </strong></span>Liste algumas considerações que são importantes para determinar qual deve ser o poder de um experimento.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;As respostas vão variar, mas aqui estão algumas considerações importantes: se existe algum risco para os pacientes no estudo. O custo de inscrição de mais pacientes. A desvantagem potencial de não detectar um efeito de interesse.&lt;/p&gt;"><sup>221</sup></a>
 </div>
+
 <hr>
 <p>A Figura <a href="ch5-inf-num.html#fig:powercurveneg3">5.12</a> mostra o poder para tamanhos de amostra de 20 a 5.000 pacientes quando <span class="math inline">\(\alpha = 0.05\)</span> e a verdadeira diferença é -3. Esta curva foi construída escrevendo um programa para calcular a potência para muitos tamanhos de amostras diferentes.</p>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">500</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">510</span>, <span class="fl">2000</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2100</span>, <span class="fl">10000</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>
 <span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">n</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fl">12</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="va">left.reject</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1.96</span> <span class="op">*</span> <span class="va">se</span>
@@ -1476,26 +1476,24 @@ n &amp;= \frac{2.8^2}{3^2} \times \left( 12^2 + 12^2 \right) = 250.88 \\
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Tamanho de Amostra por grupo"</span>, y <span class="op">=</span> <span class="st">"Poder"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:powercurveneg3"></span>
+<span style="display:block;" id="fig:powercurveneg3"></span>
 <img src="_main_files/figure-html/powercurveneg3-1.png" alt="A curva mostra a potência para diferentes tamanhos de amostra no contexto do exemplo da pressão arterial quando a diferença real é -3. Ter mais de cerca de 250 a 350 observações não fornece muito valor adicional na detecção de um efeito quando alfa = 0.05." width="672" height="20%"><p class="caption">
-Figura 5.12: A curva mostra a potência para diferentes tamanhos de amostra no contexto do exemplo da pressão arterial quando a diferença real é -3. Ter mais de cerca de 250 a 350 observações não fornece muito valor adicional na detecção de um efeito quando alfa = 0.05.
+Figure 5.12: A curva mostra a potência para diferentes tamanhos de amostra no contexto do exemplo da pressão arterial quando a diferença real é -3. Ter mais de cerca de 250 a 350 observações não fornece muito valor adicional na detecção de um efeito quando alfa = 0.05.
 </p>
 </div>
 <p>Cálculos de energia para experimentos caros ou arriscados são críticos. No entanto, o que acontece com experimentos que são baratos e onde as considerações éticas são mínimas? Por exemplo, se estamos realizando testes finais em um novo recurso em um site popular, como as nossas considerações sobre tamanho de amostra mudariam? Como antes, queremos ter certeza de que a amostra é grande o suficiente. No entanto, se o recurso foi submetido a alguns testes e sabe-se que funciona bem (ou seja, não frustra muitos usuários do site), podemos executar um experimento muito maior do que o necessário para detectar os efeitos mínimos de interesse. A razão é que pode haver benefícios adicionais em ter uma estimativa ainda mais precisa do efeito do novo recurso. Podemos até realizar um grande experimento como parte do lançamento do novo recurso.</p>
 </div>
 </div>
-<div id="comparingAveragesANOVA" class="section level2" number="5.6">
+<div id="comparingAveragesANOVA" class="section level2">
 <h2>
 <span class="header-section-number">5.6</span> Comparando muitas médias com ANOVA (tópico especial)<a class="anchor" aria-label="anchor" href="#comparingAveragesANOVA"><i class="fas fa-link"></i></a>
 </h2>
 <p>Às vezes, queremos comparar médias em muitos grupos. Poderíamos inicialmente pensar em fazer comparações pareadas; por exemplo, se houvesse três grupos, poderíamos ser tentados a comparar a primeira média com a segunda, depois com a terceira e, finalmente, comparar a segunda e a terceira médias para um total de três comparações. No entanto, essa estratégia pode ser traiçoeira. Se tivermos muitos grupos e fizermos muitas comparações, é provável que acabemos por encontrar uma diferença apenas por acaso, mesmo que não haja diferença nas populações.</p>
 <p>Nesta seção, vamos aprender um novo método chamado <strong>análise de variância (ANOVA)</strong> e uma nova estatística de teste chamada <span class="math inline">\(F\)</span>. ANOVA usa um teste de hipótese único para verificar se as médias em muitos grupos são iguais:</p>
-<span class="math display">\[\begin{cases}
-
-  H_0: \mbox{O resultado médio é o mesmo em todos os grupos. Na notação estatística, }\mu_1 = \mu_2 = \cdots = \mu_k \\
-  H_1: \mbox{Pelo menos uma média é diferente.}
-
-\end{cases}\]</span>
+<p>\begin{cases}</p>
+<p>H_0: _1 = _2 = = _k \
+H_1: </p>
+<p>\end{cases}</p>
 <p>onde <span class="math inline">\(\mu_i\)</span> representa a média do resultado para observações na categoria i.</p>
 <p>Geralmente, devemos verificar três condições nos dados antes de executar a ANOVA:</p>
 <ul>
@@ -1506,8 +1504,9 @@ Figura 5.12: A curva mostra a potência para diferentes tamanhos de amostra no c
 <p>Quando essas três condições forem satisfeitas, podemos executar uma ANOVA para determinar se os dados fornecem evidências fortes contra a hipótese nula de que <span class="math inline">\(\mu_i\)</span> são iguais.</p>
 
 <div class="example">
-<span id="exm:firstExampleForThreeStatisticsClassesAndANOVA" class="example"><strong>Exemplo 5.19  </strong></span>Os departamentos universitários geralmente realizam várias classes do mesmo curso introdutório a cada semestre por causa da alta demanda. Considere um departamento de estatística que executa três classes de um curso de estatística introdutória. Poderíamos determinar se há diferenças estatisticamente significativas nas pontuações do primeiro exame nessas três classes (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, e <span class="math inline">\(C\)</span>). Descrever hipóteses apropriadas para determinar se existem diferenças entre as três classes.
+<span id="exm:firstExampleForThreeStatisticsClassesAndANOVA" class="example"><strong>Example 5.19  </strong></span>Os departamentos universitários geralmente realizam várias classes do mesmo curso introdutório a cada semestre por causa da alta demanda. Considere um departamento de estatística que executa três classes de um curso de estatística introdutória. Poderíamos determinar se há diferenças estatisticamente significativas nas pontuações do primeiro exame nessas três classes (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, e <span class="math inline">\(C\)</span>). Descrever hipóteses apropriadas para determinar se existem diferenças entre as três classes.
 </div>
+
 <p>As hipóteses podem ser escritas da seguinte forma:</p>
 <ul>
 <li><p><span class="math inline">\(H_0\)</span>: A pontuação média é idêntica em todas as classes. Qualquer diferença observada é devida ao acaso. Notoriamente, nós escrevemos <span class="math inline">\(\mu_A=\mu_B=\mu_C\)</span>.</p></li>
@@ -1516,10 +1515,11 @@ Figura 5.12: A curva mostra a potência para diferentes tamanhos de amostra no c
 <p>Fortes evidências favorecendo a hipótese alternativa na ANOVA são descritas por diferenças incomumente grandes entre as médias do grupo. Em breve aprenderemos que avaliar a variabilidade das médias do grupo em relação à variabilidade entre observações individuais dentro de cada grupo é fundamental para o sucesso da ANOVA.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-221" class="example"><strong>Exemplo 5.20  </strong></span>Examine a Figura <a href="ch5-inf-num.html#fig:toyANOVA">5.13</a>. Compare os grupos I, II e III. Você pode determinar visualmente se as diferenças nos centros de grupo são devidas ao acaso ou não? Agora compare os grupos IV, V e VI. Essas diferenças parecem ser devidas ao acaso?
+<span id="exm:unnamed-chunk-221" class="example"><strong>Example 5.20  </strong></span>Examine a Figura <a href="ch5-inf-num.html#fig:toyANOVA">5.13</a>. Compare os grupos I, II e III. Você pode determinar visualmente se as diferenças nos centros de grupo são devidas ao acaso ou não? Agora compare os grupos IV, V e VI. Essas diferenças parecem ser devidas ao acaso?
 </div>
+
 <p>Qualquer diferença real nas médias dos grupos I, II e III é difícil de discernir, porque os dados dentro de cada grupo são muito voláteis em relação a quaisquer diferenças no resultado médio. Por outro lado, parece haver diferenças nos centros dos grupos IV, V e VI. Por exemplo, o grupo V parece ter uma média maior que a dos outros dois grupos. Investigando os grupos IV, V e VI, vemos que as diferenças nos centros dos grupos são perceptíveis, porque essas diferenças são grandes <em>em relação à variabilidade nas observações individuais dentro de cada grupo</em>.</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">gps</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">10</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="st">"V"</span>, <span class="st">"VI"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">10</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -1536,24 +1536,24 @@ Figura 5.12: A curva mostra a potência para diferentes tamanhos de amostra no c
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">'Outcome'</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:toyANOVA"></span>
+<span style="display:block;" id="fig:toyANOVA"></span>
 <img src="_main_files/figure-html/toyANOVA-1.png" alt="Gráfico de pontos lado a lado para os resultados de seis grupos." width="672"><p class="caption">
-Figura 5.13: Gráfico de pontos lado a lado para os resultados de seis grupos.
+Figure 5.13: Gráfico de pontos lado a lado para os resultados de seis grupos.
 </p>
 </div>
-<div id="hittingPerformancePositionMLB" class="section level3" number="5.6.1">
+<div id="hittingPerformancePositionMLB" class="section level3">
 <h3>
 <span class="header-section-number">5.6.1</span> O desempenho de rebatidas está relacionado à posição do jogador na MLB?<a class="anchor" aria-label="anchor" href="#hittingPerformancePositionMLB"><i class="fas fa-link"></i></a>
 </h3>
 <p>Gostaríamos de discernir se há diferenças reais entre o desempenho de rebatedores de jogadores de beisebol de acordo com sua posição: outfielder (OF), infielder (IF), designated hitter (DH), e apanhador (A). Vamos usar um conjunto de dados chamado <code>bat10</code>, que inclui registros de rebatidas de 327 jogadores da Major League Baseball (MLB) da temporada de 2010. Seis dos 327 casos representados em <code>bat10</code> são mostrados na Tabela <a href="ch5-inf-num.html#tab:mlbBat10DataMatrix">5.8</a>, e descrições para cada variável são fornecidas em Tabela <a href="ch5-inf-num.html#tab:mlbBat10Variables">5.9</a>. A medida que usaremos para o desempenho de rebatimento do jogador (a variável de resultado) é a porcentagem básica <strong>OBP</strong>. A porcentagem na base representa aproximadamente a fração do tempo que um jogador obtém com sucesso na base ou atinge um home run.</p>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mlbBat10</span><span class="op">)</span>
 
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mlbBat10</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"c"</span>, 
              caption <span class="op">=</span> <span class="st">"Seis casos da matriz de dados bat10."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:mlbBat10DataMatrix">Tabela 5.8: </span>Seis casos da matriz de dados bat10.</caption>
+<span id="tab:mlbBat10DataMatrix">Table 5.8: </span>Seis casos da matriz de dados bat10.</caption>
 <thead><tr class="header">
 <th align="center">name</th>
 <th align="center">team</th>
@@ -1704,7 +1704,7 @@ Figura 5.13: Gráfico de pontos lado a lado para os resultados de seis grupos.
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">9</span><span class="op">)</span>
 <span class="va">res</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'nome'</span>, <span class="st">'time'</span>, <span class="st">'posição'</span>, <span class="st">'AB'</span>, <span class="st">'H'</span>, <span class="st">'HR'</span>, <span class="st">'RBI'</span>, <span class="st">'AVG'</span>, <span class="st">'OBP'</span><span class="op">)</span>
 <span class="va">res</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Nome do jogador'</span>, 
@@ -1723,7 +1723,7 @@ Figura 5.13: Gráfico de pontos lado a lado para os resultados de seis grupos.
              caption <span class="op">=</span> <span class="st">"Variáveis e suas descrições para o conjunto de dados bat10."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:mlbBat10Variables">Tabela 5.9: </span>Variáveis e suas descrições para o conjunto de dados bat10.</caption>
+<span id="tab:mlbBat10Variables">Table 5.9: </span>Variáveis e suas descrições para o conjunto de dados bat10.</caption>
 <colgroup>
 <col width="7%">
 <col width="92%">
@@ -1773,16 +1773,18 @@ Figura 5.13: Gráfico de pontos lado a lado para os resultados de seis grupos.
 </table></div>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-222" class="exercise"><strong>Prática Orientada 5.18  </strong></span>A hipótese nula sob consideração é a seguinte: <span class="math inline">\(\mu_{OF} = \mu_{IF} = \mu_{DH} = \mu_{A}\)</span>.
+<span id="exr:unnamed-chunk-222" class="exercise"><strong>Exercise 5.18  </strong></span>A hipótese nula sob consideração é a seguinte: <span class="math inline">\(\mu_{OF} = \mu_{IF} = \mu_{DH} = \mu_{A}\)</span>.
 Escreva as hipóteses alternativas nula e correspondente em linguagem simples.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt;: A porcentagem média na base é igual entre as quatro posições. &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;: A porcentagem média na base varia em alguns (ou todos) grupos.&lt;/p&gt;'><sup>222</sup></a>
 </div>
+
 <hr>
 <div class="example">
-<span id="exm:unnamed-chunk-223" class="example"><strong>Exemplo 5.21  </strong></span>As posições dos jogadores foram divididas em quatro grupos: outfield (OF), infield (IF), designated hitter (DH), e apanhador (A). Qual seria uma estimativa pontual apropriada da porcentagem na base por outfielders, <span class="math inline">\(\mu_{OF}\)</span>?}
+<span id="exm:unnamed-chunk-223" class="example"><strong>Example 5.21  </strong></span>As posições dos jogadores foram divididas em quatro grupos: outfield (OF), infield (IF), designated hitter (DH), e apanhador (A). Qual seria uma estimativa pontual apropriada da porcentagem na base por outfielders, <span class="math inline">\(\mu_{OF}\)</span>?}
 Uma boa estimativa da porcentagem em bases por outfielders seria a média da amostra de  para apenas aqueles jogadores cuja posição é outfield: <span class="math inline">\(\bar{x}_{OF} = 0.334\)</span>.
 </div>
+
 <p>A Tabela <a href="ch5-inf-num.html#tab:mlbHRPerABSummaryTable">5.10</a> fornece estatísticas resumidas para cada grupo. Um gráfico de caixa lado-a-lado para a porcentagem na base é mostrado na Figura <a href="ch5-inf-num.html#fig:mlbANOVABoxPlot">5.14</a>. Observe que a variabilidade parece ser aproximadamente constante entre os grupos; a variação quase constante entre os grupos é uma suposição importante que deve ser satisfeita antes de considerarmos a abordagem ANOVA.</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">desc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">desc</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Tamanho da amostra'</span>, <span class="fl">120</span>, <span class="fl">154</span>, <span class="fl">14</span>, <span class="fl">39</span><span class="op">)</span>
 <span class="va">desc</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Média da amostra'</span>, <span class="fl">0.334</span>, <span class="fl">0.332</span>, <span class="fl">0.348</span>, <span class="fl">0.323</span><span class="op">)</span>
@@ -1794,7 +1796,7 @@ Uma boa estimativa da porcentagem em bases por outfielders seria a média da amo
              caption <span class="op">=</span> <span class="st">"Estatísticas resumidas da porcentagem na base, dividida pela posição do jogador"</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:mlbHRPerABSummaryTable">Tabela 5.10: </span>Estatísticas resumidas da porcentagem na base, dividida pela posição do jogador</caption>
+<span id="tab:mlbHRPerABSummaryTable">Table 5.10: </span>Estatísticas resumidas da porcentagem na base, dividida pela posição do jogador</caption>
 <thead><tr class="header">
 <th align="center"></th>
 <th align="center">OF</th>
@@ -1826,7 +1828,7 @@ Uma boa estimativa da porcentagem em bases por outfielders seria a média da amo
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.openintro.org/">openintro</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">COL</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mlbBat10</span><span class="op">)</span>
@@ -1849,17 +1851,18 @@ Uma boa estimativa da porcentagem em bases por outfielders seria a média da amo
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">'Posição'</span>, y <span class="op">=</span> <span class="st">'Porcentagem na base'</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_percent.html">percent_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">percent_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:mlbANOVABoxPlot"></span>
+<span style="display:block;" id="fig:mlbANOVABoxPlot"></span>
 <img src="_main_files/figure-html/mlbANOVABoxPlot-1.png" alt="Gráfico de boxplot da porcentagem na base para 327 jogadores em quatro grupos. Há um outlier proeminente visível no grupo infield, mas com 154 observações no grupo infield, esse outlier não é uma preocupação." width="672"><p class="caption">
-Figura 5.14: Gráfico de boxplot da porcentagem na base para 327 jogadores em quatro grupos. Há um outlier proeminente visível no grupo infield, mas com 154 observações no grupo infield, esse outlier não é uma preocupação.
+Figure 5.14: Gráfico de boxplot da porcentagem na base para 327 jogadores em quatro grupos. Há um outlier proeminente visível no grupo infield, mas com 154 observações no grupo infield, esse outlier não é uma preocupação.
 </p>
 </div>
 
 <div class="example">
-<span id="exm:multipleComparisonExampleThatIncludesDiscussionOfClassrooms" class="example"><strong>Exemplo 5.22  </strong></span> A maior diferença entre as médias da amostra é entre o designated hitter e o apanhador. Considere novamente as hipóteses originais:
+<span id="exm:multipleComparisonExampleThatIncludesDiscussionOfClassrooms" class="example"><strong>Example 5.22  </strong></span> A maior diferença entre as médias da amostra é entre o designated hitter e o apanhador. Considere novamente as hipóteses originais:
 </div>
+
 <p><span class="math display">\[
 \begin{cases}
 H_0: &amp; \mu_{OF} = \mu_{IF} = \mu_{DH} = \mu_{C} \\ 
@@ -1872,7 +1875,7 @@ H_1: &amp; \mbox{A porcentagem média na base } (\mu_i) \mbox{ varia entre algun
 <p>Para informações adicionais sobre as idéias expressas no Exemplo <a href="ch5-inf-num.html#exm:multipleComparisonExampleThatIncludesDiscussionOfClassrooms">5.22</a>, eecomendamos ler sobre a <strong>falácia do promotor</strong>.</p>
 <p>Na próxima seção, aprenderemos como usar a estatística <span class="math inline">\(F\)</span> e a ANOVA para testar se as diferenças observadas nas médias da amostra poderiam ter acontecido apenas por acaso, mesmo que não houvesse diferença nas respectivas médias populacionais.</p>
 </div>
-<div id="ANOVAFTest" class="section level3" number="5.6.2">
+<div id="ANOVAFTest" class="section level3">
 <h3>
 <span class="header-section-number">5.6.2</span> Análise de variância (ANOVA) e o teste F<a class="anchor" aria-label="anchor" href="#ANOVAFTest"><i class="fas fa-link"></i></a>
 </h3>
@@ -1886,22 +1889,23 @@ F = \frac{MSG}{MEP}
 <p>A <span class="math inline">\(MSG\)</span> representa uma medida da variabilidade entre grupos, e <span class="math inline">\(MEP\)</span> mede a variabilidade dentro de cada um dos grupos.</p>
 <hr>
 <div class="exercise">
-<span id="exr:unnamed-chunk-224" class="exercise"><strong>Prática Orientada 5.19  </strong></span>Para os dados do basebol, <span class="math inline">\(MSG = 0,00252\)</span> e <span class="math inline">\(MEP = 0,00127\)</span>. Identifique os graus de liberdade associados ao MSG e MEP e verifique se a estatística <span class="math inline">\(F\)</span> é aproximadamente 1.994.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Há &lt;span class="math inline"&gt;\(k=4\)&lt;/span&gt; grupos, logo &lt;span class="math inline"&gt;\(GL_{G} = k-1 = 3\)&lt;/span&gt;. Há &lt;span class="math inline"&gt;\(n = n_1 + n_2 + n_3 + n_4 = 327\)&lt;/span&gt; observações, logo &lt;span class="math inline"&gt;\(GL_{E} = n - k = 323\)&lt;/span&gt;. Em seguida, a estatística &lt;span class="math inline"&gt;\(F\)&lt;/span&gt; é calculada como a proporção de &lt;span class="math inline"&gt;\(MSG\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(MEP\)&lt;/span&gt;: &lt;span class="math inline"&gt;\(F = \frac{MSG}{MEP} = \frac{0.00252}{0.00127} = 1.984 \approx 1.994\)&lt;/span&gt;. (&lt;span class="math inline"&gt;\(F=1.994\)&lt;/span&gt; foi calculado usando valores para &lt;span class="math inline"&gt;\(MSG\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(MEP\)&lt;/span&gt; que não foram arredondados.)&lt;/p&gt;'><sup>225</sup></a>
+<span id="exr:unnamed-chunk-224" class="exercise"><strong>Exercise 5.19  </strong></span>Para os dados do basebol, <span class="math inline">\(MSG = 0,00252\)</span> e <span class="math inline">\(MEP = 0,00127\)</span>. Identifique os graus de liberdade associados ao MSG e MEP e verifique se a estatística <span class="math inline">\(F\)</span> é aproximadamente 1.994.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Há &lt;span class="math inline"&gt;\(k=4\)&lt;/span&gt; grupos, logo &lt;span class="math inline"&gt;\(GL_{G} = k-1 = 3\)&lt;/span&gt;. Há &lt;span class="math inline"&gt;\(n = n_1 + n_2 + n_3 + n_4 = 327\)&lt;/span&gt; observações, logo &lt;span class="math inline"&gt;\(GL_{E} = n - k = 323\)&lt;/span&gt;. Em seguida, a estatística &lt;span class="math inline"&gt;\(F\)&lt;/span&gt; é calculada como a proporção de &lt;span class="math inline"&gt;\(MSG\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(MEP\)&lt;/span&gt;: &lt;span class="math inline"&gt;\(F = \frac{MSG}{MEP} = \frac{0.00252}{0.00127} = 1.984 \approx 1.994\)&lt;/span&gt;. (&lt;span class="math inline"&gt;\(F=1.994\)&lt;/span&gt; foi calculado usando valores para &lt;span class="math inline"&gt;\(MSG\)&lt;/span&gt; e &lt;span class="math inline"&gt;\(MEP\)&lt;/span&gt; que não foram arredondados.)&lt;/p&gt;'><sup>225</sup></a>
 </div>
+
 <hr>
 <p>Podemos usar a estatística <span class="math inline">\(F\)</span> para avaliar as hipóteses no que é chamado de <strong>Teste F</strong>. Um p-valor pode ser calculado a partir da estatística <span class="math inline">\(F\)</span> usando uma distribuição <span class="math inline">\(F\)</span>, que possui dois parâmetros associados: <span class="math inline">\(GL_{1}\)</span> e <span class="math inline">\(GL_{2}\)</span>. Para a estatística <span class="math inline">\(F\)</span> em ANOVA, <span class="math inline">\(GL_{1} = GL_{G}\)</span> e <span class="math inline">\(GL_{2}= GL_{E}\)</span>. Uma distribuição <span class="math inline">\(F\)</span> com 3 e 323 graus de liberdade, correspondente à estatística <span class="math inline">\(F\)</span> para o teste de hipótese de beisebol, é mostrada na Figura <a href="ch5-inf-num.html#fig:fDist3And323">5.15</a>.</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="op">-</span><span class="fl">0.008</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">df</span>, n <span class="op">=</span> <span class="fl">1001</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>df1 <span class="op">=</span> <span class="fl">3</span>, df2 <span class="op">=</span> <span class="fl">323</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">df</span>, n <span class="op">=</span> <span class="fl">1001</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>df1 <span class="op">=</span> <span class="fl">3</span>, df2 <span class="op">=</span> <span class="fl">323</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, 
         axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:fDist3And323"></span>
+<span style="display:block;" id="fig:fDist3And323"></span>
 <img src="_main_files/figure-html/fDist3And323-1.png" alt="Uma  distribuição F com GL1 = 3 e GL2 = 323." width="672"><p class="caption">
-Figura 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
+Figure 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
 </p>
 </div>
 <p>Quanto maior a variabilidade observada nas médias amostrais (<span class="math inline">\(MSG\)</span>) em relação às observações dentro do grupo (<span class="math inline">\(MEP\)</span>), maior será <span class="math inline">\(F\)</span> e mais forte será a evidência contra a hipótese nula. Como valores maiores de <span class="math inline">\(F\)</span> representam evidências mais fortes contra a hipótese nula, usamos a cauda superior da distribuição para calcular um p-valor.</p>
@@ -1910,28 +1914,30 @@ Figura 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:describePValueAreaForFDistributionInMLBOBPExample" class="exercise"><strong>Prática Orientada 5.20  </strong></span>A estatística de teste para o exemplo de basebol é <span class="math inline">\(F=1.994\)</span>. Sombreie a área correspondente ao p-valor na Figura <a href="ch5-inf-num.html#fig:fDist3And323">5.15</a>
+<span id="exr:describePValueAreaForFDistributionInMLBOBPExample" class="exercise"><strong>Exercise 5.20  </strong></span>A estatística de teste para o exemplo de basebol é <span class="math inline">\(F=1.994\)</span>. Sombreie a área correspondente ao p-valor na Figura <a href="ch5-inf-num.html#fig:fDist3And323">5.15</a>
 </div>
+
 <hr>
 <div class="example">
-<span id="exm:unnamed-chunk-225" class="example"><strong>Exemplo 5.23  </strong></span>O p-valor correspondente à área sombreada na solução de Prática Orientada <a href="ch5-inf-num.html#exr:describePValueAreaForFDistributionInMLBOBPExample">5.20</a> é igual a cerca de 0.115. Isso fornece fortes evidências contra a hipótese nula?
+<span id="exm:unnamed-chunk-225" class="example"><strong>Example 5.23  </strong></span>O p-valor correspondente à área sombreada na solução de Prática Orientada <a href="ch5-inf-num.html#exr:describePValueAreaForFDistributionInMLBOBPExample">5.20</a> é igual a cerca de 0.115. Isso fornece fortes evidências contra a hipótese nula?
 </div>
+
 <p>O p-valor é maior que 0.05, indicando que a evidência não é forte o suficiente para rejeitar a hipótese nula em um nível de significância de 0.05. Ou seja, os dados não fornecem evidências fortes de que a porcentagem média na base varia de acordo com a posição primária do jogador.</p>
 </div>
-<div id="readingANOVATable" class="section level3" number="5.6.3">
+<div id="readingANOVATable" class="section level3">
 <h3>
 <span class="header-section-number">5.6.3</span> Lendo uma tabela ANOVA do software<a class="anchor" aria-label="anchor" href="#readingANOVATable"><i class="fas fa-link"></i></a>
 </h3>
 <p>Os cálculos necessários para executar uma ANOVA à mão são tediosos e propensos a erros humanos. Por essas razões, é comum usar um software estatístico para calcular a estatística e o p-valor <span class="math inline">\(F\)</span>.</p>
 <p>Uma ANOVA pode ser resumida em uma tabela muito semelhante à de um resumo de regressão, que veremos mais adiante. A Tabela <a href="ch5-inf-num.html#tab:anovaSummaryTableForOBPAgainstPosition">5.11</a> mostra um resumo da ANOVA para testar se a média da porcentagem na base varia de acordo com as posições dos jogadores na MLB. Muitos desses valores devem parecer familiares; em particular, a estatística de teste <span class="math inline">\(F\)</span> e o p-valor podem ser recuperados das últimas colunas.</p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">out</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"c"</span>, 
              caption <span class="op">=</span> <span class="st">'Resumo da ANOVA para testar se a porcentagem média na base difere entre as posições dos jogadores.'</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:anovaSummaryTableForOBPAgainstPosition">Tabela 5.11: </span>Resumo da ANOVA para testar se a porcentagem média na base difere entre as posições dos jogadores.</caption>
+<span id="tab:anovaSummaryTableForOBPAgainstPosition">Table 5.11: </span>Resumo da ANOVA para testar se a porcentagem média na base difere entre as posições dos jogadores.</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">Df</th>
@@ -1960,7 +1966,7 @@ Figura 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
 </tbody>
 </table></div>
 </div>
-<div id="graphicalDiagnosisANOVAAnalysis" class="section level3" number="5.6.4">
+<div id="graphicalDiagnosisANOVAAnalysis" class="section level3">
 <h3>
 <span class="header-section-number">5.6.4</span> Diagnóstico gráfico para uma análise ANOVA<a class="anchor" aria-label="anchor" href="#graphicalDiagnosisANOVAAnalysis"><i class="fas fa-link"></i></a>
 </h3>
@@ -1969,7 +1975,7 @@ Figura 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
 <li><p><strong>Independência</strong>: Se os dados são uma amostra aleatória simples de menos de 10% da população, esta condição é satisfeita. Para processos e experimentos, considere cuidadosamente se os dados podem ser independentes (por exemplo, sem pareamento). Por exemplo, nos dados da MLB, os dados não foram amostrados. No entanto, não existem razões óbvias pelas quais a independência não seria válida para a maioria ou para todas as observações.</p></li>
 <li><p><strong>Aproximadamente normal</strong>: Como no teste de uma e duas amostras para médias, a suposição de normalidade é especialmente importante quando o tamanho da amostra é muito pequeno. Os gráficos de probabilidade normal para cada grupo dos dados da MLB são mostrados na Figura <a href="ch5-inf-num.html#fig:mlbANOVADiagNormalityGroups">5.16</a>; há algum desvio da normalidade para os que estão em campo, mas isso não é uma preocupação substancial, pois há cerca de 150 observações nesse grupo e os outliers não são extremos. Às vezes, na ANOVA, há tantos grupos ou tão poucas observações por grupo que verificar a normalidade para cada grupo não é razoável. Veja a nota de rodapé<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt; Primeiro calcule os &lt;strong&gt;resíduos&lt;/strong&gt; dos dados do beisebol, que são calculados tomando os valores observados e subtraindo o grupo correspondente significa. Por exemplo, um outfielder com OBP de 0.405 teria um resíduo de &lt;span class="math inline"&gt;\(0.405 - \bar{x}_{OF} = 0.071\)&lt;/span&gt;. Em seguida, para verificar a condição de normalidade, crie um gráfico de probabilidade normal usando todos os resíduos simultaneamente&lt;/p&gt;'><sup>226</sup></a> para obter orientação sobre como lidar com tais instâncias.</p></li>
 </ul>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/aloy/qqplotr">qqplotr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">gp</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">out</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -1978,9 +1984,9 @@ Figura 5.15: Uma distribuição F com GL1 = 3 e GL2 = 323.
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:mlbANOVADiagNormalityGroups"></span>
+<span style="display:block;" id="fig:mlbANOVADiagNormalityGroups"></span>
 <img src="_main_files/figure-html/mlbANOVADiagNormalityGroups-1.png" alt="Gráfico de probabilidade normal do OBP para cada posição de campo." width="672"><p class="caption">
-Figura 5.16: Gráfico de probabilidade normal do OBP para cada posição de campo.
+Figure 5.16: Gráfico de probabilidade normal do OBP para cada posição de campo.
 </p>
 </div>
 <ul>
@@ -1991,18 +1997,19 @@ Figura 5.16: Gráfico de probabilidade normal do OBP para cada posição de camp
 <p><strong>Diagnóstico para uma análise ANOVA</strong>: Independência é sempre importante para uma análise ANOVA. A condição de normalidade é muito importante quando os tamanhos de amostra para cada grupo são relativamente pequenos. A condição de variância constante é especialmente importante quando os tamanhos das amostras diferem entre os grupos.</p>
 </div>
 </div>
-<div id="multipleComparisonsTypeIError" class="section level3" number="5.6.5">
+<div id="multipleComparisonsTypeIError" class="section level3">
 <h3>
 <span class="header-section-number">5.6.5</span> Múltiplas comparações e controle da Taxa de erro Tipo I<a class="anchor" aria-label="anchor" href="#multipleComparisonsTypeIError"><i class="fas fa-link"></i></a>
 </h3>
 <p>Quando rejeitamos a hipótese nula em uma análise ANOVA, poderíamos nos perguntar: quais desses grupos têm diferentes meios? Para responder a essa pergunta, comparamos as médias de cada par de grupos possível. Por exemplo, se existem três grupos e há fortes evidências de que existem algumas diferenças nas médias do grupo, há três comparações a fazer: grupo 1 para grupo 2, grupo 1 para grupo 3 e grupo 2 para grupo 3. As comparações podem ser realizadas usando um teste-<span class="math inline">\(t\)</span> de duas amostras, mas usamos um nível de significância modificado e uma estimativa agrupada do desvio padrão entre os grupos. Normalmente, este desvio padrão agrupado pode ser encontrado na tabela ANOVA, e ao longo do fundo da Tabela <a href="ch5-inf-num.html#tab:anovaSummaryTableForOBPAgainstPosition">5.11</a>.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-226" class="example"><strong>Exemplo 5.24  </strong></span>O Exemplo <a href="ch5-inf-num.html#exm:firstExampleForThreeStatisticsClassesAndANOVA">5.19</a> discutimos três classes de estatística, todas ensinadas durante o mesmo semestre. A Tabela <a href="ch5-inf-num.html#tab:summaryStatisticsForClassTestData">5.12</a> mostra estatísticas de resumo para esses três cursos, e um gráfico de caixa lado a lado dos dados é mostrado na Figura <a href="ch5-inf-num.html#fig:classDataSBSBoxPlot">5.17</a>. Gostaríamos de realizar uma ANOVA para esses dados. Você vê algum desvio das três condições para ANOVA?
+<span id="exm:unnamed-chunk-226" class="example"><strong>Example 5.24  </strong></span>O Exemplo <a href="ch5-inf-num.html#exm:firstExampleForThreeStatisticsClassesAndANOVA">5.19</a> discutimos três classes de estatística, todas ensinadas durante o mesmo semestre. A Tabela <a href="ch5-inf-num.html#tab:summaryStatisticsForClassTestData">5.12</a> mostra estatísticas de resumo para esses três cursos, e um gráfico de caixa lado a lado dos dados é mostrado na Figura <a href="ch5-inf-num.html#fig:classDataSBSBoxPlot">5.17</a>. Gostaríamos de realizar uma ANOVA para esses dados. Você vê algum desvio das três condições para ANOVA?
 </div>
+
 <p>Neste caso (como muitos outros), é difícil verificar a independência de forma rigorosa. Em vez disso, o melhor que podemos fazer é usar o bom senso para considerar as razões pelas quais a suposição de independência pode não ser válida. Por exemplo, a suposição de independência pode não ser razoável se houver um assistente de ensino que somente metade dos alunos possa acessar; tal cenário dividiria uma classe em dois subgrupos. Nenhuma dessas situações foi evidente para esses dados específicos e acreditamos que a independência é aceitável.</p>
 <p>As distribuições no gráfico de caixa lado a lado parecem ser mais ou menos simétricas e não mostram outliers perceptíveis. Os gráficos de caixa mostram uma variabilidade aproximadamente igual, que pode ser verificada na Tabela <a href="ch5-inf-num.html#tab:summaryStatisticsForClassTestData">5.12</a>, apoiando a suposição de variância constante.</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">class</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Tamanho da amostra'</span>, <span class="fl">58</span>, <span class="fl">55</span>, <span class="fl">51</span><span class="op">)</span>
 <span class="va">class</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Média da amostra'</span>, <span class="fl">75.1</span>, <span class="fl">72.0</span>, <span class="fl">78.9</span><span class="op">)</span>
@@ -2014,7 +2021,7 @@ Figura 5.16: Gráfico de probabilidade normal do OBP para cada posição de camp
              caption <span class="op">=</span> <span class="st">"Estatísticas resumidas para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:summaryStatisticsForClassTestData">Tabela 5.12: </span>Estatísticas resumidas para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso.</caption>
+<span id="tab:summaryStatisticsForClassTestData">Table 5.12: </span>Estatísticas resumidas para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso.</caption>
 <thead><tr class="header">
 <th align="center">Classe</th>
 <th align="center">A</th>
@@ -2042,7 +2049,7 @@ Figura 5.16: Gráfico de probabilidade normal do OBP para cada posição de camp
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">classData</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">classData</span><span class="op">)</span> <span class="op">+</span> 
@@ -2052,23 +2059,24 @@ Figura 5.16: Gráfico de probabilidade normal do OBP para cada posição de camp
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#E6205F'</span>, <span class="st">'#E97C31'</span>, <span class="st">"#EAB217"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<span id="fig:classDataSBSBoxPlot"></span>
+<span style="display:block;" id="fig:classDataSBSBoxPlot"></span>
 <img src="_main_files/figure-html/classDataSBSBoxPlot-1.png" alt="Gráfico de boxplot para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso." width="672"><p class="caption">
-Figura 5.17: Gráfico de boxplot para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso.
+Figure 5.17: Gráfico de boxplot para as primeiras pontuações intermediárias em três classes diferentes do mesmo curso.
 </p>
 </div>
 <hr>
 <div class="exercise">
-<span id="exr:exerExaminingAnovaSummaryTableForMidtermData" class="exercise"><strong>Prática Orientada 5.21  </strong></span>Uma ANOVA foi conduzida para os dados intermediários, e os resultados resumidos são mostrados na Tabela <a href="ch5-inf-num.html#tab:anovaSummaryTableForMidtermData">5.13</a>. O que devemos concluir?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O p-valor do teste é 0,0330, menor que o nível de significância padrão de 0,05. Portanto, rejeitamos a hipótese nula e concluímos que a diferença nos escores médios a médio prazo não se deve ao acaso.&lt;/p&gt;"><sup>227</sup></a>
+<span id="exr:exerExaminingAnovaSummaryTableForMidtermData" class="exercise"><strong>Exercise 5.21  </strong></span>Uma ANOVA foi conduzida para os dados intermediários, e os resultados resumidos são mostrados na Tabela <a href="ch5-inf-num.html#tab:anovaSummaryTableForMidtermData">5.13</a>. O que devemos concluir?<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O p-valor do teste é 0,0330, menor que o nível de significância padrão de 0,05. Portanto, rejeitamos a hipótese nula e concluímos que a diferença nos escores médios a médio prazo não se deve ao acaso.&lt;/p&gt;"><sup>227</sup></a>
 </div>
+
 <hr>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">m1</span> <span class="op">~</span> <span class="va">lecture</span>, <span class="va">classData</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">aj</span>, align <span class="op">=</span> <span class="st">"c"</span>, caption <span class="op">=</span> <span class="st">'Tabela resumo ANOVA para os dados de exames parciais.'</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:anovaSummaryTableForMidtermData">Tabela 5.13: </span>Tabela resumo ANOVA para os dados de exames parciais.</caption>
+<span id="tab:anovaSummaryTableForMidtermData">Table 5.13: </span>Tabela resumo ANOVA para os dados de exames parciais.</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">Df</th>
@@ -2106,8 +2114,9 @@ Figura 5.17: Gráfico de boxplot para as primeiras pontuações intermediárias 
 </div>
 
 <div class="example">
-<span id="exm:multipleComparisonsOfThreeStatClasses" class="example"><strong>Exemplo 5.25  </strong></span>Na Prática Orientada <a href="ch5-inf-num.html#exr:exerExaminingAnovaSummaryTableForMidtermData">5.21</a>, você encontrou fortes evidências de diferenças nas notas médias entre as três classes. Complete as três possíveis comparações entre pares usando a correção de Bonferroni e relate quaisquer diferenças.
+<span id="exm:multipleComparisonsOfThreeStatClasses" class="example"><strong>Example 5.25  </strong></span>Na Prática Orientada <a href="ch5-inf-num.html#exr:exerExaminingAnovaSummaryTableForMidtermData">5.21</a>, você encontrou fortes evidências de diferenças nas notas médias entre as três classes. Complete as três possíveis comparações entre pares usando a correção de Bonferroni e relate quaisquer diferenças.
 </div>
+
 <p>Nós usamos um nível de significância modificado de <span class="math inline">\(\alpha^* = 0.05/3 = 0.0167\)</span>. Além disso, usamos a estimativa combinada do desvio padrão: <span class="math inline">\(s_{agrupados}=13.61\)</span> com <span class="math inline">\(GL=161\)</span>, que é fornecido na tabela de resumo ANOVA.</p>
 <p>Aula A versus Aula B: A diferença estimada e o erro padrão são, respectivamente,</p>
 <p><span class="math display">\[\begin{align*}
@@ -2142,7 +2151,7 @@ Aula A versus Aula C: A diferença estimada e o erro padrão são 3,8 e 2,61, re
 <div class="prev"><a href="ch4-fund-inf.html"><span class="header-section-number">4</span> Fundamentos para Inferência</a></div>
 <div class="next"><a href="ch6-inf-cat.html"><span class="header-section-number">6</span> Inferência para dados categóricos</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>Nesta página</h2>
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#ch5-inf-num"><span class="header-section-number">5</span> Inferência para dados numéricos</a></li>
 <li>
@@ -2188,10 +2197,7 @@ Aula A versus Aula C: A diferença estimada e o erro padrão são 3,8 e 2,61, re
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Probabilidade-e-Estatistica-EAD/livro2/blob/master/05-inf-num.Rmd">Ver código da página atual <i class="fab fa-github"></i></a></li>
-          <!--
-          <li><a id="book-edit" href="#">Edite essa página <i class="fab fa-github"></i></a></li>
-          -->
+          
         </ul>
 </div>
     </nav>
@@ -2203,11 +2209,11 @@ Aula A versus Aula C: A diferença estimada e o erro padrão são 3,8 e 2,61, re
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>Adaptado por <a href="https://github.com/ghsaul" style="color:white">Gabriel Holmer Saul</a></p>
+    <p>"<strong>Livro de Probabilidade e Estatística EAD - UFRGS</strong>" was written by . </p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>Esse livro foi construido com o pacote do R <a class="text-light" href="https://bookdown.org">bookdown</a>.</p>
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>
@@ -2223,6 +2229,22 @@ Aula A versus Aula C: A diferença estimada e o erro padrão são 3,8 e 2,61, re
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
 </html>
