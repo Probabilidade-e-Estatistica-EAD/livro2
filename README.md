@@ -7,7 +7,7 @@ Este material é baseado no livro desenvolvido pela [OpenIntro](https://www.open
 Tanto este material adaptado, quanto o original, estão sob mesma licença no [Creative Commons](https://creativecommons.org/). 
 
 
-<div align="right"><strong>Tradução e Adaptação: <br></strong> Juliana Sena de Souza <br> Gabriel Holmer Saul <br> Márcia Helena Barbian <br> Lisiane Priscila Roldão Selau	 <br> Markus Chagas Stein	<br> Rodrigo Citton Padilha dos Reis</div>
+<div align="right"><strong>Tradução e Adaptação: <br></strong> Juliana Sena de Souza <br> Márcia Helena Barbian <br> Gabriel Holmer Saul <br> Lisiane Priscila Roldão Selau	 <br> Markus Chagas Stein	<br> Rodrigo Citton Padilha dos Reis</div>
 
 <img src="https://github.com/Probabilidade-e-Estatistica-EAD/livro/blob/master/todos_logo.png?raw=true" width="1000">
 
